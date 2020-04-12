@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>HTTPS中的TLS | hx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. SSL 与 TLS 2. 从网络协议的角度理解 HTTPS 3. 从密码学的角度理解 HTTPS 3.1. TLS 工作流程 3.2. 密码基础 3.2.1. 伪随机数生成器 3.2.2. 消息认证码 3.2.3. 数字签名 3.2.4. 公钥密码 3.2.5. 证书 3.2.6. 密码小结   3.3. TLS 使用的密码技术 3.4. TLS 总结   4. RSA 简单示例 5.">
+  <meta name="description" content="1. SSL 与 TLS 2. 从网络协议的角度理解 HTTPS 3. 从密码学的角度理解 HTTPS 3.1. TLS 工作流程 3.2. 密码基础 3.2.1. 伪随机数生成器 3.2.2. 消息认证码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTTPS中的TLS">
 <meta property="og:url" content="http://yoursite.com/2020/04/12/HTTPS%E4%B8%AD%E7%9A%84TLS/index.html">
 <meta property="og:site_name" content="hx">
-<meta property="og:description" content="1. SSL 与 TLS 2. 从网络协议的角度理解 HTTPS 3. 从密码学的角度理解 HTTPS 3.1. TLS 工作流程 3.2. 密码基础 3.2.1. 伪随机数生成器 3.2.2. 消息认证码 3.2.3. 数字签名 3.2.4. 公钥密码 3.2.5. 证书 3.2.6. 密码小结   3.3. TLS 使用的密码技术 3.4. TLS 总结   4. RSA 简单示例 5.">
+<meta property="og:description" content="1. SSL 与 TLS 2. 从网络协议的角度理解 HTTPS 3. 从密码学的角度理解 HTTPS 3.1. TLS 工作流程 3.2. 密码基础 3.2.1. 伪随机数生成器 3.2.2. 消息认证码">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://leran2deeplearnjavawebtech.oss-cn-beijing.aliyuncs.com/somephoto/%E4%B8%83%E5%B1%82.png">
 <meta property="og:image" content="https://leran2deeplearnjavawebtech.oss-cn-beijing.aliyuncs.com/somephoto/tls%E6%B5%81%E7%A8%8B.png">
@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://leran2deeplearnjavawebtech.oss-cn-beijing.aliyuncs.com/somephoto/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E8%BF%87%E7%A8%8B.png">
 <meta property="og:image" content="https://leran2deeplearnjavawebtech.oss-cn-beijing.aliyuncs.com/somephoto/dns%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB.png">
 <meta property="article:published_time" content="2020-04-12T07:52:20.267Z">
-<meta property="article:modified_time" content="2019-03-21T11:03:30.000Z">
+<meta property="article:modified_time" content="2020-04-12T11:08:08.528Z">
 <meta property="article:author" content="何XX">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://leran2deeplearnjavawebtech.oss-cn-beijing.aliyuncs.com/somephoto/%E4%B8%83%E5%B1%82.png">
@@ -211,7 +211,7 @@
 <li><a href="#31-tls-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B">3.1. TLS 工作流程</a></li>
 <li><a href="#32-%E5%AF%86%E7%A0%81%E5%9F%BA%E7%A1%80">3.2. 密码基础</a><ul>
 <li><a href="#321-%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%99%A8">3.2.1. 伪随机数生成器</a></li>
-<li><a href="#322-%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81">3.2.2. 消息认证码</a></li>
+<li><a href="#322-%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81">3.2.2. 消息认证码</a><a id="more"></a></li>
 <li><a href="#323-%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D">3.2.3. 数字签名</a></li>
 <li><a href="#324-%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81">3.2.4. 公钥密码</a></li>
 <li><a href="#325-%E8%AF%81%E4%B9%A6">3.2.5. 证书</a></li>

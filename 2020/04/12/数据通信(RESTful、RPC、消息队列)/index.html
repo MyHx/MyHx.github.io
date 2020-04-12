@@ -16,7 +16,7 @@
 <meta property="og:description" content="RPC RPC（Remote Procedure Call）—远程过程调用 ，它是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。RPC协议假定某些传输协议的存在，如TCP或UDP，为通信程序之间携带信息数据。在OSI网络通信模型中，RPC跨越了传输层和应用层。RPC使得开发分布式程序就像开发本地程序一样简单。 RPC采用客户端（服务调用方）&#x2F;服务器端（服务提供方）模式，">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-12T07:52:20.280Z">
-<meta property="article:modified_time" content="2019-03-21T11:03:30.000Z">
+<meta property="article:modified_time" content="2020-04-12T11:06:15.356Z">
 <meta property="article:author" content="何XX">
 <meta name="twitter:card" content="summary">
   
@@ -202,6 +202,7 @@
 <p><strong>RPC采用客户端（服务调用方）/服务器端（服务提供方）模式，</strong> 都运行在自己的JVM中。客户端只需要引入要使用的接口，接口的实现和运行都在服务器端。RPC主要依赖的技术包括序列化、反序列化和数据传输协议，这是一种定义与实现相分离的设计。</p>
 <p><strong>目前Java使用比较多的RPC方案主要有RMI（JDK自带）、Hessian、Dubbo以及Thrift等。</strong></p>
 <p><strong>注意： RPC主要指内部服务之间的调用，RESTful也可以用于内部服务之间的调用，但其主要用途还在于外部系统提供服务，因此没有将其包含在本知识点内。</strong></p>
+<a id="more"></a>
 <h3 id="常见RPC框架："><a href="#常见RPC框架：" class="headerlink" title="常见RPC框架："></a>常见RPC框架：</h3><ul>
 <li><p><strong>RMI（JDK自带）：</strong> JDK自带的RPC</p>
 <p> 详细内容可以参考：<a href="https://blog.csdn.net/lmy86263/article/details/72594760" target="_blank" rel="noopener">从懵逼到恍然大悟之Java中RMI的使用</a></p>

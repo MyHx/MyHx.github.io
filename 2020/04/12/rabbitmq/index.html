@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>rabbitmq | hx</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一文搞懂 RabbitMQ 的重要概念以及安装 一 RabbitMQ 介绍 1.1 RabbitMQ 简介 1.2 RabbitMQ 核心概念 1.2.1 Producer(生产者) 和 Consumer(消费者) 1.2.2 Exchange(交换器) 1.2.3 Queue(消息队列) 1.2.4 Broker（消息中间件的服务节点） 1.2.5 Exchange Types(交换器类型">
+  <meta name="description" content="一文搞懂 RabbitMQ 的重要概念以及安装 一 RabbitMQ 介绍 1.1 RabbitMQ 简介 1.2 RabbitMQ 核心概念 1.2.1 Producer(生产者) 和 Consumer(消费者) 1.2.2 Exchange(交换器) 1.2.3 Queue(消息队列)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="rabbitmq">
 <meta property="og:url" content="http://yoursite.com/2020/04/12/rabbitmq/index.html">
 <meta property="og:site_name" content="hx">
-<meta property="og:description" content="一文搞懂 RabbitMQ 的重要概念以及安装 一 RabbitMQ 介绍 1.1 RabbitMQ 简介 1.2 RabbitMQ 核心概念 1.2.1 Producer(生产者) 和 Consumer(消费者) 1.2.2 Exchange(交换器) 1.2.3 Queue(消息队列) 1.2.4 Broker（消息中间件的服务节点） 1.2.5 Exchange Types(交换器类型">
+<meta property="og:description" content="一文搞懂 RabbitMQ 的重要概念以及安装 一 RabbitMQ 介绍 1.1 RabbitMQ 简介 1.2 RabbitMQ 核心概念 1.2.1 Producer(生产者) 和 Consumer(消费者) 1.2.2 Exchange(交换器) 1.2.3 Queue(消息队列)">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-16/96388546.jpg">
 <meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-16/24007899.jpg">
@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-12/62504246.jpg">
 <meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-12/45835332.jpg">
 <meta property="article:published_time" content="2020-04-12T07:52:20.274Z">
-<meta property="article:modified_time" content="2019-03-21T11:03:30.000Z">
+<meta property="article:modified_time" content="2020-04-12T11:07:14.969Z">
 <meta property="article:author" content="何XX">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-16/96388546.jpg">
@@ -216,7 +216,7 @@
 <li><a href="#12-rabbitmq-核心概念">1.2 RabbitMQ 核心概念</a><ul>
 <li><a href="#121-producer生产者-和-consumer消费者">1.2.1 Producer(生产者) 和 Consumer(消费者)</a></li>
 <li><a href="#122-exchange交换器">1.2.2 Exchange(交换器)</a></li>
-<li><a href="#123-queue消息队列">1.2.3 Queue(消息队列)</a></li>
+<li><a href="#123-queue消息队列">1.2.3 Queue(消息队列)</a><a id="more"></a></li>
 <li><a href="#124-broker消息中间件的服务节点">1.2.4 Broker（消息中间件的服务节点）</a></li>
 <li><a href="#125-exchange-types交换器类型">1.2.5 Exchange Types(交换器类型)</a><ul>
 <li><a href="#①-fanout">① fanout</a></li>
@@ -317,7 +317,11 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@SnailClimb local]#rm -rf otp_src_19.3.tar.gz</span><br></pre></td></tr></table></figure>
 
 <p><strong>4 安装 erlang 的依赖工具</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@SnailClimb local]#yum -y install make gcc gcc-c++ kernel-devel m4 ncurses-devel openssl-devel unixODBC-devel</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">**5 进入erlang 安装包解压文件对 erlang 进行安装环境的配置**</span><br><span class="line"></span><br><span class="line">新建一个文件夹</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line">[root@SnailClimb local]# mkdir erlang</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@SnailClimb local]#yum -y install make gcc gcc-c++ kernel-devel m4 ncurses-devel openssl-devel unixODBC-devel</span><br></pre></td></tr></table></figure>
+
+<p><strong>5 进入erlang 安装包解压文件对 erlang 进行安装环境的配置</strong></p>
+<p>新建一个文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@SnailClimb local]# mkdir erlang</span><br></pre></td></tr></table></figure>
 
 <p>对 erlang 进行安装环境的配置</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@SnailClimb otp_src_19.3]# </span><br><span class="line">./configure --prefix=/usr/local/erlang --without-javac</span><br></pre></td></tr></table></figure>
