@@ -152,29 +152,67 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-我的第一篇博客文章" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-面试必备之乐观锁与悲观锁" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/12/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">我的第一篇博客文章</a>
+      <a class="article-title" href="/2020/04/12/%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87%E4%B9%8B%E4%B9%90%E8%A7%82%E9%94%81%E4%B8%8E%E6%82%B2%E8%A7%82%E9%94%81/">面试必备之乐观锁与悲观锁</a>
     </h1>
   
 
         
-        <a href="/2020/04/12/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/" class="archive-article-date">
-  	<time datetime="2020-04-12T03:25:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
+        <a href="/2020/04/12/%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87%E4%B9%8B%E4%B9%90%E8%A7%82%E9%94%81%E4%B8%8E%E6%82%B2%E8%A7%82%E9%94%81/" class="archive-article-date">
+  	<time datetime="2020-04-12T07:58:27.840Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><p>何鲜喜欢何丽娟</p>
-<h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><p>何丽娟喜欢何鲜</p>
-<h2 id="第三章"><a href="#第三章" class="headerlink" title="第三章"></a>第三章</h2><p>那就一直在一起吧</p>
+        <h3 id="何谓悲观锁与乐观锁"><a href="#何谓悲观锁与乐观锁" class="headerlink" title="何谓悲观锁与乐观锁"></a>何谓悲观锁与乐观锁</h3><blockquote>
+<p>乐观锁对应于生活中乐观的人总是想着事情往好的方向发展，悲观锁对应于生活中悲观的人总是想着事情往坏的方向发展。这两种人各有优缺点，不能不以场景而定说一种人好于另外一种人。</p>
+</blockquote>
+<h4 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a>悲观锁</h4><p>总是假设最坏的情况，每次去拿数据的时候都认为别人会修改，所以每次在拿数据的时候都会上锁，这样别人想拿这个数据就会阻塞直到它拿到锁（<strong>共享资源每次只给一个线程使用，其它线程阻塞，用完后再把资源转让给其它线程</strong>）。传统的关系型数据库里边就用到了很多这种锁机制，比如行锁，表锁等，读锁，写锁等，都是在做操作之前先上锁。Java中<code>synchronized</code>和<code>ReentrantLock</code>等独占锁就是悲观锁思想的实现。</p>
+<h4 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h4><p>总是假设最好的情况，每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据，可以使用版本号机制和CAS算法实现。<strong>乐观锁适用于多读的应用类型，这样可以提高吞吐量</strong>，像数据库提供的类似于<strong>write_condition机制</strong>，其实都是提供的乐观锁。在Java中<code>java.util.concurrent.atomic</code>包下面的原子变量类就是使用了乐观锁的一种实现方式<strong>CAS</strong>实现的。</p>
+<h4 id="两种锁的使用场景"><a href="#两种锁的使用场景" class="headerlink" title="两种锁的使用场景"></a>两种锁的使用场景</h4><p>从上面对两种锁的介绍，我们知道两种锁各有优缺点，不可认为一种好于另一种，像<strong>乐观锁适用于写比较少的情况下（多读场景）</strong>，即冲突真的很少发生的时候，这样可以省去了锁的开销，加大了系统的整个吞吐量。但如果是多写的情况，一般会经常产生冲突，这就会导致上层应用会不断的进行retry，这样反倒是降低了性能，所以<strong>一般多写的场景下用悲观锁就比较合适。</strong></p>
+<h3 id="乐观锁常见的两种实现方式"><a href="#乐观锁常见的两种实现方式" class="headerlink" title="乐观锁常见的两种实现方式"></a>乐观锁常见的两种实现方式</h3><blockquote>
+<p><strong>乐观锁一般会使用版本号机制或CAS算法实现。</strong></p>
+</blockquote>
+<h4 id="1-版本号机制"><a href="#1-版本号机制" class="headerlink" title="1. 版本号机制"></a>1. 版本号机制</h4><p>一般是在数据表中加上一个数据版本号version字段，表示数据被修改的次数，当数据被修改时，version值会加一。当线程A要更新数据值时，在读取数据的同时也会读取version值，在提交更新时，若刚才读取到的version值为当前数据库中的version值相等时才更新，否则重试更新操作，直到更新成功。</p>
+<p><strong>举一个简单的例子：</strong><br>假设数据库中帐户信息表中有一个 version 字段，当前值为 1 ；而当前帐户余额字段（ balance ）为 $100 。</p>
+<ol>
+<li>操作员 A 此时将其读出（ version=1 ），并从其帐户余额中扣除 $50（ $100-$50 ）。</li>
+<li>在操作员 A 操作的过程中，操作员B 也读入此用户信息（ version=1 ），并从其帐户余额中扣除 $20 （ $100-$20 ）。</li>
+<li>操作员 A 完成了修改工作，将数据版本号加一（ version=2 ），连同帐户扣除后余额（ balance=$50 ），提交至数据库更新，此时由于提交数据版本大于数据库记录当前版本，数据被更新，数据库记录 version 更新为 2 。</li>
+<li>操作员 B 完成了操作，也将版本号加一（ version=2 ）试图向数据库提交数据（ balance=$80 ），但此时比对数据库记录版本时发现，操作员 B 提交的数据版本号为 2 ，数据库记录当前版本也为 2 ，不满足 “ 提交版本必须大于记录当前版本才能执行更新 “ 的乐观锁策略，因此，操作员 B 的提交被驳回。</li>
+</ol>
+<p>这样，就避免了操作员 B 用基于 version=1 的旧数据修改的结果覆盖操作员A 的操作结果的可能。</p>
+<h4 id="2-CAS算法"><a href="#2-CAS算法" class="headerlink" title="2. CAS算法"></a>2. CAS算法</h4><p>即<strong>compare and swap（比较与交换）</strong>，是一种有名的<strong>无锁算法</strong>。无锁编程，即不使用锁的情况下实现多线程之间的变量同步，也就是在没有线程被阻塞的情况下实现变量的同步，所以也叫非阻塞同步（Non-blocking Synchronization）。<strong>CAS算法</strong>涉及到三个操作数</p>
+<ul>
+<li>需要读写的内存值 V </li>
+<li>进行比较的值 A </li>
+<li>拟写入的新值 B</li>
+</ul>
+<p>当且仅当 V 的值等于 A时，CAS通过原子方式用新值B来更新V的值，否则不会执行任何操作（比较和替换是一个原子操作）。一般情况下是一个<strong>自旋操作</strong>，即<strong>不断的重试</strong>。</p>
+<p>关于自旋锁，大家可以看一下这篇文章，非常不错：<a href="https://blog.csdn.net/qq_34337272/article/details/81252853" target="_blank" rel="noopener">《<br>面试必备之深入理解自旋锁》</a></p>
+<h3 id="乐观锁的缺点"><a href="#乐观锁的缺点" class="headerlink" title="乐观锁的缺点"></a>乐观锁的缺点</h3><blockquote>
+<p> ABA 问题是乐观锁一个常见的问题</p>
+</blockquote>
+<h4 id="1-ABA-问题"><a href="#1-ABA-问题" class="headerlink" title="1 ABA 问题"></a>1 ABA 问题</h4><p>如果一个变量V初次读取的时候是A值，并且在准备赋值的时候检查到它仍然是A值，那我们就能说明它的值没有被其他线程修改过了吗？很明显是不能的，因为在这段时间它的值可能被改为其他值，然后又改回A，那CAS操作就会误认为它从来没有被修改过。这个问题被称为CAS操作的 <strong>“ABA”问题。</strong></p>
+<p>JDK 1.5 以后的 <code>AtomicStampedReference 类</code>就提供了此种能力，其中的 <code>compareAndSet 方法</code>就是首先检查当前引用是否等于预期引用，并且当前标志是否等于预期标志，如果全部相等，则以原子方式将该引用和该标志的值设置为给定的更新值。</p>
+<h4 id="2-循环时间长开销大"><a href="#2-循环时间长开销大" class="headerlink" title="2 循环时间长开销大"></a>2 循环时间长开销大</h4><p><strong>自旋CAS（也就是不成功就一直循环执行直到成功）如果长时间不成功，会给CPU带来非常大的执行开销。</strong> 如果JVM能支持处理器提供的pause指令那么效率会有一定的提升，pause指令有两个作用，第一它可以延迟流水线执行指令（de-pipeline）,使CPU不会消耗过多的执行资源，延迟的时间取决于具体实现的版本，在一些处理器上延迟时间是零。第二它可以避免在退出循环的时候因内存顺序冲突（memory order violation）而引起CPU流水线被清空（CPU pipeline flush），从而提高CPU的执行效率。</p>
+<h4 id="3-只能保证一个共享变量的原子操作"><a href="#3-只能保证一个共享变量的原子操作" class="headerlink" title="3 只能保证一个共享变量的原子操作"></a>3 只能保证一个共享变量的原子操作</h4><p>CAS 只对单个共享变量有效，当操作涉及跨多个共享变量时 CAS 无效。但是从 JDK 1.5开始，提供了<code>AtomicReference类</code>来保证引用对象之间的原子性，你可以把多个变量放在一个对象里来进行 CAS 操作.所以我们可以使用锁或者利用<code>AtomicReference类</code>把多个共享变量合并成一个共享变量来操作。</p>
+<h3 id="CAS与synchronized的使用情景"><a href="#CAS与synchronized的使用情景" class="headerlink" title="CAS与synchronized的使用情景"></a>CAS与synchronized的使用情景</h3><blockquote>
+<p><strong>简单的来说CAS适用于写比较少的情况下（多读场景，冲突一般较少），synchronized适用于写比较多的情况下（多写场景，冲突一般较多）</strong></p>
+</blockquote>
+<ol>
+<li>对于资源竞争较少（线程冲突较轻）的情况，使用synchronized同步锁进行线程阻塞和唤醒切换以及用户态内核态间的切换操作额外浪费消耗cpu资源；而CAS基于硬件实现，不需要进入内核，不需要切换线程，操作自旋几率较少，因此可以获得更高的性能。</li>
+<li>对于资源竞争严重（线程冲突严重）的情况，CAS自旋的概率会比较大，从而浪费更多的CPU资源，效率低于synchronized。</li>
+</ol>
+<p>补充： Java并发编程这个领域中synchronized关键字一直都是元老级的角色，很久之前很多人都会称它为 <strong>“重量级锁”</strong> 。但是，在JavaSE 1.6之后进行了主要包括为了减少获得锁和释放锁带来的性能消耗而引入的 <strong>偏向锁</strong> 和 <strong>轻量级锁</strong> 以及其它<strong>各种优化</strong>之后变得在某些情况下并不是那么重了。synchronized的底层实现主要依靠 <strong>Lock-Free</strong> 的队列，基本思路是 <strong>自旋后阻塞</strong>，<strong>竞争切换后继续竞争锁</strong>，<strong>稍微牺牲了公平性，但获得了高吞吐量</strong>。在线程冲突较少的情况下，可以获得和CAS类似的性能；而线程冲突严重的情况下，性能远高于CAS。</p>
 
       
 
@@ -187,7 +225,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/12/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/04/12/%E9%9D%A2%E8%AF%95%E5%BF%85%E5%A4%87%E4%B9%8B%E4%B9%90%E8%A7%82%E9%94%81%E4%B8%8E%E6%82%B2%E8%A7%82%E9%94%81/">展开全文 >></a>
         </p>
       
 
@@ -217,6 +255,1394 @@
 
 
   
+    <article id="post-2019-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/12/2019-2/">2019-2</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/12/2019-2/" class="archive-article-date">
+  	<time datetime="2020-04-12T07:52:20.311Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-JavaGuide"><a href="#1-JavaGuide" class="headerlink" title="1. JavaGuide"></a>1. JavaGuide</h3><ul>
+<li><strong>Github地址</strong>： <a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener">https://github.com/Snailclimb/JavaGuide</a></li>
+<li><strong>Star</strong>: 27.2k (4,437 stars this month)</li>
+<li><strong>介绍</strong>: 【Java学习+面试指南】 一份涵盖大部分Java程序员所需要掌握的核心知识。</li>
+</ul>
+<h3 id="2-DoraemonKit"><a href="#2-DoraemonKit" class="headerlink" title="2.DoraemonKit"></a>2.DoraemonKit</h3><ul>
+<li><strong>Github地址</strong>： <a href="https://github.com/didi/DoraemonKit" target="_blank" rel="noopener">https://github.com/didi/DoraemonKit</a></li>
+<li><strong>Star</strong>: 5.2k (3,786 stars this month)</li>
+<li><strong>介绍</strong>: 简称 “DoKit” 。一款功能齐全的客户端（ iOS 、Android ）研发助手，你值得拥有。</li>
+</ul>
+<h3 id="3-advanced-java"><a href="#3-advanced-java" class="headerlink" title="3.advanced-java"></a>3.advanced-java</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/doocs/advanced-java" target="_blank" rel="noopener">https://github.com/doocs/advanced-java</a></li>
+<li><strong>Star</strong>:11.2k (3,042 stars this month)</li>
+<li><strong>介绍</strong>: 互联网 Java 工程师进阶知识完全扫盲。</li>
+</ul>
+<h3 id="4-spring-boot-examples"><a href="#4-spring-boot-examples" class="headerlink" title="4. spring-boot-examples"></a>4. spring-boot-examples</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/ityouknow/spring-boot-examples" target="_blank" rel="noopener">https://github.com/ityouknow/spring-boot-examples</a></li>
+<li><strong>star</strong>: 9.6 k (1,764 stars this month)</li>
+<li><strong>介绍</strong>: Spring Boot 教程、技术栈示例代码，快速简单上手教程。</li>
+</ul>
+<h3 id="5-mall"><a href="#5-mall" class="headerlink" title="5. mall"></a>5. mall</h3><ul>
+<li><strong>Github地址</strong>： <a href="https://github.com/macrozheng/mall" target="_blank" rel="noopener">https://github.com/macrozheng/mall</a></li>
+<li><strong>star</strong>: 7.4 k (1,736 stars this month)</li>
+<li><strong>介绍</strong>: mall项目是一套电商系统，包括前台商城系统及后台管理系统，基于SpringBoot+MyBatis实现。 前台商城系统包含首页门户、商品推荐、商品搜索、商品展示、购物车、订单流程、会员中心、客户服务、帮助中心等模块。 后台管理系统包含商品管理、订单管理、会员管理、促销管理、运营管理、内容管理、统计报表、财务管理、权限管理、设置等模块。</li>
+</ul>
+<h3 id="6-fescar"><a href="#6-fescar" class="headerlink" title="6. fescar"></a>6. fescar</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/alibaba/fescar" target="_blank" rel="noopener">https://github.com/alibaba/fescar</a></li>
+<li><strong>star</strong>: 6.0 k (1,308 stars this month)</li>
+<li><strong>介绍</strong>: 具有 <strong>高性能</strong> 和 <strong>易用性</strong> 的 <strong>微服务架构</strong> 的 <strong>分布式事务</strong> 的解决方案。（特点：高性能且易于使用，旨在实现简单并快速的事务提交与回滚。）</li>
+</ul>
+<h3 id="7-h4cker"><a href="#7-h4cker" class="headerlink" title="7. h4cker"></a>7. h4cker</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/The-Art-of-Hacking/h4cker" target="_blank" rel="noopener">https://github.com/The-Art-of-Hacking/h4cker</a></li>
+<li><strong>star</strong>: 2.1 k (1,303 stars this month)</li>
+<li><strong>介绍</strong>: 该仓库主要由Omar Santos维护，包括与道德黑客/渗透测试，数字取证和事件响应（DFIR），漏洞研究，漏洞利用开发，逆向工程等相关的资源。</li>
+</ul>
+<h3 id="8-spring-boot"><a href="#8-spring-boot" class="headerlink" title="8.  spring-boot"></a>8.  spring-boot</h3><ul>
+<li><p><strong>Github地址</strong>： <a href="https://github.com/spring-projects/spring-boot" target="_blank" rel="noopener">https://github.com/spring-projects/spring-boot</a></p>
+</li>
+<li><p><strong>star:</strong> 34.8k (1,073 stars this month)</p>
+</li>
+<li><p><strong>介绍</strong>： 虽然Spring的组件代码是轻量级的，但它的配置却是重量级的（需要大量XML配置）,不过Spring Boot 让这一切成为了过去。 另外Spring Cloud也是基于Spring Boot构建的，我个人非常有必要学习一下。</p>
+<p>   <strong>关于Spring Boot官方的介绍：</strong></p>
+<blockquote>
+<p>Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”…Most Spring Boot applications need very little Spring configuration.(Spring Boot可以轻松创建独立的生产级基于Spring的应用程序,只要通过 “just run”（可能是run ‘Application’或java -jar 或 tomcat 或 maven插件run 或 shell脚本）便可以运行项目。大部分Spring Boot项目只需要少量的配置即可)</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="9-arthas"><a href="#9-arthas" class="headerlink" title="9. arthas"></a>9. arthas</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/alibaba/arthas" target="_blank" rel="noopener">https://github.com/alibaba/arthas</a></li>
+<li><strong>star</strong>: 10.5 k (970 stars this month)</li>
+<li><strong>介绍</strong>: Arthas 是Alibaba开源的Java诊断工具。</li>
+</ul>
+<h3 id="10-tutorials"><a href="#10-tutorials" class="headerlink" title="10. tutorials"></a>10. tutorials</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/eugenp/tutorials" target="_blank" rel="noopener">https://github.com/eugenp/tutorials</a></li>
+<li><strong>star</strong>: 12.1 k (789 stars this month)</li>
+<li><strong>介绍</strong>: 该项目是一系列小而专注的教程 - 每个教程都涵盖Java生态系统中单一且定义明确的开发领域。 当然，它们的重点是Spring Framework  -  Spring，Spring Boot和Spring Securiyt。 除了Spring之外，还有以下技术：核心Java，Jackson，HttpClient，Guava。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/12/2019-2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-2019-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/12/2019-1/">2019-1</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/12/2019-1/" class="archive-article-date">
+  	<time datetime="2020-04-12T07:52:20.308Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-JavaGuide"><a href="#1-JavaGuide" class="headerlink" title="1. JavaGuide"></a>1. JavaGuide</h3><ul>
+<li><strong>Github地址</strong>： <a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener">https://github.com/Snailclimb/JavaGuide</a></li>
+<li><strong>star</strong>: 22.8k</li>
+<li><strong>介绍</strong>: 【Java学习+面试指南】 一份涵盖大部分Java程序员所需要掌握的核心知识。</li>
+</ul>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/JavaGuide.png" alt="JavaGuide"></p>
+<p><strong>概览：</strong></p>
+<p>  <img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-24/1352784.jpg" alt="JavaGuide"></p>
+<h3 id="2-advanced-java"><a href="#2-advanced-java" class="headerlink" title="2. advanced-java"></a>2. advanced-java</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/doocs/advanced-java" target="_blank" rel="noopener">https://github.com/doocs/advanced-java</a></li>
+<li><strong>star</strong>: 7.9k</li>
+<li><strong>介绍</strong>: 互联网 Java 工程师进阶知识完全扫盲</li>
+</ul>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/advanced-java.png" alt="advanced-java"></p>
+<p><strong>概览：</strong></p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-1/18005792.jpg" alt="advanced-java"></p>
+<h3 id="3-fescar"><a href="#3-fescar" class="headerlink" title="3.  fescar"></a>3.  fescar</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/alibaba/fescar" target="_blank" rel="noopener">https://github.com/alibaba/fescar</a></li>
+<li><strong>star</strong>: 4.6k</li>
+<li><strong>介绍</strong>: 具有 <strong>高性能</strong> 和 <strong>易用性</strong> 的 <strong>微服务架构</strong> 的 <strong>分布式事务</strong> 的解决方案。（特点：高性能且易于使用，旨在实现简单并快速的事务提交与回滚。）关于 fescar 的更详细介绍可以查看：<a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484888&idx=2&sn=ff9fe077c95959ec777c866a425bddbe&chksm=fd9853b9caefdaaf52a1b7caecc697938c2c1c5f6916527d1309ef01aba70c6546bdba6a9657&token=96044853&lang=zh_CN#rd" target="_blank" rel="noopener">Github 上日获 800多 star 的阿里微服务架构分布式事务解决方案 FESCAR开源啦</a></li>
+</ul>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/fescar.png" alt="fescar"></p>
+<h3 id="4-mall"><a href="#4-mall" class="headerlink" title="4. mall"></a>4. mall</h3><ul>
+<li><strong>Github地址</strong>： <a href="https://github.com/macrozheng/mall" target="_blank" rel="noopener">https://github.com/macrozheng/mall</a></li>
+<li><strong>star</strong>: 5.6 k</li>
+<li><strong>介绍</strong>: mall项目是一套电商系统，包括前台商城系统及后台管理系统，基于SpringBoot+MyBatis实现。 前台商城系统包含首页门户、商品推荐、商品搜索、商品展示、购物车、订单流程、会员中心、客户服务、帮助中心等模块。 后台管理系统包含商品管理、订单管理、会员管理、促销管理、运营管理、内容管理、统计报表、财务管理、权限管理、设置等模块。</li>
+</ul>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/mall.png" alt="mall"></p>
+<p><strong>概览：</strong></p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-1/99819963.jpg" alt="mall"></p>
+<h3 id="5-miaosha"><a href="#5-miaosha" class="headerlink" title="5. miaosha"></a>5. miaosha</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/qiurunze123/miaosha" target="_blank" rel="noopener">https://github.com/qiurunze123/miaosha</a></li>
+<li><strong>star</strong>: 4.4k</li>
+<li><strong>介绍</strong>: 高并发大流量如何进行秒杀架构，我对这部分知识做了一个系统的整理，写了一套系统。</li>
+</ul>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/miaosha.png" alt="miaosha"></p>
+<h3 id="6-flink"><a href="#6-flink" class="headerlink" title="6. flink"></a>6. flink</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/apache/flink" target="_blank" rel="noopener">https://github.com/apache/flink</a></li>
+<li><strong>star</strong>: 7.1 k</li>
+<li><strong>介绍</strong>: Apache Flink是一个开源流处理框架，具有强大的流和批处理功能。</li>
+</ul>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/flink.png" alt="flink"></p>
+<p>关于Flink 更加详细的介绍可以查看这篇文章：<a href="https://www.cnblogs.com/feiyudemeng/p/8998772.html" target="_blank" rel="noopener">https://www.cnblogs.com/feiyudemeng/p/8998772.html</a></p>
+<h3 id="7-cim"><a href="#7-cim" class="headerlink" title="7. cim"></a>7. cim</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/crossoverJie/cim" target="_blank" rel="noopener">https://github.com/crossoverJie/cim</a></li>
+<li><strong>star</strong>: 1.8 k</li>
+<li><strong>介绍</strong>: cim(cross IM) 适用于开发者的即时通讯系统。</li>
+</ul>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/cim.png" alt="cim"></p>
+<p><strong>系统架构：</strong></p>
+<p><img src="https://camo.githubusercontent.com/16f644ac7e2ab8cf8b8784408b1c70baf15634f4/68747470733a2f2f7773312e73696e61696d672e636e2f6c617267652f303036744e6252776c793166796c646769697a68756a3331356f3072346e306b2e6a7067" alt="cim系统架构"></p>
+<h3 id="8-symphony"><a href="#8-symphony" class="headerlink" title="8. symphony"></a>8. symphony</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/b3log/symphony" target="_blank" rel="noopener">https://github.com/b3log/symphony</a></li>
+<li><strong>star</strong>: 10k</li>
+<li><strong>介绍</strong>:  一款用 Java 实现的现代化社区（论坛/BBS/社交网络/博客）平台。</li>
+</ul>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/symphony.png" alt="symphony"></p>
+<h3 id="9-spring-boot"><a href="#9-spring-boot" class="headerlink" title="9.  spring-boot"></a>9.  spring-boot</h3><ul>
+<li><p><strong>Github地址</strong>： <a href="https://github.com/spring-projects/spring-boot" target="_blank" rel="noopener">https://github.com/spring-projects/spring-boot</a></p>
+</li>
+<li><p><strong>star:</strong> 32.6k</p>
+</li>
+<li><p><strong>介绍</strong>： 虽然Spring的组件代码是轻量级的，但它的配置却是重量级的（需要大量XML配置）,不过Spring Boot 让这一切成为了过去。 另外Spring Cloud也是基于Spring Boot构建的，我个人非常有必要学习一下。</p>
+<p> <strong>关于Spring Boot官方的介绍：</strong></p>
+<blockquote>
+<p>Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”…Most Spring Boot applications need very little Spring configuration.(Spring Boot可以轻松创建独立的生产级基于Spring的应用程序,只要通过 “just run”（可能是run ‘Application’或java -jar 或 tomcat 或 maven插件run 或 shell脚本）便可以运行项目。大部分Spring Boot项目只需要少量的配置即可)</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/spring-boot.png" alt="spring-boot"></p>
+<h3 id="10-arthas"><a href="#10-arthas" class="headerlink" title="10. arthas"></a>10. arthas</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/alibaba/arthas" target="_blank" rel="noopener">https://github.com/alibaba/arthas</a></li>
+<li><strong>star</strong>: 9.5k</li>
+<li><strong>介绍</strong>: Arthas 是Alibaba开源的Java诊断工具。</li>
+</ul>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/arthas.png" alt="arthas"></p>
+<p><strong>概览：</strong></p>
+<p>当你遇到以下类似问题而束手无策时，<code>Arthas</code>可以帮助你解决：</p>
+<ol start="0">
+<li>这个类从哪个 jar 包加载的？为什么会报各种类相关的 Exception？</li>
+<li>我改的代码为什么没有执行到？难道是我没 commit？分支搞错了？</li>
+<li>遇到问题无法在线上 debug，难道只能通过加日志再重新发布吗？</li>
+<li>线上遇到某个用户的数据处理有问题，但线上同样无法 debug，线下无法重现！</li>
+<li>是否有一个全局视角来查看系统的运行状况？</li>
+<li>有什么办法可以监控到JVM的实时运行状态？</li>
+</ol>
+<p><code>Arthas</code>支持JDK 6+，支持Linux/Mac/Winodws，采用命令行交互模式，同时提供丰富的 <code>Tab</code> 自动补全功能，进一步方便进行问题的定位和诊断。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/12/2019-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-2018-12" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/12/2018-12/">2018-12</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/12/2018-12/" class="archive-article-date">
+  	<time datetime="2020-04-12T07:52:20.303Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文数据统计于 1.1 号凌晨，由 SnailClimb 整理。</p>
+<h3 id="1-JavaGuide"><a href="#1-JavaGuide" class="headerlink" title="1. JavaGuide"></a>1. JavaGuide</h3><ul>
+<li><strong>Github地址</strong>： <a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener">https://github.com/Snailclimb/JavaGuide</a></li>
+<li><strong>star</strong>: 18.2k</li>
+<li><strong>介绍</strong>: 【Java学习+面试指南】 一份涵盖大部分Java程序员所需要掌握的核心知识。</li>
+</ul>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-1/96151465.jpg" alt="JavaGuide"></p>
+<p>概览：</p>
+<p>  <img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-24/1352784.jpg" alt="JavaGuide"></p>
+<h3 id="2-mall"><a href="#2-mall" class="headerlink" title="2. mall"></a>2. mall</h3><ul>
+<li><strong>Github地址</strong>： <a href="https://github.com/macrozheng/mall" target="_blank" rel="noopener">https://github.com/macrozheng/mall</a></li>
+<li><strong>star</strong>: 3.3k</li>
+<li><strong>介绍</strong>: mall项目是一套电商系统，包括前台商城系统及后台管理系统，基于SpringBoot+MyBatis实现。 前台商城系统包含首页门户、商品推荐、商品搜索、商品展示、购物车、订单流程、会员中心、客户服务、帮助中心等模块。 后台管理系统包含商品管理、订单管理、会员管理、促销管理、运营管理、内容管理、统计报表、财务管理、权限管理、设置等模块。</li>
+</ul>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-1/11382760.jpg" alt="mall"></p>
+<p>概览：</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-1/99819963.jpg" alt="mall"></p>
+<h3 id="3-advanced-java"><a href="#3-advanced-java" class="headerlink" title="3. advanced-java"></a>3. advanced-java</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/doocs/advanced-java" target="_blank" rel="noopener">https://github.com/doocs/advanced-java</a></li>
+<li><strong>star</strong>: 3.3k</li>
+<li><strong>介绍</strong>: 互联网 Java 工程师进阶知识完全扫盲</li>
+</ul>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-1/95209476.jpg" alt="advanced-java"></p>
+<p>概览：</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-1/18005792.jpg" alt="advanced-java"></p>
+<h3 id="4-matrix"><a href="#4-matrix" class="headerlink" title="4. matrix"></a>4. matrix</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/Tencent/matrix" target="_blank" rel="noopener">https://github.com/Tencent/matrix</a></li>
+<li><strong>star</strong>: 2.5k</li>
+<li><strong>介绍</strong>: Matrix 是一款微信研发并日常使用的 APM（Application Performance Manage），当前主要运行在 Android 平台上。 Matrix 的目标是建立统一的应用性能接入框架，通过各种性能监控方案，对性能监控项的异常数据进行采集和分析，输出相应的问题分析、定位与优化建议，从而帮助开发者开发出更高质量的应用。</li>
+</ul>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-1/8991895.jpg" alt="matrix"></p>
+<h3 id="5-miaosha"><a href="#5-miaosha" class="headerlink" title="5. miaosha"></a>5. miaosha</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/qiurunze123/miaosha" target="_blank" rel="noopener">https://github.com/qiurunze123/miaosha</a></li>
+<li><strong>star</strong>: 2.4k</li>
+<li><strong>介绍</strong>: 高并发大流量如何进行秒杀架构，我对这部分知识做了一个系统的整理，写了一套系统。</li>
+</ul>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-1/79382302.jpg" alt="miaosha"></p>
+<h3 id="6-arthas"><a href="#6-arthas" class="headerlink" title="6. arthas"></a>6. arthas</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/alibaba/arthas" target="_blank" rel="noopener">https://github.com/alibaba/arthas</a></li>
+<li><strong>star</strong>: 8.2k</li>
+<li><strong>介绍</strong>: Arthas 是Alibaba开源的Java诊断工具，深受开发者喜爱。</li>
+</ul>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-1/73394671.jpg" alt="arthas"></p>
+<h3 id="7-spring-boot"><a href="#7-spring-boot" class="headerlink" title="7 spring-boot"></a>7 spring-boot</h3><ul>
+<li><p><strong>Github地址</strong>： <a href="https://github.com/spring-projects/spring-boot" target="_blank" rel="noopener">https://github.com/spring-projects/spring-boot</a></p>
+</li>
+<li><p><strong>star:</strong> 32.6k</p>
+</li>
+<li><p><strong>介绍</strong>： 虽然Spring的组件代码是轻量级的，但它的配置却是重量级的（需要大量XML配置）,不过Spring Boot 让这一切成为了过去。 另外Spring Cloud也是基于Spring Boot构建的，我个人非常有必要学习一下。</p>
+<p> <strong>关于Spring Boot官方的介绍：</strong></p>
+<blockquote>
+<p>Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”…Most Spring Boot applications need very little Spring configuration.(Spring Boot可以轻松创建独立的生产级基于Spring的应用程序,只要通过 “just run”（可能是run ‘Application’或java -jar 或 tomcat 或 maven插件run 或 shell脚本）便可以运行项目。大部分Spring Boot项目只需要少量的配置即可)</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-1/29649807.jpg" alt="spring-boot"></p>
+<h3 id="8-tutorials"><a href="#8-tutorials" class="headerlink" title="8. tutorials"></a>8. tutorials</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/eugenp/tutorials" target="_blank" rel="noopener">https://github.com/eugenp/tutorials</a></li>
+<li><strong>star</strong>: 10k</li>
+<li><strong>介绍</strong>: 该项目是一系列小而专注的教程 - 每个教程都涵盖Java生态系统中单一且定义明确的开发领域。 当然，它们的重点是Spring Framework  -  Spring，Spring Boot和Spring Securiyt。 除了Spring之外，还有以下技术：核心Java，Jackson，HttpClient，Guava。</li>
+</ul>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-1/94425339.jpg" alt="tutorials"></p>
+<h3 id="9-qmq"><a href="#9-qmq" class="headerlink" title="9. qmq"></a>9. qmq</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/qunarcorp/qmq" target="_blank" rel="noopener">https://github.com/qunarcorp/qmq</a></li>
+<li><strong>star</strong>: 1.1k</li>
+<li><strong>介绍</strong>: QMQ是去哪儿网内部广泛使用的消息中间件，自2012年诞生以来在去哪儿网所有业务场景中广泛的应用，包括跟交易息息相关的订单场景； 也包括报价搜索等高吞吐量场景。</li>
+</ul>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-1/73394671.jpg" alt="arthas"></p>
+<h3 id="10-symphony"><a href="#10-symphony" class="headerlink" title="10. symphony"></a>10. symphony</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/b3log/symphony" target="_blank" rel="noopener">https://github.com/b3log/symphony</a></li>
+<li><strong>star</strong>: 9k</li>
+<li><strong>介绍</strong>:  一款用 Java 实现的现代化社区（论坛/BBS/社交网络/博客）平台。</li>
+</ul>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-1/11577890.jpg" alt="symphony"></p>
+<h3 id="11-incubator-dubbo"><a href="#11-incubator-dubbo" class="headerlink" title="11. incubator-dubbo"></a>11. incubator-dubbo</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/apache/incubator-dubbo" target="_blank" rel="noopener">https://github.com/apache/incubator-dubbo</a></li>
+<li><strong>star</strong>: 23.6k</li>
+<li><strong>介绍</strong>:  阿里开源的一个基于Java的高性能开源RPC框架。</li>
+</ul>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-1/53068060.jpg" alt="incubator-dubbo"></p>
+<h3 id="12-apollo"><a href="#12-apollo" class="headerlink" title="12. apollo"></a>12. apollo</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/ctripcorp/apollo" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo</a></li>
+<li><strong>star</strong>: 10k</li>
+<li><strong>介绍</strong>:  Apollo（阿波罗）是携程框架部门研发的分布式配置中心，能够集中化管理应用不同环境、不同集群的配置，配置修改后能够实时推送到应用端，并且具备规范的权限、流程治理等特性，适用于微服务配置管理场景。</li>
+</ul>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-1/89386993.jpg" alt="apollo"></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/12/2018-12/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-选择技术方向都要考虑哪些因素" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/12/%E9%80%89%E6%8B%A9%E6%8A%80%E6%9C%AF%E6%96%B9%E5%90%91%E9%83%BD%E8%A6%81%E8%80%83%E8%99%91%E5%93%AA%E4%BA%9B%E5%9B%A0%E7%B4%A0/">选择技术方向都要考虑哪些因素</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/12/%E9%80%89%E6%8B%A9%E6%8A%80%E6%9C%AF%E6%96%B9%E5%90%91%E9%83%BD%E8%A6%81%E8%80%83%E8%99%91%E5%93%AA%E4%BA%9B%E5%9B%A0%E7%B4%A0/" class="archive-article-date">
+  	<time datetime="2020-04-12T07:52:20.299Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文主要是作者读安晓辉老师的《程序员程序员职场进阶 32 讲 》中关于“选择技术方向都要考虑哪些因素”这部分做的一些笔记和自己的思考。在这里分享给各位！</p>
+<h3 id="选择一种技术可能会考虑到的决定因素"><a href="#选择一种技术可能会考虑到的决定因素" class="headerlink" title="选择一种技术可能会考虑到的决定因素"></a>选择一种技术可能会考虑到的决定因素</h3><ol>
+<li><p>就业机会</p>
+<p>选择一门就业面广的技术还是比较重要的。我的很多学PHP的同学现在都在培训班学Java，真的！！！</p>
+</li>
+<li><p>难易程度</p>
+<p> 我当时是在C/C++语言与Java中选择了Java，因为我感觉Java学起来确实要比C++简单一些。</p>
+</li>
+<li><p>个人兴趣</p>
+<p>兴趣是你能坚持下来的一个很重要的条件。</p>
+</li>
+<li><p>薪资水平</p>
+<p>薪资虽然不是人的唯一追求，但是一定是必备的追求。</p>
+</li>
+<li><p>发展前景</p>
+<p>你肯定不愿意看到这种情况发生：选择了一门技术，结果一年后它就没人用、没市场了。所以我们在选择时就要考虑这一点，做一些预判。</p>
+<p>选择技术时存在两种考虑：一种是选择稳定的、经典的技术；一种是卡位将来的市场缺口，选择将来可能需要用到的技术。</p>
+</li>
+<li><p>他人推荐</p>
+<p>我们在懵懵懂懂的时候，往往最容易听从别人的推荐，然后选择某种技术。</p>
+</li>
+<li><p>相近原则</p>
+<p>当我们已经掌握了一些技术，要学习新技术时，就可以根据一种新技术是否和自己已经掌握的技术比较接近来判断选择。相近的技术，学起来会更容易上手。</p>
+</li>
+<li><p>互补原则</p>
+<p>和相近性类似，互补性也常用在拓展我们技术能力的情景下。它指的是，有一些技术可以和你已经掌握的技术互相补充，组合在一起，形成更完整、更系统的技术图谱，给你带来更大的竞争力。关于相近原则与互补原则，我们也会在后面的文章里具体解读。</p>
+</li>
+<li><p>团队技术图谱</p>
+<p>我觉得这个可能就是团队开发过程中的需要。比如在做一个项目的时候，这个项目需要你去学习一下某个你没有接触过的新技术。</p>
+</li>
+</ol>
+<h3 id="入行时如何选择技术方向"><a href="#入行时如何选择技术方向" class="headerlink" title="入行时如何选择技术方向"></a>入行时如何选择技术方向</h3><p> 为了明确自己的求职目标，可以问问自己下面的问题：</p>
+<ul>
+<li>我想在哪个城市工作？</li>
+<li>我想在哪些行业、领域发展？</li>
+<li>我想去什么样的公司？</li>
+<li>我想做什么样的产品？   </li>
+</ul>
+<p>另外你要知道的是热门技术会有更多机会，相应竞争压力也会更大，并不能保证你找到合适的工作。<br>冷门技术，机会相对较少，而且机会相对确定 。</p>
+<h3 id="构建技能树时如何选择技术方向"><a href="#构建技能树时如何选择技术方向" class="headerlink" title="构建技能树时如何选择技术方向"></a>构建技能树时如何选择技术方向</h3><p>当我们过了专项能力提升的初级阶段之后，就应该开始构建自己的技能体系了。在为搭建技能树而选择技术时，通常考虑下面两个原则：</p>
+<ul>
+<li>相近原则</li>
+<li>互补原则</li>
+</ul>
+<p>“学习技术时一定要学对自己以后发展有用的技术”是我经常对自己强调的，另外我觉得很误导人同时也很错误的一个思想是：“只要是技术学了就会有用的”，这句话在我刚学编程时经常听到有人对我说。希望大家不要被误导，很多技术过时了就是过时了，没有必要再去花时间学。</p>
+<p>我觉得相近原则和互补原则互补原则就是你主精和自己技术方向相同的的东西或者对自己技术领域有提升的东西。比如我目前暂时选择了Java为我的主要发展语言，所以我就要求自己大部分时间还是搞和Java相关的东西比如：Spring、SpingBoot、Dubbo、Mybatis等等。但是千万不要被语言所束缚，在业余时间我学的比较多的就是Python以及JS、C/C++/C#也会偶尔接触。因为我经常会接触前端另外我自己偶尔有爬虫需求或者需要用Python的一些第三库解决一些问题，所以我业余学Pyton以及JS就比较多一点，我觉得这两门技术也是对我现有技术的一个补充了。</p>
+<h3 id="技术转型时的方向选择"><a href="#技术转型时的方向选择" class="headerlink" title="技术转型时的方向选择"></a>技术转型时的方向选择</h3><p>我觉得对于技术转型主要有一下几点建议</p>
+<ul>
+<li>与自己当前技术栈跨度不太大的领域，比如你做安卓的话转型可以选择做Java后端。</li>
+<li>真正适合自己去做的，并不是一味看着这个领域火了（比如人工智能），然后自己就不考虑实际的去转型到这个领域里去。</li>
+<li>技术转型方向尽量对自己以后的发展需要有帮助。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/12/%E9%80%89%E6%8B%A9%E6%8A%80%E6%9C%AF%E6%96%B9%E5%90%91%E9%83%BD%E8%A6%81%E8%80%83%E8%99%91%E5%93%AA%E4%BA%9B%E5%9B%A0%E7%B4%A0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-个人阅读书籍清单" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/12/%E4%B8%AA%E4%BA%BA%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%B8%85%E5%8D%95/">个人阅读书籍清单</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/12/%E4%B8%AA%E4%BA%BA%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%B8%85%E5%8D%95/" class="archive-article-date">
+  	<time datetime="2020-04-12T07:52:20.296Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>下面是个人阅读书籍的部分清单，我比较建议阅读的书籍前都加上了:thumbsup: 表情。</p>
+<blockquote>
+<h3 id="核心基础知识"><a href="#核心基础知识" class="headerlink" title="核心基础知识"></a>核心基础知识</h3></blockquote>
+<ul>
+<li><p>:thumbsup: <a href="https://book.douban.com/subject/25863515/" target="_blank" rel="noopener">《图解HTTP》</a></p>
+<p>讲漫画一样的讲HTTP，很有意思，不会觉得枯燥，大概也涵盖也HTTP常见的知识点。因为篇幅问题，内容可能不太全面。不过，如果不是专门做网络方向研究的小伙伴想研究HTTP相关知识的话，读这本书的话应该来说就差不多了。</p>
+</li>
+</ul>
+<blockquote>
+<h3 id="Java相关"><a href="#Java相关" class="headerlink" title="Java相关"></a>Java相关</h3></blockquote>
+<ul>
+<li><p>:thumbsup: <a href="https://book.douban.com/subject/2000732/" target="_blank" rel="noopener">《Head First Java.第二版》</a></p>
+<p>可以说是我的Java启蒙书籍了，特别适合新手读当然也适合我们用来温故Java知识点。</p>
+</li>
+<li><p><a href="https://book.douban.com/subject/26555197/" target="_blank" rel="noopener">《Java多线程编程核心技术》</a></p>
+<p>Java多线程入门级书籍还不错，但是说实话，质量不是很高，很快就可以阅读完。</p>
+</li>
+<li><p><a href="https://book.douban.com/subject/26259017/" target="_blank" rel="noopener">《JAVA网络编程 第4版》</a></p>
+<p>可以系统的学习一下网络的一些概念以及网络编程在Java中的使用。</p>
+</li>
+<li><p>:thumbsup: <a href="https://book.douban.com/subject/25762168/" target="_blank" rel="noopener">《Java核心技术卷1+卷2》</a></p>
+<p>很棒的两本书，建议有点Java基础之后再读，介绍的还是比较深入的，非常推荐。这两本书我一般也会用来巩固知识点，是两本适合放在自己身边的好书。</p>
+</li>
+<li><p>:thumbsup: <a href="https://book.douban.com/subject/2130190/" target="_blank" rel="noopener">《Java编程思想(第4版)》</a></p>
+<p>这本书要常读，初学者可以快速概览，中等程序员可以深入看看java，老鸟还可以用之回顾java的体系。这本书之所以厉害，因为它在无形中整合了设计模式，这本书之所以难读，也恰恰在于他对设计模式的整合是无形的。</p>
+</li>
+<li><p>:thumbsup: <a href="https://book.douban.com/subject/26591326/" target="_blank" rel="noopener">《Java并发编程的艺术》</a></p>
+<p>这本书不是很适合作为Java并发入门书籍，需要具备一定的JVM基础。我感觉有些东西讲的还是挺深入的，推荐阅读。</p>
+</li>
+<li><p>:thumbsup: <a href="https://book.douban.com/subject/26663605/" target="_blank" rel="noopener">《实战Java高并发程序设计》</a></p>
+<p>  豆瓣评分 8.3 ，书的质量没的说，推荐大家好好看一下。</p>
+</li>
+<li><p><a href="https://book.douban.com/subject/24841235/" target="_blank" rel="noopener">《Java程序员修炼之道》</a></p>
+<p>很杂，我只看了前面几章，不太推荐阅读。</p>
+</li>
+<li><p>:thumbsup: <a href="https://book.douban.com/subject/24722612/" target="_blank" rel="noopener">《深入理解Java虚拟机（第2版）周志明》</a></p>
+<p>神书！神书！神书！建议多刷几遍，书中的所有知识点可以通过JAVA运行时区域和JAVA的内存模型与线程两个大模块罗列完全。 </p>
+</li>
+</ul>
+<blockquote>
+<h3 id="JavaWeb相关"><a href="#JavaWeb相关" class="headerlink" title="JavaWeb相关"></a>JavaWeb相关</h3></blockquote>
+<ul>
+<li><p>:thumbsup: <a href="https://book.douban.com/subject/25953851/" target="_blank" rel="noopener">《深入分析Java Web技术内幕》</a></p>
+<p>感觉还行，涉及的东西也蛮多，推荐阅读。</p>
+</li>
+<li><p>:thumbsup: <a href="https://book.douban.com/subject/26767354/" target="_blank" rel="noopener">《Spring实战（第4版）》</a></p>
+<p>不建议当做入门书籍读，入门的话可以找点国人的书或者视频看。这本定位就相当于是关于Spring的新华字典，只有一些基本概念的介绍和示例，涵盖了Spring的各个方面，但都不够深入。就像作者在最后一页写的那样：“学习Spring，这才刚刚开始”。</p>
+</li>
+<li><p><a href="https://book.douban.com/subject/4189495/" target="_blank" rel="noopener">《Java Web整合开发王者归来》</a></p>
+<p>当时刚开始学的时候就是开的这本书，基本上是完完整整的看完了。不过，我不是很推荐大家看。这本书比较老了，里面很多东西都已经算是过时了。不过，这本书的一个很大优点是：基础知识点概括全面。</p>
+</li>
+<li><p>:thumbsup: <a href="https://book.douban.com/subject/26612779/" target="_blank" rel="noopener">《Redis实战》</a></p>
+<p> 如果你想了解Redis的一些概念性知识的话，这本书真的非常不错。</p>
+</li>
+</ul>
+<blockquote>
+<h3 id="架构相关"><a href="#架构相关" class="headerlink" title="架构相关"></a>架构相关</h3></blockquote>
+<ul>
+<li><p>:thumbsup: <a href="https://book.douban.com/subject/25723064/" target="_blank" rel="noopener">《大型网站技术架构：核心原理与案例分析+李智慧》</a></p>
+<p>这本书我读过，基本不需要你有什么基础啊~读起来特别轻松，但是却可以学到很多东西，非常推荐了。另外我写过这本书的思维导图，关注我的微信公众号：“Java面试通关手册”回复“大型网站技术架构”即可领取思维导图。</p>
+</li>
+<li><p><a href="https://book.douban.com/subject/27081188/" target="_blank" rel="noopener">《架构解密从分布式到微服务（Leaderus著）》</a></p>
+<p>很一般的书籍，我就是当做课后图书来阅读的。</p>
+</li>
+</ul>
+<blockquote>
+<h3 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h3></blockquote>
+<ul>
+<li><p>:thumbsup: <a href="https://book.douban.com/subject/4262627/" target="_blank" rel="noopener">《重构_改善既有代码的设计》</a></p>
+<p> 豆瓣 9.1 分，重构书籍的开山鼻祖。</p>
+<blockquote>
+<h3 id="linux操作系统相关"><a href="#linux操作系统相关" class="headerlink" title="linux操作系统相关"></a>linux操作系统相关</h3></blockquote>
+</li>
+<li><p>:thumbsup:<a href="https://book.douban.com/subject/25900403/" target="_blank" rel="noopener">&lt;&lt;unix环境编程&gt;&gt;</a> :thumbsup: <a href="https://book.douban.com/subject/1500149/" target="_blank" rel="noopener">&lt;&lt;unix网络编程&gt;&gt;</a></p>
+<p>对于理解linux操作系统原理非常有用，同时可以打好个人的基本功力，面试中很多公司也会问到linux知识。</p>
+<blockquote>
+<h3 id="课外书籍"><a href="#课外书籍" class="headerlink" title="课外书籍"></a>课外书籍</h3></blockquote>
+</li>
+</ul>
+<p>《技术奇点》 :thumbsup:《追风筝的人》 :thumbsup:《穆斯林的葬礼》  :thumbsup:《三体》 《人工智能——李开复》<br>:thumbsup:《活着——余华》  </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/12/%E4%B8%AA%E4%BA%BA%E9%98%85%E8%AF%BB%E4%B9%A6%E7%B1%8D%E6%B8%85%E5%8D%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-2018 秋招" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/12/2018%20%E7%A7%8B%E6%8B%9B/">2018 秋招</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/12/2018%20%E7%A7%8B%E6%8B%9B/" class="archive-article-date">
+  	<time datetime="2020-04-12T07:52:20.293Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="秋招历程流水账总结"><a href="#秋招历程流水账总结" class="headerlink" title="秋招历程流水账总结"></a>秋招历程流水账总结</h1><p>笔主大四准毕业生，在秋招末流比较幸运地进入了一家自己非常喜欢一家公司——ThoughtWorks.</p>
+<p><img src="https://images.gitbook.cn/1433af10-d5f7-11e8-841a-4f0b0cc7be7b" alt="今天去签约在门外拍的照片"></p>
+<p>从9-6号投递出去第一份简历，到10-18号左右拿到第一份 offer ，中间差不多有 1 个半月的时间了。可能自己比较随缘，而且自己所在的大学所处的位置并不是互联网比较发达的城市的原因。所以，很少会有公司愿意跑到我们学校那边来宣讲，来的公司也大多是一些自己没听过或者不太喜欢的公司。所以，在前期，我仅仅能够通过网上投递简历的方式来找工作。</p>
+<p>零零总总算了一下，自己在网上投了大概有 10 份左右的简历，都是些自己还算喜欢的公司。简单说一下自己投递的一些公司：网上投递的公司有：ThoughtWorks、网易、小米、携程、爱奇艺、知乎、小红书、搜狐、欢聚时代、京东；直接邮箱投递的有：烽火、中电数据、蚂蚁金服花呗部门、今日头条；线下宣讲会投递的有：玄武科技。</p>
+<p>网上投递的大部分简历都是在做完笔试之后就没有了下文了，即使有几场笔试自我感觉做的很不错的情况下，还是没有收到后续的面试邀请。还有些邮箱投递的简历，后面也都没了回应。所以，我总共也只参加了3个公司的面试，ThoughtWorks、玄武科技和中电数据，都算是拿到了 offer。拿到 ThoughtWorks 的 offer之后，后面的一些笔试和少部分面试都拒了。决定去 ThoughtWorks 了，春招的大部队会没有我的存在。</p>
+<p>我个人对 ThoughtWorks 最有好感，ThoughtWorks 也是我自己之前很想去的一家公司。不光是因为我投递简历的时候可以不用重新填一遍表格可以直接发送我已经编辑好的PDF格式简历的友好，这个公司的文化也让我很喜欢。每次投递一家公司几乎都要重新填写一遍简历真的很让人头疼，即使是用牛客网的简历助手也还是有很多东西需要自己重新填写。</p>
+<p>说句实话，自己在拿到第一份 offer 之前心里还是比较空的，虽然说对自己还是比较自信。包括自己当时来到武汉的原因，也是因为自己没有 offer ，就感觉心里空空的，我相信很多人在这个时候与我也有一样的感觉。然后，我就想到武汉参加一下别的学校宣讲会。现在看来，这个决定也是不必要的，因为我最后去的公司 ThoughtWorks，虽然就在我租的房子的附近，但之前投递的时候，选择的还是远程面试。来到武汉，简单的修整了一下之后，我就去参加了玄武科技在武理工的宣讲会，顺便做了笔试，然后接着就是技术面、HR面、高管面。总体来说，玄武科技的 HR 真的很热情，为他们点个赞，虽然自己最后没能去玄武科技，然后就是技术面非常简单，HR面和高管面也都还好，不会有压抑的感觉，总体聊得很愉快。需要注意的是 玄武科技和很多公司一样都有笔试中有逻辑题，我之前没有做过类似的题，所以当时第一次做有点懵逼。高管面的时候，高管还专门在我做的逻辑题上聊了一会，让我重新做了一些做错的题，并且给他讲一些题的思路，可以看出高层对于应聘者的这项能力还是比较看重的。</p>
+<p>中电数据的技术面试是电话进行的，花了1个多小时一点，个人感觉问的还是比较深的，感觉自己总体回答的还是比较不错的。</p>
+<p>这里我着重说一下 ThoughtWorks，也算是给想去 ThoughtWorks 的同学一点小小的提示。我是 9.11 号在官网：<a href="https://join.thoughtworks.cn/" target="_blank" rel="noopener">https://join.thoughtworks.cn/</a> 投递的简历，9.20 日邮件通知官网下载作业，作业总体来说不难，9.21 号花了半天多的时间做完，然后就直接在9.21 号下午提交了。然后等了挺长时间的，可能是因为 ThoughtWorks 在管理方面比较扁平化的原因，所以总体来说效率可能不算高。因为我选的是远程面试，所以直接下载好 zoom 之后，等HR打电话过来告诉你一个房间号，你就可以直接进去面试就好，一般技术面试有几个人看着你。技术面试的内容，首先就是在面试官让你在你之前做的作业的基础上新增加一个或者两个功能（20分钟）。所以，你在技术面试之前一定要保证你的程序的扩展性是不错的，另外就是你在技术面试之前最好能重构一下自己写的程序。重构本身就是你自己对你写的程序的理解加强很好的一种方式，另外重构也能让你发现你的程序的一些小问题。然后，这一步完成之后，面试官可能会问你一些基础问题，比较简单，所以我觉得 ThoughtWorks 可能更看重你的代码质量。ThoughtWorks 的 HR 面和其他公司的唯一不同可能在于，他会让你用英语介绍一下自己或者说自己的技术栈啊这些。</p>
+<p><img src="https://images.gitbook.cn/83f765e0-d5f6-11e8-9c1a-919e09988420" alt="思特沃克可爱的招聘官网"></p>
+<h1 id="关于面试一些重要的问题总结"><a href="#关于面试一些重要的问题总结" class="headerlink" title="关于面试一些重要的问题总结"></a>关于面试一些重要的问题总结</h1><p>另外，再给大家总结一些我个人想到一些关于面试非常重要的一些问题。</p>
+<h3 id="面试前"><a href="#面试前" class="headerlink" title="面试前"></a>面试前</h3><p><strong>如何准备</strong></p>
+<p>运筹帷幄之后，决胜千里之外！不打毫无准备的仗，我觉得大家可以先从下面几个方面来准备面试：</p>
+<ol>
+<li>自我介绍。（你可千万这样介绍：“我叫某某，性别，来自哪里，学校是那个，自己爱干什么”，记住：多说点简历上没有的，多说点自己哪里比别人强！）</li>
+<li>自己面试中可能涉及哪些知识点、那些知识点是重点。</li>
+<li>面试中哪些问题会被经常问到、面试中自己改如何回答。(强烈不推荐背题，第一：通过背这种方式你能记住多少？能记住多久？第二：背题的方式的学习很难坚持下去！)</li>
+<li>自己的简历该如何写。</li>
+</ol>
+<p>另外，如果你想去类似阿里巴巴、腾讯这种比较大的互联网公司的话，一定要尽早做打算。像阿里巴巴在7月份左右就开始了提前批招聘，到了9月份差不多就已经招聘完毕了。所以，秋招没有参加到阿里的面试还是很遗憾的，毕竟面试即使失败了，也能从阿里难度Max的面试中学到很多东西。</p>
+<p><strong>关于着装</strong></p>
+<p>穿西装、打领带、小皮鞋？NO！NO！NO！这是互联网公司面试又不是去走红毯，所以你只需要穿的简单大方就好，不需要太正式。</p>
+<p><strong>关于自我介绍</strong></p>
+<p>如果你简历上写的基本信息就不要说了，比如性别、年龄、学校。另外，你也不要一上来就说自己爱好什么这方面内容。因为，面试官根本不关心这些东西。你直接挑和你岗位相关的重要经历和自己最突出的特点讲就好了。</p>
+<p><strong>提前准备</strong></p>
+<p>面试之前可以在网上找找有没有你要面试的公司的面经。在我面试 ThoughtWorks 的前几天我就在网上找了一些关于 ThoughtWorks 的技术面的一些文章。然后知道了 ThoughtWorks 的技术面会让我们在之前做的作业的基础上增加一个或两个功能，所以我提前一天就把我之前做的程序重新重构了一下。然后在技术面的时候，简单的改了几行代码之后写个测试就完事了。如果没有提前准备，我觉得 20 分钟我很大几率会完不成这项任务。</p>
+<h3 id="面试中"><a href="#面试中" class="headerlink" title="面试中"></a>面试中</h3><p>面试的时候一定要自信，千万不要怕自己哪里会答不出来，或者说某个问题自己忘记怎么回答了。面试过程中，很多问题可能是你之前没有碰到过的，这个时候你就要通过自己构建的知识体系来思考这些问题。如果某些问题你回答不上来，你也可以让面试官给你简单的提示一下。总之，你要自信，你自信的前提是自己要做好充分的准备。下面给大家总结一些面试非常常见的问题：</p>
+<ul>
+<li>SpringMVC 工作原理</li>
+<li>说一下自己对 IOC 、AOP 的理解</li>
+<li>Spring 中用到了那些设计模式，讲一下自己对于这些设计模式的理解</li>
+<li>Spring Bean 的作用域和生命周期了解吗</li>
+<li>Spring 事务中的隔离级别</li>
+<li>Spring 事务中的事务传播行为</li>
+<li>手写一个 LRU 算法</li>
+<li>知道那些排序算法，简单介绍一下快排的原理，能不能手写一下快排</li>
+<li>String 为什么是不可变的？String为啥要设计为不可变的？</li>
+<li>Arraylist 与 LinkedList 异同</li>
+<li>HashMap的底层实现</li>
+<li>HashMap 的长度为什么是2的幂次方</li>
+<li>ConcurrentHashMap 和 Hashtable 的区别</li>
+<li>ConcurrentHashMap线程安全的具体实现方式/底层具体实现</li>
+<li>如果你的简历写了redis 、dubbo、zookeeper、docker的话，面试官还会问一下这些东西。比如redis可能会问你：为什么要用 redis、为什么要用 redis 而不用 map/guava 做缓存、redis 常见数据结构以及使用场景分析、 redis 设置过期时间、redis 内存淘汰机制、 redis 持久化机制、 缓存雪崩和缓存穿透问题、如何解决 Redis 的并发竞争 Key 问题、如何保证缓存与数据库双写时的数据一致性。</li>
+<li>一些简单的 Linux 命令。</li>
+<li>为什么要用 消息队列</li>
+<li>关于 Java多线程，在面试的时候，问的比较多的就是①悲观锁和乐观锁②synchronized 和 ReenTrantLock 区别以及 volatile 和 synchronized 的区别，③可重入锁与非可重入锁的区别、④多线程是解决什么问题的、⑤线程池解决什么问题，为什么要用线程池 ⑥Synchronized 关键字使用、底层原理、JDK1.6 之后的底层优化以及 ReenTrantLock 对比；⑦线程池使用时的注意事项、⑧AQS 原理以及 AQS 同步组件：Semaphore、CountDownLatCh、 CyclicBarrier、ReadWriteLock、⑨ReentranLock源码，设计原理，整体过程 等等问题。</li>
+<li>关于 Java 虚拟机问的比较多的是：①Java内存区域、②虚拟机垃圾算法、③虚拟机垃圾收集器、④JVM内存管理、⑤JVM调优这些问题。 </li>
+</ul>
+<h3 id="面试后"><a href="#面试后" class="headerlink" title="面试后"></a>面试后</h3><p>如果失败，不要灰心；如果通过，切勿狂喜。面试和工作实际上是两回事，可能很多面试未通过的人，工作能力比你强的多，反之亦然。我个人觉得面试也像是一场全新的征程，失败和胜利都是平常之事。所以，劝各位不要因为面试失败而灰心、丧失斗志。也不要因为面试通过而沾沾自喜，等待你的将是更美好的未来，继续加油！</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/12/2018%20%E7%A7%8B%E6%8B%9B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-2018 summary" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/12/2018%20summary/">2018 summary</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/12/2018%20summary/" class="archive-article-date">
+  	<time datetime="2020-04-12T07:52:20.289Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="【2018总结】即使平凡，也要热爱自己的生活"><a href="#【2018总结】即使平凡，也要热爱自己的生活" class="headerlink" title="【2018总结】即使平凡，也要热爱自己的生活"></a>【2018总结】即使平凡，也要热爱自己的生活</h1><p>2018 年于我而讲，虽然平凡，但是自己就是在这平凡的一年也收货了很多东西。不光是自己学到的知识，我觉得 2018 年最大的幸运有三:其一是自己拥有了一份爱情，一份甜蜜的初恋，我真的很幸运遇到我现在的女朋友，愿以后的日子都能有她；其一是在 2018 年，我拥有了一份自己还算满意的 offer，马上就要毕业了，自己也要正式进去社会了；其一是自己在 2018 年的实现了自己的经济独立，这是一件让我很高兴的事情，我觉得大在学生时代实现经济独立还算是一件很不错的事情，花了这么多年父母的辛苦钱，自己也终于能替他们分担一点了。2018 年，感恩父母，感恩老师，感恩朋友，感恩遇到的每个善良的人，同时感恩2018年那个还算努力的自己。2019 继续加油！</p>
+<h2 id="一份甜蜜的初恋-分手"><a href="#一份甜蜜的初恋-分手" class="headerlink" title="一份甜蜜的初恋(分手)"></a>一份甜蜜的初恋(分手)</h2><p>先说说爱情。我和我的女朋友在一起已经半年多了，准确的来说截止到今天也就是 2018-12-30 号已经 190 天了。</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-30/54482393.jpg" alt="我和傻欢"></p>
+<p>我俩是异地，我在荆州，她在三亚。相见一面不管是时间上还是经济上对于还是学生的我们来说都甚是不易。见过很多人议论异地恋的种种不好，但是，于我而言，一份好的感情是值得被等待的。“待每一天如初恋，互相尊重彼此生活，共同努力，等老了就退隐山林养老……”，这应该是我和她之间最好的承诺了。</p>
+<h2 id="还算不错的学习收获"><a href="#还算不错的学习收获" class="headerlink" title="还算不错的学习收获"></a>还算不错的学习收获</h2><p>再来说说学习。这一年还算是让人满意，虽然我也不知道这一年自己到底学到了什么。如果你要问我这一年在学习上做的最满意的事情是什么，我还真不好回答，下面就从下面几个维度来简单谈一谈。</p>
+<h3 id="开源"><a href="#开源" class="headerlink" title="开源"></a>开源</h3><p>这一年自己在Github上还是挺活跃的，提交了很多的代码和文档，同时也收获了很多的star、follower、pr、issue以及fork。</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-30/41250517.jpg" alt="我的Github概览"></p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-30/33580466.jpg" alt="我的Github贡献概览"></p>
+<p>开源的Java学习/面试指南—JavaGuide 某种程度上让我挺满意的，3月份开源  ，到现在的18k+ star 也算是可以用厚积薄发来形容了。但是，JavaGuide 也有很多让我不满意的，在2019年以及以后我也会继续完善。JavaGuide 地址：<a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener">https://github.com/Snailclimb/JavaGuide</a></p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-24/1352784.jpg" alt="JavaGuide 概览"></p>
+<h3 id="技术博客"><a href="#技术博客" class="headerlink" title="技术博客"></a>技术博客</h3><p>我更新的博客主要都是关于Java方面的，也更新了几篇Python的，有一篇Python的文章竟然在我的CSDN上面阅读霸榜。<br><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-30/19527688.jpg" alt="霸榜的 Python 文章"></p>
+<p>在这一年，我更新了挺多技术文章，这里就不一一列举了，我贴一下自己觉得不错的文章吧！</p>
+<h4 id="最常见面试题系列"><a href="#最常见面试题系列" class="headerlink" title="最常见面试题系列"></a>最常见面试题系列</h4><ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484252&idx=1&sn=cb160d67fc1c0a95babc464b703df5e7&chksm=fd98553dcaefdc2b18f934957dd950aeaf04e90136099fa2817fffbd1e1df452b581e1caee17&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">最最最常见的Java面试题总结——第一周</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484282&idx=1&sn=7f986dc3263b6ca0f9e182145fdd40a1&chksm=fd98551bcaefdc0d5aff9577692881dc79765a339ce97e55958e23e1956aa7092dfac44b68f1&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">最最最常见的Java面试题总结——第二周</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484308&idx=1&sn=e3607919aed604be629617f867f46844&chksm=fd9855f5caefdce3f1ee72cb33b9b3bf9899fa2b64bbb92f1e820c0ef3985245b1f7dfc05358&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">这几道Java集合框架面试题在面试中几乎必问</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484337&idx=1&sn=d5e953d4b2da7ed37a7f843bfb437ed8&chksm=fd9855d0caefdcc65cb2e5cc0c69d27f785fc41477bcf55fff2cdff3268b0b078eb1a5107726&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">如果不会这几道多线程基础题，请自觉面壁！</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484355&idx=1&sn=6da29974b6dd1a4aa0d032f44d5fa8de&chksm=fd9855a2caefdcb4c370814baafd4baca27dfccaf609c9edf82370637ba4856176ab143a375e&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">值得立马保存的 synchronized 关键字总结</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484400&idx=1&sn=1b6155015fedfc9f78fabecc18da7b18&chksm=fd985591caefdc870cb018d27f92e1908b6c6e22816a77ead03c4e44b2f53caec00871172b1f&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">【面试必备】源码角度一步一步分析 ArrayList 扩容机制</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484539&idx=1&sn=3500cdcd5188bdc253fb19a1bfa805e6&chksm=fd98521acaefdb0c5167247a1fa903a1a53bb4e050b558da574f894f9feda5378ec9d0fa1ac7&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">Synchronized 关键字使用、底层原理、JDK1.6 之后的底层优化以及 和ReenTrantLock 的对比</a></li>
+</ul>
+<h4 id="Github"><a href="#Github" class="headerlink" title="Github"></a>Github</h4><ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484188&idx=1&sn=40037de4844f62316465bbe4e910c69c&chksm=fd98557dcaefdc6bedcaeb275aae7c340d46cf6ab0dc96e49c51982f9c53d6a44de283efc9a8&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">近几个月Github上最热门的Java项目一览</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484333&idx=1&sn=8c97b029692877a537d55175a8c82977&chksm=fd9855cccaefdcdaffe0558ba5e8dca415495935b0ad1181e6b148b08e1c86ce5d841e9df901&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">推荐10个Java方向最热门的开源项目（8月）</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484644&idx=1&sn=5016caaf97e498b76de2189e3f55e9dc&chksm=fd985285caefdb93f4e3c7545d30edac6ad31b99f1fcc4503350101f0b20bba9a9705ed7d124&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">Github上 Star 数相加超过 7w+ 的三个面试相关的仓库推荐</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484730&idx=1&sn=86e35dfea1478221b6d14a263e88ac89&chksm=fd98535bcaefda4d4f03bf0cd2e0a8fd9f44b1a2b118457a0c8b3de2ff8a1f4c4b7cd083f40e&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">11月 Github Trending 榜最热门的 10 个 Java 项目</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484817&idx=1&sn=12f0c254a240c40c2ccab8314653216b&chksm=fd9853f0caefdae6d191e6bf085d44ab9c73f165e3323aa0362d830e420ccbfad93aa5901021&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">盘点一下Github上开源的Java面试/学习相关的仓库，看完弄懂薪资至少增加10k</a></li>
+</ul>
+<h4 id="备战面试系列"><a href="#备战面试系列" class="headerlink" title="备战面试系列"></a>备战面试系列</h4><ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484529&idx=1&sn=9c7a3d6ad124affcadc19b0ff49bf68a&chksm=fd985210caefdb0615a9643fa698cb6267e89562730423841d942cde17ec9c1280dfc3a2b933&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">可能是一份最适合你的后端面试指南（部分内容前端同样适用）</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484573&idx=1&sn=8c5965d4a3710d405d8e8cc10c7b0ce5&chksm=fd9852fccaefdbea8dfe0bc40188b7579f1cddb1e8905dc981669a3f21d2a04cadceafa9023f&token=1990180468&lang=zh_CN#rd" target="_blank" rel="noopener">【备战春招/秋招系列1】程序员的简历就该这样写</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484578&idx=1&sn=eea72d80a2325257f00aaed21d5b226f&chksm=fd9852c3caefdbd52dd8a537cc723ed1509314401b3a669a253ef5bc0360b6fddef48b9c2e94&token=1990180468&lang=zh_CN#rd" target="_blank" rel="noopener">【备战春招/秋招系列2】初出茅庐的程序员该如何准备面试？</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484592&idx=1&sn=6d9731ce7401be49e97c1af6ed384ecc&chksm=fd9852d1caefdbc720a361ae65a8ad9d53cfb4800b15a7c68cbdc630b313215c6c52e0934ec2&token=1990180468&lang=zh_CN#rd" target="_blank" rel="noopener">【备战春招/秋招系列3】Java程序员必备书单</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484601&idx=1&sn=4907b7fef0856791c565d49d788ba8cc&chksm=fd9852d8caefdbce88e51c0a10a4ec77c97f382fd2af4a840ea47cffc828bfd0f993f50d5f0d&token=1895808268&lang=zh_CN#rd" target="_blank" rel="noopener">【备战春招/秋招系列】美团面经总结基础篇 （附详解答案）</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484625&idx=1&sn=9c4fa1f7d4291a5fbd7daa44bac2b012&chksm=fd9852b0caefdba6edcf9a827aa4a17ddc97bf6ad2e5ee6f7e1aa1b443b54444d05d2b76732b&token=1895808268&lang=zh_CN#rd" target="_blank" rel="noopener">【备战春招/秋招系列】美团面经总结进阶篇 （附详解答案）</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484668&idx=1&sn=9d4631588393075d9c453f307410f0cd&chksm=fd98529dcaefdb8b5497d1f161834af6917c33ea3d305eb41872e522707fa94218769ca60101&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">【备战春招/秋招系列】美团Java面经总结终结篇 （附详解答案）</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484739&idx=1&sn=25cf5b36090f69299150663bdccfeec2&chksm=fd985322caefda34df0734efa607114704d1937f083aee2230b797d1f5aa04f7d13bf2f81dc5&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">GitHub 上四万 Star 大佬的求职回忆</a>(非原创)</li>
+</ul>
+<h4 id="并发编程面试必备"><a href="#并发编程面试必备" class="headerlink" title="并发编程面试必备"></a>并发编程面试必备</h4><ul>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484539&idx=1&sn=3500cdcd5188bdc253fb19a1bfa805e6&chksm=fd98521acaefdb0c5167247a1fa903a1a53bb4e050b558da574f894f9feda5378ec9d0fa1ac7&scene=21#wechat_redirect" target="_blank" rel="noopener">并发编程面试必备：synchronized 关键字使用、底层原理、JDK1.6 之后的底层优化以及 和ReenTrantLock 的对比</a></li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484553&idx=1&sn=aca9fa19f723206eff7e33a10973a887&chksm=fd9852e8caefdbfe7180c34f83bbb422a1a0bef1ed44b1e84f56924244ea3fd2da720f25c6dd#rd" target="_blank" rel="noopener">并发编程面试必备：JUC 中的 Atomic 原子类总结</a></li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484559&idx=1&sn=28dae85c38c4c500201c39234d25d731&chksm=fd9852eecaefdbf80cc54a25204e7c7d81170ce659acf92b7fa4151799ca3d0d7df2225d4ff1#rd" target="_blank" rel="noopener">并发编程面试必备：AQS 原理以及 AQS 同步组件总结</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484564&idx=1&sn=d8467fdc5c1b3883e9b99485f7b0fb9a&chksm=fd9852f5caefdbe364d1c438865cff84acd8f40c1c9e2f9f5c8fef673b30f905b4c5f5255368&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">并发编程面试必备：BATJ都爱问的多线程面试题</a></li>
+</ul>
+<h4 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h4><ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484303&idx=1&sn=af0fd436cef755463f59ee4dd0720cbd&chksm=fd9855eecaefdcf8d94ac581cfda4e16c8a730bda60c3b50bc55c124b92f23b6217f7f8e58d5&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">可能是把Java内存区域讲的最清楚的一篇文章</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484328&idx=1&sn=214f5e18a6afa096eb552fd8627e0cea&chksm=fd9855c9caefdcdf70c746c74d31f65bbb109eedaea0cfe311a1e10af666047df59ff04c873b&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">搞定 JVM 垃圾回收就是这么简单</a></li>
+</ul>
+<h4 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a>Spring Boot</h4><ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484706&idx=1&sn=d413fc17023482f67ca17cb6756b9ff8&chksm=fd985343caefda555969568fdf4734536e0a1745f9de337d434a7dbd04e893bd2d75f3641aab&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">超详细，新手都能看懂 ！使用SpringBoot+Dubbo 搭建一个简单的分布式服务</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484730&idx=2&sn=9be4636dd9a416b46f9029df68fad232&chksm=fd98535bcaefda4dccf14a286a24fcd2b3d4ab0d0e4d89dfbc955df99d2b06a1e17392b3c10b&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">基于 SpringBoot2.0+优雅整合 SpringBoot+Mybatis</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484737&idx=1&sn=e39693d845f022d689437ee58948ef6a&chksm=fd985320caefda36d5ab8abd52f5516c11cc5d1104608695bcea5909602b28dc40c132d6d46c&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">新手也能实现，基于SpirngBoot2.0+ 的 SpringBoot+Mybatis 多数据源配置</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484745&idx=1&sn=dbeec694916d204605929244d48a6b1c&chksm=fd985328caefda3e793170d81433c7c0b7dc1c4a4ae99395cce23b1d1a239482fd5bf1d89bc6&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">SpringBoot 整合 阿里云OSS 存储服务，快来免费搭建一个自己的图床</a></li>
+</ul>
+<h4 id="成长"><a href="#成长" class="headerlink" title="成长"></a>成长</h4><ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484516&idx=1&sn=4e2320613e76dd73a130c63beebbc3ca&chksm=fd985205caefdb13b4b611ed3c604d95314d28d567ec0c3b44585b89a7dc3142bcd52bc2d4cb&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">结束了我短暂的秋招，说点自己的感受</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484477&idx=1&sn=3b597e2431611aacca2b5d671a309d85&chksm=fd98525ccaefdb4a7e3742b5958244d453efe26f61f42f9f108190a0c18313f083189f10944e&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">保研之路：从双非到南大</a>(非原创)</li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484650&idx=1&sn=e97ea1eeebdb5def58bae1949bec9448&chksm=fd98528bcaefdb9d76ac62fd10544f058b1fee4a40ffd06ab9312b7eb3a62f86d67ea653b88a&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">【周日闲谈】最近想说的几件小事</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484836&idx=1&sn=a6ada99c9506af01dc3bb472f66c57be&chksm=fd9853c5caefdad3034dbed00cf04412ea990fc05b6168720e6828ae6c90c9a885793acd7a14&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">这7个问题，可能大部分Java程序员都比较关心吧！</a></li>
+</ul>
+<h4 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h4><ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484127&idx=1&sn=70ee95619ec761da884c4f9af3e83194&chksm=fd9854becaefdda81a02bf6cf9bd07a2fc879efa7cefc79691a0d319b501d8572e8bad981d87&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">可能是把Docker的概念讲的最清楚的一篇文章</a></li>
+</ul>
+<h4 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h4><ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484157&idx=1&sn=8b47e623e83fb3666bce7c680e4649b8&chksm=fd98549ccaefdd8ad815f3d8eaca86cc7e7245b4f8de1d23897af3017f5fdb3f152734c40f5e&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">后端程序员必备的Linux基础知识</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484696&idx=1&sn=d3c1ba5abc10c10ff844cae2109a2628&chksm=fd985379caefda6faff8e050b7dfa1e92fbfe2912e44150cb4ae349aea807836166355062970&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">快速入门大厂后端面试必备的 Shell 编程</a></li>
+</ul>
+<h4 id="ZooKeeper"><a href="#ZooKeeper" class="headerlink" title="ZooKeeper"></a>ZooKeeper</h4><ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484379&idx=1&sn=036f5d3defa8a6979afb77acc82a9517&chksm=fd9855bacaefdcacc1462f781b634e5599f2ee9e806bd24297dae4af0e4196a70ca6bbd8c354&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">可能是全网把 ZooKeeper 概念讲的最清楚的一篇文章</a></li>
+</ul>
+<h4 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h4><ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484450&idx=1&sn=7ee03fa67aecd05c5becd2a8259d3631&chksm=fd985243caefdb554ebab9149e750ac0c819074c57bd208f2d7f097fbc461ed58223e71c05f1&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">redis 总结——重构版</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484478&idx=1&sn=a1250d9b8025cd7cb6fc6a58238ab51e&chksm=fd98525fcaefdb499a027df0138c98d4b02d828f27bd6144a4d40a1c088d340c29dd53d4a026&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">史上最全Redis高可用技术解决方案大全</a>(非原创)</li>
+</ul>
+<h4 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h4><ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484289&idx=1&sn=6b556843c60aac9a17b0e7c2e3cd6bca&chksm=fd9855e0caefdcf6af4123b719448c81d90c5442d4052ae01a4698047e226c0c18c14b2cc54a&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">搞定计算机网络面试，看这篇就够了（补充版）</a></li>
+</ul>
+<h4 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h4><ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484486&idx=1&sn=215450f11e042bca8a58eac9f4a97686&chksm=fd985227caefdb3117b8375f150676f5824aa20d1ebfdbcfb93ff06e23e26efbafae6cf6b48e&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">【思维导图-索引篇】搞定数据库索引就是这么简单</a></li>
+</ul>
+<h4 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h4><ul>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484789&idx=1&sn=ba972f0aac39e9a28b29ddf92fc15c18&chksm=fd985314caefda0278235427d43846b6374ff32f4149352dec063287cbf9733b888acbb79923&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">新手也能看懂，消息队列其实很简单</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484796&idx=1&sn=bc56fecb634732669cfe7db8d1820ded&chksm=fd98531dcaefda0b07b8a9c13429ef225d36a6e287c96c53d7aa3dfd65c62ccd60d13b22ebbf&token=1398134989&lang=zh_CN#rd" target="_blank" rel="noopener">一文搞懂 RabbitMQ 的重要概念以及安装</a></li>
+</ul>
+<h3 id="读书"><a href="#读书" class="headerlink" title="读书"></a>读书</h3><p>推荐一下 2018 年看过的书籍，小部分可能2017年也看过一些。</p>
+<h4 id="已看完"><a href="#已看完" class="headerlink" title="已看完"></a>已看完</h4><ul>
+<li><a href="https://book.douban.com/subject/25863515/" target="_blank" rel="noopener">《图解HTTP》</a>（推荐,豆瓣评分 8.1 , 1.6K+人评价）： 讲漫画一样的讲HTTP，很有意思，不会觉得枯燥，大概也涵盖也HTTP常见的知识点。因为篇幅问题，内容可能不太全面。不过，如果不是专门做网络方向研究的小伙伴想研究HTTP相关知识的话，读这本书的话应该来说就差不多了。</li>
+<li><a href="https://book.douban.com/subject/6424904/" target="_blank" rel="noopener">《大话数据结构》</a>（推荐，豆瓣评分 7.9 , 1K+人评价）：入门类型的书籍，读起来比较浅显易懂，适合没有数据结构基础或者说数据结构没学好的小伙伴用来入门数据结构。</li>
+<li><a href="https://book.douban.com/subject/26979890/" target="_blank" rel="noopener">《算法图解》</a>（推荐，豆瓣评分 8.4，0.6K+人评价）：入门类型的书籍，读起来比较浅显易懂，适合没有算法基础或者说算法没学好的小伙伴用来入门。示例丰富，图文并茂，以让人容易理解的方式阐释了算法.读起来比较快，内容不枯燥！</li>
+<li><a href="https://book.douban.com/subject/26591326/" target="_blank" rel="noopener">《Java并发编程的艺术》</a>（推荐，豆瓣评分 7.2，0.2K+人评价）： 这本书不是很适合作为Java并发入门书籍，需要具备一定的JVM基础。我感觉有些东西讲的还是挺深入的，推荐阅读。</li>
+<li><a href="https://book.douban.com/subject/26663605/" target="_blank" rel="noopener">《实战Java高并发程序设计》</a>（推荐）：豆瓣评分 8.3 ，书的质量没的说，推荐大家好好看一下。</li>
+<li><a href="https://book.douban.com/subject/24722612/" target="_blank" rel="noopener">《深入理解Java虚拟机（第2版）周志明》</a>（推荐，豆瓣评分 8.9，1.0K+人评价）：建议多刷几遍，书中的所有知识点可以通过JAVA运行时区域和JAVA的内存模型与线程两个大模块罗列完全。 </li>
+<li><a href="https://book.douban.com/subject/27038538/" target="_blank" rel="noopener">《Netty实战》</a>（推荐，豆瓣评分 7.8，92人评价）：内容很细，如果想学Netty的话，推荐阅读这本书！</li>
+<li><a href="https://book.douban.com/subject/26292004/" target="_blank" rel="noopener">《从Paxos到Zookeeper》</a>（推荐，豆瓣评分 7.8，0.3K人评价）：简要介绍几种典型的分布式一致性协议，以及解决分布式一致性问题的思路，其中重点讲解了Paxos和ZAB协议。同时，本书深入介绍了分布式一致性问题的工业解决方案——ZooKeeper，并着重向读者展示这一分布式协调框架的使用方法、内部实现及运维技巧，旨在帮助读者全面了解ZooKeeper，并更好地使用和运维ZooKeeper。</li>
+<li><a href="https://book.douban.com/subject/26612779/" target="_blank" rel="noopener">《Redis实战》</a>：如果你想了解Redis的一些概念性知识的话，这本书真的非常不错。</li>
+<li><a href="https://book.douban.com/subject/25900156/" target="_blank" rel="noopener">《Redis设计与实现》</a>（推荐，豆瓣评分 8.5，0.5K+人评价）</li>
+<li><a href="https://book.douban.com/subject/25723064/" target="_blank" rel="noopener">《大型网站技术架构：核心原理与案例分析+李智慧》</a>（推荐）:这本书我读过，基本不需要你有什么基础啊~读起来特别轻松，但是却可以学到很多东西，非常推荐了。另外我写过这本书的思维导图，关注我的微信公众号：“Java面试通关手册”回复“大型网站技术架构”即可领取思维导图。</li>
+</ul>
+<h4 id="未看完"><a href="#未看完" class="headerlink" title="未看完"></a>未看完</h4><ul>
+<li><a href="https://book.douban.com/subject/4889838/" target="_blank" rel="noopener">《鸟哥的Linux私房菜》</a>（推荐，，豆瓣评分 9.1，0.3K+人评价）：本书是最具知名度的Linux入门书《鸟哥的Linux私房菜基础学习篇》的最新版，全面而详细地介绍了Linux操作系统。全书分为5个部分：第一部分着重说明Linux的起源及功能，如何规划和安装Linux主机；第二部分介绍Linux的文件系统、文件、目录与磁盘的管理；第三部分介绍文字模式接口 shell和管理系统的好帮手shell脚本，另外还介绍了文字编辑器vi和vim的使用方法；第四部分介绍了对于系统安全非常重要的Linux账号的管理，以及主机系统与程序的管理，如查看进程、任务分配和作业管理；第五部分介绍了系统管理员(root)的管理事项，如了解系统运行状况、系统服务，针对登录文件进行解析，对系统进行备份以及核心的管理等。</li>
+<li><a href="https://book.douban.com/subject/26999243/" target="_blank" rel="noopener">《亿级流量网站架构核心技术》</a>（推荐）：一书总结并梳理了亿级流量网站高可用和高并发原则，通过实例详细介绍了如何落地这些原则。本书分为四部分：概述、高可用原则、高并发原则、案例实战。从负载均衡、限流、降级、隔离、超时与重试、回滚机制、压测与预案、缓存、池化、异步化、扩容、队列等多方面详细介绍了亿级流量网站的架构核心技术，让读者看后能快速运用到实践项目中。</li>
+<li><a href="https://book.douban.com/subject/4262627/" target="_blank" rel="noopener">《重构_改善既有代码的设计》</a>（推荐）：豆瓣 9.1 分，重构书籍的开山鼻祖。</li>
+<li><a href="https://book.douban.com/subject/10426640/" target="_blank" rel="noopener">《深入剖析Tomcat》</a>（推荐，豆瓣评分 8.4，0.2K+人评价）：本书深入剖析Tomcat 4和Tomcat 5中的每个组件，并揭示其内部工作原理。通过学习本书，你将可以自行开发Tomcat组件，或者扩展已有的组件。 读完这本书，基本可以摆脱背诵面试题的尴尬。</li>
+<li><a href="https://book.douban.com/subject/23008813/" target="_blank" rel="noopener">《高性能MySQL》</a>（推荐，豆瓣评分 9.3，0.4K+人评价）：mysql 领域的经典之作，拥有广泛的影响力。不但适合数据库管理员（dba）阅读，也适合开发人员参考学习。不管是数据库新手还是专家，相信都能从本书有所收获。</li>
+<li><a href="https://book.douban.com/subject/26745255/" target="_blank" rel="noopener">深入理解Nginx（第2版）</a>：作者讲的非常细致，注释都写的都很工整，对于 Nginx 的开发人员非常有帮助。优点是细致，缺点是过于细致，到处都是代码片段，缺少一些抽象。</li>
+<li><a href="https://book.douban.com/subject/27591386/" target="_blank" rel="noopener">《RabbitMQ实战指南》</a>：《RabbitMQ实战指南》从消息中间件的概念和RabbitMQ的历史切入，主要阐述RabbitMQ的安装、使用、配置、管理、运维、原理、扩展等方面的细节。如果你想浅尝RabbitMQ的使用，这本书是你最好的选择；如果你想深入RabbitMQ的原理，这本书也是你最好的选择；总之，如果你想玩转RabbitMQ，这本书一定是最值得看的书之一</li>
+<li><a href="https://book.douban.com/subject/27025912/" target="_blank" rel="noopener">《Spring Cloud微服务实战》</a>：从时下流行的微服务架构概念出发，详细介绍了Spring Cloud针对微服务架构中几大核心要素的解决方案和基础组件。对于各个组件的介绍，《Spring Cloud微服务实战》主要以示例与源码结合的方式来帮助读者更好地理解这些组件的使用方法以及运行原理。同时，在介绍的过程中，还包含了作者在实践中所遇到的一些问题和解决思路，可供读者在实践中作为参考。</li>
+<li><a href="https://book.douban.com/subject/26780404/" target="_blank" rel="noopener">《第一本Docker书》</a>：Docker入门书籍！</li>
+<li><a href="https://book.douban.com/subject/3360807/" target="_blank" rel="noopener">《Effective java 》</a>（推荐，豆瓣评分 9.0，1.4K+人评价）：本书介绍了在Java编程中78条极具实用价值的经验规则，这些经验规则涵盖了大多数开发人员每天所面临的问题的解决方案。通过对Java平台设计专家所使用的技术的全面描述，揭示了应该做什么，不应该做什么才能产生清晰、健壮和高效的代码。本书中的每条规则都以简短、独立的小文章形式出现，并通过例子代码加以进一步说明。本书内容全面，结构清晰，讲解详细。可作为技术人员的参考用书。</li>
+<li><a href="https://book.douban.com/subject/10432347/" target="_blank" rel="noopener">《算法 第四版》</a>（推荐，豆瓣评分 9.3，0.4K+人评价）：Java语言描述，算法领域经典的参考书，全面介绍了关于算法和数据结构的必备知识，并特别针对排序、搜索、图处理和字符串处理进行了论述。书的内容非常多，可以说是Java程序员的必备书籍之一了。</li>
+</ul>
+<h2 id="一些个人愚见"><a href="#一些个人愚见" class="headerlink" title="一些个人愚见"></a>一些个人愚见</h2><h3 id="关于读书"><a href="#关于读书" class="headerlink" title="关于读书"></a>关于读书</h3><p>不知道大家收藏栏是不是和我一样收藏了很多文章，但是有多少篇是你真真认真看的呢？或者那几篇你认真看之后，经过一个月之后还记得这篇文章的大概内容。现在这个社会真是一个信息爆炸的社会，我个人真的深有感触，就在刚刚我还取消关注了好多微信公众号，很多公众号给我推的文章都有好几十篇了，但是我一篇都没有看，所以索性取消关注，省个位置。我个人觉得遇到好的文章，我们不光要读，而且要记录下来。就拿我本人来说，我平时喜欢用 OneNote 来记录学习笔记以及其他我感觉重要的事情比如重要人的生日啦这些。每当遇到自己喜欢的文章的时候，我都先会把文章的地址保存到我分好类的笔记本上，我会先进行第一遍阅读，第一遍我会读的很仔细，如果晦涩难懂的话我会先快速把总体看一遍，然后在细细品读。一般第二遍的时候我就会在笔记本上记录这篇文章的一些要点，以便我日后看到这些要点可以快速回忆起整篇文章的内容。如果某篇文章的知识点太过庞大的话，我会去选择采用思维导图的方式展示要点。看视频一样，看教学视频的话，如果觉得老师讲的不错，我们不妨记录下来，Onenote 或者有道云笔记都行，记录大概，够我们日后回忆就好。</p>
+<h3 id="关于学习"><a href="#关于学习" class="headerlink" title="关于学习"></a>关于学习</h3><p>做事不要有功利性，我最早在掘金写文章，其实也只是为了记录自己的学习，没想到会有人喜欢自己的文章，另外我课外学的很多东西，我自己也不清楚以后工作会不会用到，反正我自己感觉即然自己感兴趣，那么就去学吧。我相信，很多东西可能暂时带给你不了带多实质性的帮助，但是总有一天它会对你有帮助。如果感到迷茫的话，就做好眼前的事（拿我们班主任的话说，如果你感到迷茫，你就学好现在的专业知识就好了），我觉得没毛病。</p>
+<h3 id="关于个人"><a href="#关于个人" class="headerlink" title="关于个人"></a>关于个人</h3><p>在生活中一定要保持谦虚，保持谦虚，保持谦虚，时刻都要有反省的准备，你要记住学无止境，永远不要满足现在的现状。另外，就是一定要掌控好自己的时间，多留点时间给父母亲人，以及那些自己在乎的人。如果对别人很在乎的话，不要去装作不在乎，因为这样真的不是太好，虽然我之前也会这样，很多时候撰写的消息，最后没发出去。</p>
+<h2 id="最后分享一句话"><a href="#最后分享一句话" class="headerlink" title="最后分享一句话"></a>最后分享一句话</h2><p>分享给大家,我笔记本里一直保存的杨绛老先生的一句话：“我们曾如此渴望命运的波澜，到最后才发现：人生最曼妙的风景，竟是内心的淡定与从容……我们曾如此期盼外界的认可，到最后才知道：世界是自己的，与他人毫无关系！”。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/12/2018%20summary/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-计算机网络" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="archive-article-date">
+  	<time datetime="2020-04-12T07:52:20.283Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- MarkdownTOC -->
+
+<ul>
+<li><a href="#一-osi与tcpip各层的结构与功能都有哪些协议">一 OSI与TCP/IP各层的结构与功能,都有哪些协议</a><ul>
+<li><a href="#五层协议的体系结构">五层协议的体系结构</a></li>
+<li><a href="#1-应用层">1 应用层</a><ul>
+<li><a href="#域名系统">域名系统</a></li>
+<li><a href="#http协议">HTTP协议</a></li>
+</ul>
+</li>
+<li><a href="#2-运输层">2 运输层</a><ul>
+<li><a href="#运输层主要使用以下两种协议">运输层主要使用以下两种协议</a></li>
+<li><a href="#udp-的主要特点">UDP 的主要特点</a></li>
+<li><a href="#tcp-的主要特点">TCP 的主要特点</a></li>
+</ul>
+</li>
+<li><a href="#3-网络层">3 网络层</a></li>
+<li><a href="#4-数据链路层">4 数据链路层</a></li>
+<li><a href="#5-物理层">5 物理层</a></li>
+<li><a href="#总结一下">总结一下</a></li>
+</ul>
+</li>
+<li><a href="#二-tcp-三次握手和四次挥手面试常客">二 TCP 三次握手和四次挥手(面试常客)</a><ul>
+<li><a href="#为什么要三次握手">为什么要三次握手</a></li>
+<li><a href="#为什么要传回-syn">为什么要传回 SYN</a></li>
+<li><a href="#传了-syn为啥还要传-ack">传了 SYN,为啥还要传 ACK</a></li>
+<li><a href="#为什么要四次挥手">为什么要四次挥手</a></li>
+</ul>
+</li>
+<li><a href="#三-tcp、udp-协议的区别">三 TCP、UDP 协议的区别</a></li>
+<li><a href="#四-tcp-协议如何保证可靠传输">四 TCP 协议如何保证可靠传输</a><ul>
+<li><a href="#停止等待协议">停止等待协议</a></li>
+<li><a href="#自动重传请求-arq-协议">自动重传请求 ARQ 协议</a></li>
+<li><a href="#连续arq协议">连续ARQ协议</a></li>
+<li><a href="#滑动窗口">滑动窗口</a></li>
+<li><a href="#流量控制">流量控制</a></li>
+<li><a href="#拥塞控制">拥塞控制</a></li>
+</ul>
+</li>
+<li><a href="#五-在浏览器中输入url地址---显示主页的过程（面试常客）">五  在浏览器中输入url地址 -&gt;&gt; 显示主页的过程（面试常客）</a></li>
+<li><a href="#六-状态码">六 状态码</a></li>
+<li><a href="#七-各种协议与http协议之间的关系">七 各种协议与HTTP协议之间的关系</a></li>
+<li><a href="#八-http长连接、短连接">八  HTTP长连接、短连接</a></li>
+<li><a href="#写在最后">写在最后</a><ul>
+<li><a href="#计算机网络常见问题回顾">计算机网络常见问题回顾</a></li>
+<li><a href="#建议">建议</a></li>
+</ul>
+</li>
+</ul>
+<!-- /MarkdownTOC -->
+
+
+<p>相对与上一个版本的计算机网路面试知识总结，这个版本增加了 “TCP协议如何保证可靠传输”包括超时重传、停止等待协议、滑动窗口、流量控制、拥塞控制等内容并且对一些已有内容做了补充。</p>
+<h2 id="一-OSI与TCP-IP各层的结构与功能-都有哪些协议"><a href="#一-OSI与TCP-IP各层的结构与功能-都有哪些协议" class="headerlink" title="一 OSI与TCP/IP各层的结构与功能,都有哪些协议"></a>一 OSI与TCP/IP各层的结构与功能,都有哪些协议</h2><h3 id="五层协议的体系结构"><a href="#五层协议的体系结构" class="headerlink" title="五层协议的体系结构"></a>五层协议的体系结构</h3><p>学习计算机网络时我们一般采用折中的办法，也就是中和 OSI 和 TCP/IP 的优点，采用一种只有五层协议的体系结构，这样既简洁又能将概念阐述清楚。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/29/164e5307471e8eba?w=633&h=344&f=png&s=164623" alt="五层协议的体系结构"></p>
+<p>结合互联网的情况，自上而下地，非常简要的介绍一下各层的作用。</p>
+<h3 id="1-应用层"><a href="#1-应用层" class="headerlink" title="1 应用层"></a>1 应用层</h3><p><strong>应用层(application-layer）的任务是通过应用进程间的交互来完成特定网络应用。</strong>应用层协议定义的是应用进程（进程：主机中正在运行的程序）间的通信和交互的规则。对于不同的网络应用需要不同的应用层协议。在互联网中应用层协议很多，如<strong>域名系统DNS</strong>，支持万维网应用的 <strong>HTTP协议</strong>，支持电子邮件的 <strong>SMTP协议</strong>等等。我们把应用层交互的数据单元称为报文。</p>
+<h4 id="域名系统"><a href="#域名系统" class="headerlink" title="域名系统"></a>域名系统</h4><blockquote>
+<p>域名系统(Domain Name System缩写 DNS，Domain Name被译为域名)是因特网的一项核心服务，它作为可以将域名和IP地址相互映射的一个分布式数据库，能够使人更方便的访问互联网，而不用去记住能够被机器直接读取的IP数串。（百度百科）例如：一个公司的 Web 网站可看作是它在网上的门户，而域名就相当于其门牌地址，通常域名都使用该公司的名称或简称。例如上面提到的微软公司的域名，类似的还有：IBM 公司的域名是 <a href="http://www.ibm.com、Oracle" target="_blank" rel="noopener">www.ibm.com、Oracle</a> 公司的域名是 <a href="http://www.oracle.com、Cisco公司的域名是" target="_blank" rel="noopener">www.oracle.com、Cisco公司的域名是</a> <a href="http://www.cisco.com" target="_blank" rel="noopener">www.cisco.com</a> 等。</p>
+</blockquote>
+<h4 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h4><blockquote>
+<p>超文本传输协议（HTTP，HyperText Transfer Protocol)是互联网上应用最为广泛的一种网络协议。所有的 WWW（万维网） 文件都必须遵守这个标准。设计 HTTP 最初的目的是为了提供一种发布和接收 HTML 页面的方法。（百度百科）</p>
+</blockquote>
+<h3 id="2-运输层"><a href="#2-运输层" class="headerlink" title="2 运输层"></a>2 运输层</h3><p><strong>运输层(transport layer)的主要任务就是负责向两台主机进程之间的通信提供通用的数据传输服务</strong>。应用进程利用该服务传送应用层报文。“通用的”是指并不针对某一个特定的网络应用，而是多种应用可以使用同一个运输层服务。由于一台主机可同时运行多个线程，因此运输层有复用和分用的功能。所谓复用就是指多个应用层进程可同时使用下面运输层的服务，分用和复用相反，是运输层把收到的信息分别交付上面应用层中的相应进程。</p>
+<h4 id="运输层主要使用以下两种协议"><a href="#运输层主要使用以下两种协议" class="headerlink" title="运输层主要使用以下两种协议"></a>运输层主要使用以下两种协议</h4><ol>
+<li><strong>传输控制协议 TCP</strong>（Transmission Control Protocol）–提供<strong>面向连接</strong>的，<strong>可靠的</strong>数据传输服务。</li>
+<li><strong>用户数据协议 UDP</strong>（User Datagram Protocol）–提供<strong>无连接</strong>的，尽最大努力的数据传输服务（<strong>不保证数据传输的可靠性</strong>）。</li>
+</ol>
+<h4 id="UDP-的主要特点"><a href="#UDP-的主要特点" class="headerlink" title="UDP 的主要特点"></a>UDP 的主要特点</h4><ol>
+<li>UDP 是无连接的；</li>
+<li>UDP 使用尽最大努力交付，即不保证可靠交付，因此主机不需要维持复杂的链接状态（这里面有许多参数）；</li>
+<li>UDP 是面向报文的；</li>
+<li>UDP 没有拥塞控制，因此网络出现拥塞不会使源主机的发送速率降低（对实时应用很有用，如 直播，实时视频会议等）；</li>
+<li>UDP 支持一对一、一对多、多对一和多对多的交互通信；</li>
+<li>UDP 的首部开销小，只有8个字节，比TCP的20个字节的首部要短。</li>
+</ol>
+<h4 id="TCP-的主要特点"><a href="#TCP-的主要特点" class="headerlink" title="TCP 的主要特点"></a>TCP 的主要特点</h4><ol>
+<li>TCP 是面向连接的。（就好像打电话一样，通话前需要先拨号建立连接，通话结束后要挂机释放连接）；</li>
+<li>每一条 TCP 连接只能有两个端点，每一条TCP连接只能是点对点的（一对一）；</li>
+<li>TCP 提供可靠交付的服务。通过TCP连接传送的数据，无差错、不丢失、不重复、并且按序到达；</li>
+<li>TCP 提供全双工通信。TCP 允许通信双方的应用进程在任何时候都能发送数据。TCP 连接的两端都设有发送缓存和接收缓存，用来临时存放双方通信的数据；</li>
+<li>面向字节流。TCP 中的“流”（Stream）指的是流入进程或从进程流出的字节序列。“面向字节流”的含义是：虽然应用程序和 TCP 的交互是一次一个数据块（大小不等），但 TCP 把应用程序交下来的数据仅仅看成是一连串的无结构的字节流。</li>
+</ol>
+<h3 id="3-网络层"><a href="#3-网络层" class="headerlink" title="3 网络层"></a>3 网络层</h3><p><strong>在 计算机网络中进行通信的两个计算机之间可能会经过很多个数据链路，也可能还要经过很多通信子网。网络层的任务就是选择合适的网间路由和交换结点， 确保数据及时传送。</strong> 在发送数据时，网络层把运输层产生的报文段或用户数据报封装成分组和包进行传送。在 TCP/IP 体系结构中，由于网络层使用 <strong>IP 协议</strong>，因此分组也叫 <strong>IP 数据报</strong> ，简称 <strong>数据报</strong>。</p>
+<p>这里要注意：<strong>不要把运输层的“用户数据报 UDP ”和网络层的“ IP 数据报”弄混</strong>。另外，无论是哪一层的数据单元，都可笼统地用“分组”来表示。</p>
+<p>这里强调指出，网络层中的“网络”二字已经不是我们通常谈到的具体网络，而是指计算机网络体系结构模型中第三层的名称.</p>
+<p>互联网是由大量的异构（heterogeneous）网络通过路由器（router）相互连接起来的。互联网使用的网络层协议是无连接的网际协议（Intert Protocol）和许多路由选择协议，因此互联网的网络层也叫做<strong>网际层</strong>或<strong>IP层</strong>。</p>
+<h3 id="4-数据链路层"><a href="#4-数据链路层" class="headerlink" title="4 数据链路层"></a>4 数据链路层</h3><p><strong>数据链路层(data link layer)通常简称为链路层。两台主机之间的数据传输，总是在一段一段的链路上传送的，这就需要使用专门的链路层的协议。</strong> 在两个相邻节点之间传送数据时，<strong>数据链路层将网络层交下来的 IP 数据报组装程帧</strong>，在两个相邻节点间的链路上传送帧。每一帧包括数据和必要的控制信息（如同步信息，地址信息，差错控制等）。</p>
+<p>在接收数据时，控制信息使接收端能够知道一个帧从哪个比特开始和到哪个比特结束。这样，数据链路层在收到一个帧后，就可从中提出数据部分，上交给网络层。<br>控制信息还使接收端能够检测到所收到的帧中有误差错。如果发现差错，数据链路层就简单地丢弃这个出了差错的帧，以避免继续在网络中传送下去白白浪费网络资源。如果需要改正数据在链路层传输时出现差错（这就是说，数据链路层不仅要检错，而且还要纠错），那么就要采用可靠性传输协议来纠正出现的差错。这种方法会使链路层的协议复杂些。</p>
+<h3 id="5-物理层"><a href="#5-物理层" class="headerlink" title="5 物理层"></a>5 物理层</h3><p>在物理层上所传送的数据单位是比特。<br> <strong>物理层(physical layer)的作用是实现相邻计算机节点之间比特流的透明传送，尽可能屏蔽掉具体传输介质和物理设备的差异。</strong> 使其上面的数据链路层不必考虑网络的具体传输介质是什么。“透明传送比特流”表示经实际电路传送后的比特流没有发生变化，对传送的比特流来说，这个电路好像是看不见的。</p>
+<p>在互联网使用的各种协中最重要和最著名的就是 TCP/IP 两个协议。现在人们经常提到的TCP/IP并不一定单指TCP和IP这两个具体的协议，而往往表示互联网所使用的整个TCP/IP协议族。</p>
+<h3 id="总结一下"><a href="#总结一下" class="headerlink" title="总结一下"></a>总结一下</h3><p>上面我们对计算机网络的五层体系结构有了初步的了解，下面附送一张七层体系结构图总结一下。图片来源：<a href="https://blog.csdn.net/yaopeng_2005/article/details/7064869" target="_blank" rel="noopener">https://blog.csdn.net/yaopeng_2005/article/details/7064869</a><br><img src="https://user-gold-cdn.xitu.io/2018/7/29/164e529309f0fa33?w=1120&h=1587&f=gif&s=225325" alt="七层体系结构图"></p>
+<h2 id="二-TCP-三次握手和四次挥手-面试常客"><a href="#二-TCP-三次握手和四次挥手-面试常客" class="headerlink" title="二 TCP 三次握手和四次挥手(面试常客)"></a>二 TCP 三次握手和四次挥手(面试常客)</h2><p>为了准确无误地把数据送达目标处，TCP协议采用了三次握手策略。</p>
+<p><strong>漫画图解：</strong></p>
+<p>图片来源：《图解HTTP》<br><img src="https://user-gold-cdn.xitu.io/2018/5/8/1633e127396541f1?w=864&h=439&f=png&s=226095" alt="TCP三次握手"></p>
+<p><strong>简单示意图：</strong><br><img src="https://user-gold-cdn.xitu.io/2018/5/8/1633e14233d95972?w=542&h=427&f=jpeg&s=15088" alt="TCP三次握手"></p>
+<ul>
+<li>客户端–发送带有 SYN 标志的数据包–一次握手–服务端</li>
+<li>服务端–发送带有 SYN/ACK 标志的数据包–二次握手–客户端</li>
+<li>客户端–发送带有带有 ACK 标志的数据包–三次握手–服务端</li>
+</ul>
+<h3 id="为什么要三次握手"><a href="#为什么要三次握手" class="headerlink" title="为什么要三次握手"></a>为什么要三次握手</h3><p><strong>三次握手的目的是建立可靠的通信信道，说到通讯，简单来说就是数据的发送与接收，而三次握手最主要的目的就是双方确认自己与对方的发送与接收是正常的。</strong></p>
+<p>第一次握手：Client 什么都不能确认；Server 确认了对方发送正常</p>
+<p>第二次握手：Client 确认了：自己发送、接收正常，对方发送、接收正常；Server 确认了：自己接收正常，对方发送正常</p>
+<p>第三次握手：Client 确认了：自己发送、接收正常，对方发送、接收正常；Server 确认了：自己发送、接收正常，对方发送接收正常</p>
+<p>所以三次握手就能确认双发收发功能都正常，缺一不可。</p>
+<h3 id="为什么要传回-SYN"><a href="#为什么要传回-SYN" class="headerlink" title="为什么要传回 SYN"></a>为什么要传回 SYN</h3><p>接收端传回发送端所发送的 SYN 是为了告诉发送端，我接收到的信息确实就是你所发送的信号了。</p>
+<blockquote>
+<p>SYN 是 TCP/IP 建立连接时使用的握手信号。在客户机和服务器之间建立正常的 TCP 网络连接时，客户机首先发出一个 SYN 消息，服务器使用 SYN-ACK 应答表示接收到了这个消息，最后客户机再以 ACK(Acknowledgement[汉译：确认字符 ,在数据通信传输中，接收站发给发送站的一种传输控制字符。它表示确认发来的数据已经接受无误。 ]）消息响应。这样在客户机和服务器之间才能建立起可靠的TCP连接，数据才可以在客户机和服务器之间传递。</p>
+</blockquote>
+<h3 id="传了-SYN-为啥还要传-ACK"><a href="#传了-SYN-为啥还要传-ACK" class="headerlink" title="传了 SYN,为啥还要传 ACK"></a>传了 SYN,为啥还要传 ACK</h3><p>双方通信无误必须是两者互相发送信息都无误。传了 SYN，证明发送方到接收方的通道没有问题，但是接收方到发送方的通道还需要 ACK 信号来进行验证。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/5/8/1633e1676e2ac0a3?w=500&h=340&f=jpeg&s=13406" alt="TCP四次挥手"></p>
+<p>断开一个 TCP 连接则需要“四次挥手”：</p>
+<ul>
+<li>客户端-发送一个 FIN，用来关闭客户端到服务器的数据传送</li>
+<li>服务器-收到这个 FIN，它发回一 个 ACK，确认序号为收到的序号加1 。和 SYN 一样，一个 FIN 将占用一个序号</li>
+<li>服务器-关闭与客户端的连接，发送一个FIN给客户端</li>
+<li>客户端-发回 ACK 报文确认，并将确认序号设置为收到序号加1</li>
+</ul>
+<h3 id="为什么要四次挥手"><a href="#为什么要四次挥手" class="headerlink" title="为什么要四次挥手"></a>为什么要四次挥手</h3><p>任何一方都可以在数据传送结束后发出连接释放的通知，待对方确认后进入半关闭状态。当另一方也没有数据再发送的时候，则发出连接释放通知，对方确认后就完全关闭了TCP连接。</p>
+<p>举个例子：A 和 B 打电话，通话即将结束后，A 说“我没啥要说的了”，B回答“我知道了”，但是 B 可能还会有要说的话，A 不能要求 B 跟着自己的节奏结束通话，于是 B 可能又巴拉巴拉说了一通，最后 B 说“我说完了”，A 回答“知道了”，这样通话才算结束。</p>
+<p>上面讲的比较概括，推荐一篇讲的比较细致的文章：<a href="https://blog.csdn.net/qzcsu/article/details/72861891" target="_blank" rel="noopener">https://blog.csdn.net/qzcsu/article/details/72861891</a></p>
+<h2 id="三-TCP、UDP-协议的区别"><a href="#三-TCP、UDP-协议的区别" class="headerlink" title="三 TCP、UDP 协议的区别"></a>三 TCP、UDP 协议的区别</h2><p><img src="https://user-gold-cdn.xitu.io/2018/4/19/162db5e97e9a9e01?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="TCP、UDP协议的区别"></p>
+<p>UDP 在传送数据之前不需要先建立连接，远地主机在收到 UDP 报文后，不需要给出任何确认。虽然 UDP 不提供可靠交付，但在某些情况下 UDP 确是一种最有效的工作方式（一般用于即时通信），比如： QQ 语音、 QQ 视频 、直播等等</p>
+<p>TCP 提供面向连接的服务。在传送数据之前必须先建立连接，数据传送结束后要释放连接。 TCP 不提供广播或多播服务。由于 TCP 要提供可靠的，面向连接的运输服务（TCP的可靠体现在TCP在传递数据之前，会有三次握手来建立连接，而且在数据传递时，有确认、窗口、重传、拥塞控制机制，在数据传完后，还会断开连接用来节约系统资源），这一难以避免增加了许多开销，如确认，流量控制，计时器以及连接管理等。这不仅使协议数据单元的首部增大很多，还要占用许多处理机资源。TCP 一般用于文件传输、发送和接收邮件、远程登录等场景。</p>
+<h2 id="四-TCP-协议如何保证可靠传输"><a href="#四-TCP-协议如何保证可靠传输" class="headerlink" title="四 TCP 协议如何保证可靠传输"></a>四 TCP 协议如何保证可靠传输</h2><ol>
+<li>应用数据被分割成 TCP 认为最适合发送的数据块。 </li>
+<li>TCP 给发送的每一个包进行编号，接收方对数据包进行排序，把有序数据传送给应用层。 </li>
+<li><strong>校验和：</strong> TCP 将保持它首部和数据的检验和。这是一个端到端的检验和，目的是检测数据在传输过程中的任何变化。如果收到段的检验和有差错，TCP 将丢弃这个报文段和不确认收到此报文段。 </li>
+<li>TCP 的接收端会丢弃重复的数据。 </li>
+<li><strong>流量控制：</strong> TCP 连接的每一方都有固定大小的缓冲空间，TCP的接收端只允许发送端发送接收端缓冲区能接纳的数据。当接收方来不及处理发送方的数据，能提示发送方降低发送的速率，防止包丢失。TCP 使用的流量控制协议是可变大小的滑动窗口协议。 （TCP 利用滑动窗口实现流量控制）</li>
+<li><strong>拥塞控制：</strong> 当网络拥塞时，减少数据的发送。</li>
+<li><strong>停止等待协议</strong> 也是为了实现可靠传输的，它的基本原理就是每发完一个分组就停止发送，等待对方确认。在收到确认后再发下一个分组。</li>
+<li><strong>超时重传：</strong> 当 TCP 发出一个段后，它启动一个定时器，等待目的端确认收到这个报文段。如果不能及时收到一个确认，将重发这个报文段。 </li>
+</ol>
+<h3 id="停止等待协议"><a href="#停止等待协议" class="headerlink" title="停止等待协议"></a>停止等待协议</h3><ul>
+<li>停止等待协议是为了实现可靠传输的，它的基本原理就是每发完一个分组就停止发送，等待对方确认。在收到确认后再发下一个分组；</li>
+<li>在停止等待协议中，若接收方收到重复分组，就丢弃该分组，但同时还要发送确认；</li>
+</ul>
+<p><strong>1) 无差错情况:</strong></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/8/16/16541fa8c3816a90?w=514&h=473&f=png&s=9924" alt=""></p>
+<p>发送方发送分组,接收方在规定时间内收到,并且回复确认.发送方再次发送。</p>
+<p><strong>2) 出现差错情况（超时重传）:</strong><br><img src="https://user-gold-cdn.xitu.io/2018/8/16/16541faefdf249ab?w=953&h=480&f=png&s=19163" alt=""><br>停止等待协议中超时重传是指只要超过一段时间仍然没有收到确认，就重传前面发送过的分组（认为刚才发送过的分组丢失了）。因此每发送完一个分组需要设置一个超时计时器，其重转时间应比数据在分组传输的平均往返时间更长一些。这种自动重传方式常称为 <strong>自动重传请求 ARQ</strong> 。另外在停止等待协议中若收到重复分组，就丢弃该分组，但同时还要发送确认。<strong>连续 ARQ 协议</strong> 可提高信道利用率。发送维持一个发送窗口，凡位于发送窗口内的分组可连续发送出去，而不需要等待对方确认。接收方一般采用累积确认，对按序到达的最后一个分组发送确认，表明到这个分组位置的所有分组都已经正确收到了。</p>
+<p><strong>3) 确认丢失和确认迟到</strong></p>
+<ul>
+<li><p><strong>确认丢失</strong>：确认消息在传输过程丢失<br><img src="https://user-gold-cdn.xitu.io/2018/8/16/16541fb6941a7165?w=918&h=461&f=png&s=19841" alt=""><br> 当A发送M1消息，B收到后，B向A发送了一个M1确认消息，但却在传输过程中丢失。而A并不知道，在超时计时过后，A重传M1消息，B再次收到该消息后采取以下两点措施：</p>
+<ol>
+<li>丢弃这个重复的M1消息，不向上层交付。</li>
+<li>向A发送确认消息。（不会认为已经发送过了，就不再发送。A能重传，就证明B的确认消息丢失）。</li>
+</ol>
+</li>
+<li><p><strong>确认迟到</strong> ：确认消息在传输过程中迟到<br><img src="https://user-gold-cdn.xitu.io/2018/8/16/16541fdd85929e6b?w=899&h=450&f=png&s=23165" alt=""><br>A发送M1消息，B收到并发送确认。在超时时间内没有收到确认消息，A重传M1消息，B仍然收到并继续发送确认消息（B收到了2份M1）。此时A收到了B第二次发送的确认消息。接着发送其他数据。过了一会，A收到了B第一次发送的对M1的确认消息（A也收到了2份确认消息）。处理如下：</p>
+<ol>
+<li>A收到重复的确认后，直接丢弃。</li>
+<li>B收到重复的M1后，也直接丢弃重复的M1。</li>
+</ol>
+</li>
+</ul>
+<h3 id="自动重传请求-ARQ-协议"><a href="#自动重传请求-ARQ-协议" class="headerlink" title="自动重传请求 ARQ 协议"></a>自动重传请求 ARQ 协议</h3><p>停止等待协议中超时重传是指只要超过一段时间仍然没有收到确认，就重传前面发送过的分组（认为刚才发送过的分组丢失了）。因此每发送完一个分组需要设置一个超时计时器，其重传时间应比数据在分组传输的平均往返时间更长一些。这种自动重传方式常称为自动重传请求ARQ。</p>
+<p><strong>优点：</strong> 简单</p>
+<p><strong>缺点：</strong> 信道利用率低</p>
+<h3 id="连续ARQ协议"><a href="#连续ARQ协议" class="headerlink" title="连续ARQ协议"></a>连续ARQ协议</h3><p>连续 ARQ 协议可提高信道利用率。发送方维持一个发送窗口，凡位于发送窗口内的分组可以连续发送出去，而不需要等待对方确认。接收方一般采用累计确认，对按序到达的最后一个分组发送确认，表明到这个分组为止的所有分组都已经正确收到了。</p>
+<p><strong>优点：</strong> 信道利用率高，容易实现，即使确认丢失，也不必重传。</p>
+<p><strong>缺点：</strong> 不能向发送方反映出接收方已经正确收到的所有分组的信息。 比如：发送方发送了 5条 消息，中间第三条丢失（3号），这时接收方只能对前两个发送确认。发送方无法知道后三个分组的下落，而只好把后三个全部重传一次。这也叫 Go-Back-N（回退 N），表示需要退回来重传已经发送过的 N 个消息。</p>
+<h3 id="滑动窗口"><a href="#滑动窗口" class="headerlink" title="滑动窗口"></a>滑动窗口</h3><ul>
+<li>TCP 利用滑动窗口实现流量控制的机制。</li>
+<li>滑动窗口（Sliding window）是一种流量控制技术。早期的网络通信中，通信双方不会考虑网络的拥挤情况直接发送数据。由于大家不知道网络拥塞状况，同时发送数据，导致中间节点阻塞掉包，谁也发不了数据，所以就有了滑动窗口机制来解决此问题。</li>
+<li>TCP 中采用滑动窗口来进行传输控制，滑动窗口的大小意味着接收方还有多大的缓冲区可以用于接收数据。发送方可以通过滑动窗口的大小来确定应该发送多少字节的数据。当滑动窗口为 0 时，发送方一般不能再发送数据报，但有两种情况除外，一种情况是可以发送紧急数据，例如，允许用户终止在远端机上的运行进程。另一种情况是发送方可以发送一个 1 字节的数据报来通知接收方重新声明它希望接收的下一字节及发送方的滑动窗口大小。</li>
+</ul>
+<h3 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h3><ul>
+<li>TCP 利用滑动窗口实现流量控制。</li>
+<li>流量控制是为了控制发送方发送速率，保证接收方来得及接收。</li>
+<li>接收方发送的确认报文中的窗口字段可以用来控制发送方窗口大小，从而影响发送方的发送速率。将窗口字段设置为 0，则发送方不能发送数据。</li>
+</ul>
+<h3 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h3><p>在某段时间，若对网络中某一资源的需求超过了该资源所能提供的可用部分，网络的性能就要变坏。这种情况就叫拥塞。拥塞控制就是为了防止过多的数据注入到网络中，这样就可以使网络中的路由器或链路不致过载。拥塞控制所要做的都有一个前提，就是网络能够承受现有的网络负荷。拥塞控制是一个全局性的过程，涉及到所有的主机，所有的路由器，以及与降低网络传输性能有关的所有因素。相反，流量控制往往是点对点通信量的控制，是个端到端的问题。流量控制所要做到的就是抑制发送端发送数据的速率，以便使接收端来得及接收。</p>
+<p>为了进行拥塞控制，TCP 发送方要维持一个 <strong>拥塞窗口(cwnd)</strong> 的状态变量。拥塞控制窗口的大小取决于网络的拥塞程度，并且动态变化。发送方让自己的发送窗口取为拥塞窗口和接收方的接受窗口中较小的一个。</p>
+<p>TCP的拥塞控制采用了四种算法，即 <strong>慢开始</strong> 、 <strong>拥塞避免</strong> 、<strong>快重传</strong> 和 <strong>快恢复</strong>。在网络层也可以使路由器采用适当的分组丢弃策略（如主动队列管理 AQM），以减少网络拥塞的发生。</p>
+<ul>
+<li><strong>慢开始：</strong> 慢开始算法的思路是当主机开始发送数据时，如果立即把大量数据字节注入到网络，那么可能会引起网络阻塞，因为现在还不知道网络的符合情况。经验表明，较好的方法是先探测一下，即由小到大逐渐增大发送窗口，也就是由小到大逐渐增大拥塞窗口数值。cwnd初始值为1，每经过一个传播轮次，cwnd加倍。<br> <img src="https://user-gold-cdn.xitu.io/2018/8/10/1652348ada2c8fd0?w=1050&h=560&f=jpeg&s=112611" alt=""></li>
+<li><strong>拥塞避免：</strong> 拥塞避免算法的思路是让拥塞窗口cwnd缓慢增大，即每经过一个往返时间RTT就把发送放的cwnd加1.</li>
+<li><strong>快重传与快恢复：</strong><br>在 TCP/IP 中，快速重传和恢复（fast retransmit and recovery，FRR）是一种拥塞控制算法，它能快速恢复丢失的数据包。没有 FRR，如果数据包丢失了，TCP 将会使用定时器来要求传输暂停。在暂停的这段时间内，没有新的或复制的数据包被发送。有了 FRR，如果接收机接收到一个不按顺序的数据段，它会立即给发送机发送一个重复确认。如果发送机接收到三个重复确认，它会假定确认件指出的数据段丢失了，并立即重传这些丢失的数据段。有了 FRR，就不会因为重传时要求的暂停被耽误。 　当有单独的数据包丢失时，快速重传和恢复（FRR）能最有效地工作。当有多个数据信息包在某一段很短的时间内丢失时，它则不能很有效地工作。<br><img src="https://user-gold-cdn.xitu.io/2018/8/10/165234f0303d174b?w=1174&h=648&f=png&s=109568" alt="快重传与快恢复"></li>
+</ul>
+<h2 id="五-在浏览器中输入url地址-gt-gt-显示主页的过程（面试常客）"><a href="#五-在浏览器中输入url地址-gt-gt-显示主页的过程（面试常客）" class="headerlink" title="五  在浏览器中输入url地址 -&gt;&gt; 显示主页的过程（面试常客）"></a>五  在浏览器中输入url地址 -&gt;&gt; 显示主页的过程（面试常客）</h2><p>百度好像最喜欢问这个问题。</p>
+<blockquote>
+<p>打开一个网页，整个过程会使用哪些协议</p>
+</blockquote>
+<p>图解（图片来源：《图解HTTP》）：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/4/19/162db5e985aabdbe?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="状态码"></p>
+<p>总体来说分为以下几个过程:</p>
+<ol>
+<li>DNS解析</li>
+<li>TCP连接</li>
+<li>发送HTTP请求</li>
+<li>服务器处理请求并返回HTTP报文</li>
+<li>浏览器解析渲染页面</li>
+<li>连接结束</li>
+</ol>
+<p>具体可以参考下面这篇文章：</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000006879700" target="_blank" rel="noopener">https://segmentfault.com/a/1190000006879700</a></li>
+</ul>
+<h2 id="六-状态码"><a href="#六-状态码" class="headerlink" title="六 状态码"></a>六 状态码</h2><p><img src="https://user-gold-cdn.xitu.io/2018/5/8/1633e19dba27ed00?w=673&h=218&f=png&s=72968" alt="状态码"></p>
+<h2 id="七-各种协议与HTTP协议之间的关系"><a href="#七-各种协议与HTTP协议之间的关系" class="headerlink" title="七 各种协议与HTTP协议之间的关系"></a>七 各种协议与HTTP协议之间的关系</h2><p>一般面试官会通过这样的问题来考察你对计算机网络知识体系的理解。</p>
+<p>图片来源：《图解HTTP》</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/5/8/1633ead316d07713?w=841&h=1193&f=png&s=609513" alt="各种协议与HTTP协议之间的关系"></p>
+<h2 id="八-HTTP长连接、短连接"><a href="#八-HTTP长连接、短连接" class="headerlink" title="八  HTTP长连接、短连接"></a>八  HTTP长连接、短连接</h2><p>在HTTP/1.0中默认使用短连接。也就是说，客户端和服务器每进行一次HTTP操作，就建立一次连接，任务结束就中断连接。当客户端浏览器访问的某个HTML或其他类型的Web页中包含有其他的Web资源（如JavaScript文件、图像文件、CSS文件等），每遇到这样一个Web资源，浏览器就会重新建立一个HTTP会话。</p>
+<p>而从HTTP/1.1起，默认使用长连接，用以保持连接特性。使用长连接的HTTP协议，会在响应头加入这行代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Connection:keep-alive</span><br></pre></td></tr></table></figure>
+
+<p>在使用长连接的情况下，当一个网页打开完成后，客户端和服务器之间用于传输HTTP数据的TCP连接不会关闭，客户端再次访问这个服务器时，会继续使用这一条已经建立的连接。Keep-Alive不会永久保持连接，它有一个保持时间，可以在不同的服务器软件（如Apache）中设定这个时间。实现长连接需要客户端和服务端都支持长连接。</p>
+<p><strong>HTTP协议的长连接和短连接，实质上是TCP协议的长连接和短连接。</strong> </p>
+<p>—— <a href="https://www.cnblogs.com/gotodsp/p/6366163.html" target="_blank" rel="noopener">《HTTP长连接、短连接究竟是什么？》</a></p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><h3 id="计算机网络常见问题回顾"><a href="#计算机网络常见问题回顾" class="headerlink" title="计算机网络常见问题回顾"></a>计算机网络常见问题回顾</h3><ul>
+<li>①TCP三次握手和四次挥手、</li>
+<li>②在浏览器中输入url地址-&gt;&gt;显示主页的过程</li>
+<li>③HTTP和HTTPS的区别</li>
+<li>④TCP、UDP协议的区别</li>
+<li>⑤常见的状态码。 </li>
+</ul>
+<h3 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h3><p>非常推荐大家看一下 《图解HTTP》 这本书，这本书页数不多，但是内容很是充实，不管是用来系统的掌握网络方面的一些知识还是说纯粹为了应付面试都有很大帮助。下面的一些文章只是参考。大二学习这门课程的时候，我们使用的教材是 《计算机网络第七版》（谢希仁编著），不推荐大家看这本教材，书非常厚而且知识偏理论，不确定大家能不能心平气和的读完。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://blog.csdn.net/qq_16209077/article/details/52718250" target="_blank" rel="noopener">https://blog.csdn.net/qq_16209077/article/details/52718250</a></li>
+<li><a href="https://blog.csdn.net/zixiaomuwu/article/details/60965466" target="_blank" rel="noopener">https://blog.csdn.net/zixiaomuwu/article/details/60965466</a></li>
+<li><a href="https://blog.csdn.net/turn__back/article/details/73743641" target="_blank" rel="noopener">https://blog.csdn.net/turn__back/article/details/73743641</a></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/12/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-数据通信(RESTful、RPC、消息队列)" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/12/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1(RESTful%E3%80%81RPC%E3%80%81%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97)/">数据通信(RESTful、RPC、消息队列)</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/12/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1(RESTful%E3%80%81RPC%E3%80%81%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97)/" class="archive-article-date">
+  	<time datetime="2020-04-12T07:52:20.280Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<h2 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h2></blockquote>
+<p><strong>RPC（Remote Procedure Call）—远程过程调用</strong> ，它是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。RPC协议假定某些传输协议的存在，如TCP或UDP，为通信程序之间携带信息数据。在OSI网络通信模型中，RPC跨越了传输层和应用层。RPC使得开发分布式程序就像开发本地程序一样简单。</p>
+<p><strong>RPC采用客户端（服务调用方）/服务器端（服务提供方）模式，</strong> 都运行在自己的JVM中。客户端只需要引入要使用的接口，接口的实现和运行都在服务器端。RPC主要依赖的技术包括序列化、反序列化和数据传输协议，这是一种定义与实现相分离的设计。</p>
+<p><strong>目前Java使用比较多的RPC方案主要有RMI（JDK自带）、Hessian、Dubbo以及Thrift等。</strong></p>
+<p><strong>注意： RPC主要指内部服务之间的调用，RESTful也可以用于内部服务之间的调用，但其主要用途还在于外部系统提供服务，因此没有将其包含在本知识点内。</strong></p>
+<h3 id="常见RPC框架："><a href="#常见RPC框架：" class="headerlink" title="常见RPC框架："></a>常见RPC框架：</h3><ul>
+<li><p><strong>RMI（JDK自带）：</strong> JDK自带的RPC</p>
+<p> 详细内容可以参考：<a href="https://blog.csdn.net/lmy86263/article/details/72594760" target="_blank" rel="noopener">从懵逼到恍然大悟之Java中RMI的使用</a></p>
+</li>
+<li><p><strong>Dubbo:</strong> Dubbo是 阿里巴巴公司开源的一个高性能优秀的服务框架，使得应用可通过高性能的 RPC 实现服务的输出和输入功能，可以和 Spring框架无缝集成。</p>
+<p>详细内容可以参考：</p>
+<ul>
+<li><p><a href="https://blog.csdn.net/qq_34337272/article/details/79862899" target="_blank" rel="noopener"> 高性能优秀的服务框架-dubbo介绍</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/houshaolin/article/details/76408399" target="_blank" rel="noopener">Dubbo是什么？能做什么？</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><strong>Hessian：</strong> Hessian是一个轻量级的remotingonhttp工具，使用简单的方法提供了RMI的功能。 相比WebService，Hessian更简单、快捷。采用的是二进制RPC协议，因为采用的是二进制协议，所以它很适合于发送二进制数据。</p>
+<p>详细内容可以参考： <a href="https://blog.csdn.net/sunwei_pyw/article/details/74002351" target="_blank" rel="noopener">Hessian的使用以及理解</a></p>
+</li>
+<li><p><strong>Thrift：</strong>  Apache Thrift是Facebook开源的跨语言的RPC通信框架，目前已经捐献给Apache基金会管理，由于其跨语言特性和出色的性能，在很多互联网公司得到应用，有能力的公司甚至会基于thrift研发一套分布式服务框架，增加诸如服务注册、服务发现等功能。</p>
+</li>
+</ul>
+<pre><code>详细内容可以参考： [【Java】分布式RPC通信框架Apache Thrift 使用总结](https://www.cnblogs.com/zeze/p/8628585.html)</code></pre><h3 id="如何进行选择："><a href="#如何进行选择：" class="headerlink" title="如何进行选择："></a>如何进行选择：</h3><ul>
+<li><strong>是否允许代码侵入：</strong>  即需要依赖相应的代码生成器生成代码，比如Thrift。</li>
+<li><strong>是否需要长连接获取高性能：</strong>  如果对于性能需求较高的haul，那么可以果断选择基于TCP的Thrift、Dubbo。</li>
+<li><strong>是否需要跨越网段、跨越防火墙：</strong> 这种情况一般选择基于HTTP协议的Hessian和Thrift的HTTP Transport。</li>
+</ul>
+<p>此外，Google推出的基于HTTP2.0的gRPC框架也开始得到应用，其序列化协议基于Protobuf，网络框架使用的是Netty4,但是其需要生成代码，可扩展性也比较差。  </p>
+<blockquote>
+<h2 id="消息中间件"><a href="#消息中间件" class="headerlink" title="消息中间件"></a>消息中间件</h2></blockquote>
+<p><strong>消息中间件，也可以叫做中央消息队列或者是消息队列（区别于本地消息队列，本地消息队列指的是JVM内的队列实现）</strong>，是一种独立的队列系统，消息中间件经常用来解决内部服务之间的 <strong>异步调用问题</strong> 。请求服务方把请求队列放到队列中即可返回，然后等待服务提供方去队列中获取请求进行处理，之后通过回调等机制把结果返回给请求服务方。</p>
+<p>异步调用只是消息中间件一个非常常见的应用场景。此外，常用的消息队列应用场景还偷如下几个：</p>
+<ul>
+<li><strong>解耦 ：</strong> 一个业务的非核心流程需要依赖其他系统，但结果并不重要，有通知即可。</li>
+<li><strong>最终一致性 ：</strong> 指的是两个系统的状态保持一致，可以有一定的延迟，只要最终达到一致性即可。经常用在解决分布式事务上。</li>
+<li><strong>广播 ：</strong> 消息队列最基本的功能。生产者只负责生产消息，订阅者接收消息。</li>
+<li><strong>错峰和流控</strong></li>
+</ul>
+<p>具体可以参考： </p>
+<p><a href="https://blog.csdn.net/qq_34337272/article/details/80029918" target="_blank" rel="noopener">《消息队列深入解析》</a></p>
+<p>当前使用较多的消息队列有ActiveMQ（性能差，不推荐使用）、RabbitMQ、RocketMQ、Kafka等等，我们之前提到的redis数据库也可以实现消息队列，不过不推荐，redis本身设计就不是用来做消息队列的。</p>
+<ul>
+<li><p><strong>ActiveMQ：</strong> ActiveMQ是Apache出品，最流行的，能力强劲的开源消息总线。ActiveMQ是一个完全支持JMS1.1和J2EE 1.4规范的JMSProvider实现,尽管JMS规范出台已经是很久的事情了,但是JMS在当今的J2EE应用中间仍然扮演着特殊的地位。</p>
+<p>具体可以参考： </p>
+<p><a href="https://blog.csdn.net/qq_34337272/article/details/80031702" target="_blank" rel="noopener">《消息队列ActiveMQ的使用详解》</a></p>
+</li>
+<li><p><strong>RabbitMQ:</strong> RabbitMQ 是一个由 Erlang 语言开发的 AMQP 的开源实现。RabbitMQ 最初起源于金融系统，用于在分布式系统中存储转发消息，在易用性、扩展性、高可用性等方面表现不俗</p>
+<blockquote>
+<p>AMQP ：Advanced Message Queue，高级消息队列协议。它是应用层协议的一个开放标准，为面向消息的中间件设计，基于此协议的客户端与消息中间件可传递消息，并不受产品、开发语言等条件的限制。</p>
+</blockquote>
+</li>
+</ul>
+<p>   具体可以参考：</p>
+<p>   <a href="https://www.jianshu.com/p/79ca08116d57" target="_blank" rel="noopener">《消息队列之 RabbitMQ》</a></p>
+<ul>
+<li><p><strong>RocketMQ：</strong></p>
+<p> 具体可以参考：</p>
+<p> <a href="https://www.jianshu.com/p/824066d70da8" target="_blank" rel="noopener">《RocketMQ 实战之快速入门》</a></p>
+<p> <a href="http://jm.taobao.org/2017/01/12/rocketmq-quick-start-in-10-minutes/" target="_blank" rel="noopener">《十分钟入门RocketMQ》</a> （阿里中间件团队博客）</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>Kafka</strong>：Kafka是一个分布式的、可分区的、可复制的、基于发布/订阅的消息系统（现在官方的描述是“一个分布式流平台”）,Kafka主要用于大数据领域,当然在分布式系统中也有应用。目前市面上流行的消息队列RocketMQ就是阿里借鉴Kafka的原理、用Java开发而得。</p>
+<p>具体可以参考：</p>
+<p><a href="http://book.51cto.com/art/201801/565244.htm" target="_blank" rel="noopener">《Kafka应用场景》</a></p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484106&idx=1&sn=aa1999895d009d91eb3692a3e6429d18&chksm=fd9854abcaefddbd1101ca5dc2c7c783d7171320d6300d9b2d8e68b7ef8abd2b02ea03e03600#rd" target="_blank" rel="noopener">《初谈Kafka》</a></p>
+</li>
+</ul>
+<p><strong>推荐阅读：</strong></p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU5OTMyODAyNg==&mid=2247484721&idx=1&sn=11e4e29886e581dd328311d308ccc068&chksm=feb7d144c9c058529465b02a4e26a25ef76b60be8984ace9e4a0f5d3d98ca52e014ecb73b061&scene=21#wechat_redirect" target="_blank" rel="noopener">《Kafka、RabbitMQ、RocketMQ等消息中间件的对比 —— 消息发送性能和区别》</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/12/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1(RESTful%E3%80%81RPC%E3%80%81%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97)/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+    </nav>
   
 
 
