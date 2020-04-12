@@ -152,416 +152,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-HTTPS中的TLS" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/12/HTTPS%E4%B8%AD%E7%9A%84TLS/">HTTPS中的TLS</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/12/HTTPS%E4%B8%AD%E7%9A%84TLS/" class="archive-article-date">
-  	<time datetime="2020-04-12T07:52:20.267Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- TOC -->
-
-<ul>
-<li><a href="#1-ssl-%E4%B8%8E-tls">1. SSL 与 TLS</a></li>
-<li><a href="#2-%E4%BB%8E%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E7%9A%84%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3-https">2. 从网络协议的角度理解 HTTPS</a></li>
-<li><a href="#3-%E4%BB%8E%E5%AF%86%E7%A0%81%E5%AD%A6%E7%9A%84%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3-https">3. 从密码学的角度理解 HTTPS</a><ul>
-<li><a href="#31-tls-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B">3.1. TLS 工作流程</a></li>
-<li><a href="#32-%E5%AF%86%E7%A0%81%E5%9F%BA%E7%A1%80">3.2. 密码基础</a><ul>
-<li><a href="#321-%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%99%A8">3.2.1. 伪随机数生成器</a></li>
-<li><a href="#322-%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81">3.2.2. 消息认证码</a></li>
-<li><a href="#323-%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D">3.2.3. 数字签名</a></li>
-<li><a href="#324-%E5%85%AC%E9%92%A5%E5%AF%86%E7%A0%81">3.2.4. 公钥密码</a></li>
-<li><a href="#325-%E8%AF%81%E4%B9%A6">3.2.5. 证书</a></li>
-<li><a href="#326-%E5%AF%86%E7%A0%81%E5%B0%8F%E7%BB%93">3.2.6. 密码小结</a></li>
-</ul>
-</li>
-<li><a href="#33-tls-%E4%BD%BF%E7%94%A8%E7%9A%84%E5%AF%86%E7%A0%81%E6%8A%80%E6%9C%AF">3.3. TLS 使用的密码技术</a></li>
-<li><a href="#34-tls-%E6%80%BB%E7%BB%93">3.4. TLS 总结</a></li>
-</ul>
-</li>
-<li><a href="#4-rsa-%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B">4. RSA 简单示例</a></li>
-<li><a href="#5-%E5%8F%82%E8%80%83">5. 参考</a></li>
-</ul>
-<!-- TOC -->
-
-<h1 id="1-SSL-与-TLS"><a href="#1-SSL-与-TLS" class="headerlink" title="1. SSL 与 TLS"></a>1. SSL 与 TLS</h1><p>SSL：（Secure Socket Layer） 安全套接层，于 1994 年由网景公司设计，并于 1995 年发布了 3.0 版本<br>TLS：（Transport Layer Security）传输层安全性协议，是 IETF 在 SSL3.0 的基础上设计的协议<br>以下全部使用 TLS 来表示</p>
-<h1 id="2-从网络协议的角度理解-HTTPS"><a href="#2-从网络协议的角度理解-HTTPS" class="headerlink" title="2. 从网络协议的角度理解 HTTPS"></a>2. 从网络协议的角度理解 HTTPS</h1><p><img src="https://leran2deeplearnjavawebtech.oss-cn-beijing.aliyuncs.com/somephoto/%E4%B8%83%E5%B1%82.png" alt="此图并不准确"><br>HTTP：HyperText Transfer Protocol 超文本传输协议<br>HTTPS：Hypertext Transfer Protocol Secure 超文本传输安全协议<br>TLS：位于 HTTP 和 TCP 之间的协议，其内部有 TLS握手协议、TLS记录协议<br>HTTPS 经由 HTTP 进行通信，但利用 TLS 来保证安全，即 HTTPS = HTTP + TLS</p>
-<h1 id="3-从密码学的角度理解-HTTPS"><a href="#3-从密码学的角度理解-HTTPS" class="headerlink" title="3. 从密码学的角度理解 HTTPS"></a>3. 从密码学的角度理解 HTTPS</h1><p>HTTPS 使用 TLS 保证安全，这里的“安全”分两部分，一是传输内容加密、二是服务端的身份认证</p>
-<h2 id="3-1-TLS-工作流程"><a href="#3-1-TLS-工作流程" class="headerlink" title="3.1. TLS 工作流程"></a>3.1. TLS 工作流程</h2><p><img src="https://leran2deeplearnjavawebtech.oss-cn-beijing.aliyuncs.com/somephoto/tls%E6%B5%81%E7%A8%8B.png" alt="此图并不准确"><br>此为服务端单向认证，还有客户端/服务端双向认证，流程类似，只不过客户端也有自己的证书，并发送给服务器进行验证</p>
-<h2 id="3-2-密码基础"><a href="#3-2-密码基础" class="headerlink" title="3.2. 密码基础"></a>3.2. 密码基础</h2><h3 id="3-2-1-伪随机数生成器"><a href="#3-2-1-伪随机数生成器" class="headerlink" title="3.2.1. 伪随机数生成器"></a>3.2.1. 伪随机数生成器</h3><p>为什么叫伪随机数，因为没有真正意义上的随机数，具体可以参考 Random/TheadLocalRandom<br>它的主要作用在于生成对称密码的秘钥、用于公钥密码生成秘钥对</p>
-<h3 id="3-2-2-消息认证码"><a href="#3-2-2-消息认证码" class="headerlink" title="3.2.2. 消息认证码"></a>3.2.2. 消息认证码</h3><p>消息认证码主要用于验证消息的完整性与消息的认证，其中消息的认证指“消息来自正确的发送者”  </p>
-<blockquote>
-<p>消息认证码用于验证和认证，而不是加密  </p>
-</blockquote>
-<p><img src="https://leran2deeplearnjavawebtech.oss-cn-beijing.aliyuncs.com/somephoto/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81%E7%A0%81%E8%BF%87%E7%A8%8B.png" alt="消息认证码过程">  </p>
-<ol>
-<li>发送者与接收者事先共享秘钥</li>
-<li>发送者根据发送消息计算 MAC 值</li>
-<li>发送者发送消息和 MAC 值  </li>
-<li>接收者根据接收到的消息计算 MAC 值</li>
-<li>接收者根据自己计算的 MAC 值与收到的 MAC 对比</li>
-<li>如果对比成功，说明消息完整，并来自与正确的发送者</li>
-</ol>
-<h3 id="3-2-3-数字签名"><a href="#3-2-3-数字签名" class="headerlink" title="3.2.3. 数字签名"></a>3.2.3. 数字签名</h3><p>消息认证码的缺点在于<strong>无法防止否认</strong>，因为共享秘钥被 client、server 两端拥有，server 可以伪造 client 发送给自己的消息（自己给自己发送消息），为了解决这个问题，我们需要它们有各自的秘钥不被第二个知晓（这样也解决了共享秘钥的配送问题）  </p>
-<p><img src="https://leran2deeplearnjavawebtech.oss-cn-beijing.aliyuncs.com/somephoto/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E8%BF%87%E7%A8%8B.png" alt="数字签名过程">  </p>
-<blockquote>
-<p>数字签名和消息认证码都<strong>不是为了加密</strong><br>可以将单向散列函数获取散列值的过程理解为使用 md5 摘要算法获取摘要的过程  </p>
-</blockquote>
-<p>使用自己的私钥对自己所认可的消息生成一个该消息专属的签名，这就是数字签名，表明我承认该消息来自自己<br>注意：<strong>私钥用于加签，公钥用于解签，每个人都可以解签，查看消息的归属人</strong>  </p>
-<h3 id="3-2-4-公钥密码"><a href="#3-2-4-公钥密码" class="headerlink" title="3.2.4. 公钥密码"></a>3.2.4. 公钥密码</h3><p>公钥密码也叫非对称密码，由公钥和私钥组成，它是最开始是为了解决秘钥的配送传输安全问题，即，我们不配送私钥，只配送公钥，私钥由本人保管<br>它与数字签名相反，公钥密码的私钥用于解密、公钥用于加密，每个人都可以用别人的公钥加密，但只有对应的私钥才能解开密文<br>client：明文 + 公钥 = 密文<br>server：密文 + 私钥 = 明文<br>注意：<strong>公钥用于加密，私钥用于解密，只有私钥的归属者，才能查看消息的真正内容</strong>   </p>
-<h3 id="3-2-5-证书"><a href="#3-2-5-证书" class="headerlink" title="3.2.5. 证书"></a>3.2.5. 证书</h3><p>证书：全称公钥证书（Public-Key Certificate, PKC）,里面保存着归属者的基本信息，以及证书过期时间、归属者的公钥，并由认证机构（Certification Authority, <strong>CA</strong>）施加数字签名，表明，某个认证机构认定该公钥的确属于此人  </p>
-<blockquote>
-<p>想象这个场景：你想在支付宝页面交易，你需要支付宝的公钥进行加密通信，于是你从百度上搜索关键字“支付宝公钥”，你获得了支什宝的公钥，这个时候，支什宝通过中间人攻击，让你访问到了他们支什宝的页面，最后你在这个支什宝页面完美的使用了支什宝的公钥完成了与支什宝的交易<br><img src="https://leran2deeplearnjavawebtech.oss-cn-beijing.aliyuncs.com/somephoto/dns%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB.png" alt="证书过程">   </p>
-</blockquote>
-<p>在上面的场景中，你可以理解支付宝证书就是由支付宝的公钥、和给支付宝颁发证书的企业的数字签名组成<br>任何人都可以给自己或别人的公钥添加自己的数字签名，表明：我拿我的尊严担保，我的公钥/别人的公钥是真的，至于信不信那是另一回事了</p>
-<h3 id="3-2-6-密码小结"><a href="#3-2-6-密码小结" class="headerlink" title="3.2.6. 密码小结"></a>3.2.6. 密码小结</h3><table>
-<thead>
-<tr>
-<th align="left">密码</th>
-<th align="left">作用</th>
-<th align="left">组成</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">消息认证码</td>
-<td align="left">确认消息的完整、并对消息的来源认证</td>
-<td align="left">共享秘钥+消息的散列值</td>
-</tr>
-<tr>
-<td align="left">数字签名</td>
-<td align="left">对消息的散列值签名</td>
-<td align="left">公钥+私钥+消息的散列值</td>
-</tr>
-<tr>
-<td align="left">公钥密码</td>
-<td align="left">解决秘钥的配送问题</td>
-<td align="left">公钥+私钥+消息</td>
-</tr>
-<tr>
-<td align="left">证书</td>
-<td align="left">解决公钥的归属问题</td>
-<td align="left">公钥密码中的公钥+数字签名</td>
-</tr>
-</tbody></table>
-<h2 id="3-3-TLS-使用的密码技术"><a href="#3-3-TLS-使用的密码技术" class="headerlink" title="3.3. TLS 使用的密码技术"></a>3.3. TLS 使用的密码技术</h2><ol>
-<li>伪随机数生成器：秘钥生成随机性，更难被猜测</li>
-<li>对称密码：对称密码使用的秘钥就是由伪随机数生成，相较于非对称密码，效率更高</li>
-<li>消息认证码：保证消息信息的完整性、以及验证消息信息的来源</li>
-<li>公钥密码：证书技术使用的就是公钥密码</li>
-<li>数字签名：验证证书的签名，确定由真实的某个 CA 颁发 </li>
-<li>证书：解决公钥的真实归属问题，降低中间人攻击概率   </li>
-</ol>
-<h2 id="3-4-TLS-总结"><a href="#3-4-TLS-总结" class="headerlink" title="3.4. TLS 总结"></a>3.4. TLS 总结</h2><p>TLS 是一系列密码工具的框架，作为框架，它也是非常的灵活，体现在每个工具套件它都可以替换，即：客户端与服务端之间协商密码套件，从而更难的被攻破，例如使用不同方式的对称密码，或者公钥密码、数字签名生成方式、单向散列函数技术的替换等</p>
-<h1 id="4-RSA-简单示例"><a href="#4-RSA-简单示例" class="headerlink" title="4. RSA 简单示例"></a>4. RSA 简单示例</h1><p>RSA 是一种公钥密码算法，我们简单的走一遍它的加密解密过程<br>加密算法：密文 = (明文^E) mod N，其中公钥为{E,N}，即”求明文的E次方的对 N 的余数“<br>解密算法：明文 = (密文^D) mod N，其中秘钥为{D,N}，即”求密文的D次方的对 N 的余数“<br>例：我们已知公钥为{5,323}，私钥为{29,323}，明文为300，请写出加密和解密的过程：  </p>
-<blockquote>
-<p>加密：密文 = 123 ^ 5 mod 323 = 225<br>解密：明文 = 225 ^ 29 mod 323 = [[(225 ^ 5) mod 323] * [(225 ^ 5) mod 323] * [(225 ^ 5) mod 323] * [(225 ^ 5) mod 323] * [(225 ^ 5) mod 323] * [(225 ^ 4) mod 323]] mod 323 = (4 * 4 * 4 * 4 * 4 * 290) mod 323 = 123</p>
-</blockquote>
-<h1 id="5-参考"><a href="#5-参考" class="headerlink" title="5. 参考"></a>5. 参考</h1><ol>
-<li>SSL加密发生在哪里：<a href="https://security.stackexchange.com/questions/19681/where-does-ssl-encryption-take-place" target="_blank" rel="noopener">https://security.stackexchange.com/questions/19681/where-does-ssl-encryption-take-place</a>  </li>
-<li>TLS工作流程：<a href="https://blog.csdn.net/ustccw/article/details/76691248" target="_blank" rel="noopener">https://blog.csdn.net/ustccw/article/details/76691248</a>  </li>
-<li>《图解密码技术》：<a href="https://book.douban.com/subject/26822106/" target="_blank" rel="noopener">https://book.douban.com/subject/26822106/</a> 豆瓣评分 9.5</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/12/HTTPS%E4%B8%AD%E7%9A%84TLS/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-dubbo" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/12/dubbo/">dubbo</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/12/dubbo/" class="archive-article-date">
-  	<time datetime="2020-04-12T07:52:20.264Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文是作者根据官方文档以及自己平时的使用情况，对 Dubbo 所做的一个总结。如果不懂 Dubbo 的使用的话，可以参考我的这篇文章<a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484706&idx=1&sn=d413fc17023482f67ca17cb6756b9ff8&chksm=fd985343caefda555969568fdf4734536e0a1745f9de337d434a7dbd04e893bd2d75f3641aab&token=1902169190&lang=zh_CN#rd" target="_blank" rel="noopener">《超详细，新手都能看懂 ！使用SpringBoot+Dubbo 搭建一个简单的分布式服务》</a></p>
-<p>Dubbo 官网：<a href="http://dubbo.apache.org/zh-cn/index.html" target="_blank" rel="noopener">http://dubbo.apache.org/zh-cn/index.html</a></p>
-<p>Dubbo 中文文档： <a href="http://dubbo.apache.org/zh-cn/index.html" target="_blank" rel="noopener">http://dubbo.apache.org/zh-cn/index.html</a></p>
-<!-- MarkdownTOC -->
-
-<ul>
-<li><a href="#一-重要的概念">一 重要的概念</a><ul>
-<li><a href="#11-什么是-dubbo">1.1 什么是 Dubbo?</a></li>
-<li><a href="#12-什么是-rpcrpc原理是什么">1.2 什么是 RPC?RPC原理是什么?</a></li>
-<li><a href="#13-为什么要用-dubbo">1.3 为什么要用 Dubbo?</a></li>
-<li><a href="#14-什么是分布式">1.4 什么是分布式?</a></li>
-<li><a href="#15-为什么要分布式">1.5 为什么要分布式?</a></li>
-</ul>
-</li>
-<li><a href="#二-dubbo-的架构">二 Dubbo 的架构</a><ul>
-<li><a href="#21-dubbo-的架构图解">2.1 Dubbo 的架构图解</a></li>
-<li><a href="#22-dubbo-工作原理">2.2 Dubbo 工作原理</a></li>
-</ul>
-</li>
-<li><a href="#三-dubbo-的负载均衡策略">三 Dubbo 的负载均衡策略</a><ul>
-<li><a href="#31-先来解释一下什么是负载均衡">3.1 先来解释一下什么是负载均衡</a></li>
-<li><a href="#32-再来看看-dubbo-提供的负载均衡策略">3.2 再来看看 Dubbo 提供的负载均衡策略</a><ul>
-<li><a href="#321-random-loadbalance默认基于权重的随机负载均衡机制">3.2.1  Random LoadBalance(默认，基于权重的随机负载均衡机制)</a></li>
-<li><a href="#322-roundrobin-loadbalance不推荐基于权重的轮询负载均衡机制">3.2.2  RoundRobin LoadBalance(不推荐，基于权重的轮询负载均衡机制)</a></li>
-<li><a href="#323-leastactive-loadbalance">3.2.3 LeastActive LoadBalance</a></li>
-<li><a href="#324-consistenthash-loadbalance">3.2.4  ConsistentHash LoadBalance</a></li>
-</ul>
-</li>
-<li><a href="#33-配置方式">3.3 配置方式</a></li>
-</ul>
-</li>
-<li><a href="#四-zookeeper宕机与dubbo直连的情况">四 zookeeper宕机与dubbo直连的情况</a></li>
-</ul>
-<!-- /MarkdownTOC -->
-
-
-<h2 id="一-重要的概念"><a href="#一-重要的概念" class="headerlink" title="一 重要的概念"></a>一 重要的概念</h2><h3 id="1-1-什么是-Dubbo"><a href="#1-1-什么是-Dubbo" class="headerlink" title="1.1 什么是 Dubbo?"></a>1.1 什么是 Dubbo?</h3><p>Apache Dubbo (incubating) |ˈdʌbəʊ| 是一款高性能、轻量级的开源Java RPC 框架，它提供了三大核心能力：面向接口的远程方法调用，智能容错和负载均衡，以及服务自动注册和发现。简单来说 Dubbo 是一个分布式服务框架，致力于提供高性能和透明化的RPC远程服务调用方案，以及SOA服务治理方案。</p>
-<p>Dubbo 目前已经有接近 23k 的 Star ，Dubbo的Github 地址：<a href="https://github.com/apache/incubator-dubbo" target="_blank" rel="noopener">https://github.com/apache/incubator-dubbo</a> 。 另外，在开源中国举行的2018年度最受欢迎中国开源软件这个活动的评选中，Dubbo 更是凭借其超高人气仅次于 vue.js 和 ECharts 获得第三名的好成绩。</p>
-<p>Dubbo 是由阿里开源，后来加入了 Apache 。正式由于 Dubbo 的出现，才使得越来越多的公司开始使用以及接受分布式架构。</p>
-<p><strong>我们上面说了  Dubbo 实际上是 RPC 框架，那么什么是 RPC呢？</strong></p>
-<h3 id="1-2-什么是-RPC-RPC原理是什么"><a href="#1-2-什么是-RPC-RPC原理是什么" class="headerlink" title="1.2 什么是 RPC?RPC原理是什么?"></a>1.2 什么是 RPC?RPC原理是什么?</h3><p><strong>什么是 RPC？</strong></p>
-<p>RPC（Remote Procedure Call）—远程过程调用，它是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。比如两个不同的服务A,B部署在两台不同的机器上，那么服务 A 如果想要调用服务 B 中的某个方法该怎么办呢？使用 HTTP请求 当然可以，但是可能会比较慢而且一些优化做的并不好。 RPC 的出现就是为了解决这个问题。</p>
-<p><strong>RPC原理是什么？</strong></p>
-<p>我这里这是简单的提一下。详细内容可以查看下面这篇文章：</p>
-<p><a href="http://www.importnew.com/22003.html" target="_blank" rel="noopener">http://www.importnew.com/22003.html</a></p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-6/37345851.jpg" alt="RPC原理图"></p>
-<ol>
-<li>服务消费方（client）调用以本地调用方式调用服务；</li>
-<li>client stub接收到调用后负责将方法、参数等组装成能够进行网络传输的消息体；</li>
-<li>client stub找到服务地址，并将消息发送到服务端；</li>
-<li>server stub收到消息后进行解码；</li>
-<li>server stub根据解码结果调用本地的服务；</li>
-<li>本地服务执行并将结果返回给server stub；</li>
-<li>server stub将返回结果打包成消息并发送至消费方；</li>
-<li>client stub接收到消息，并进行解码；</li>
-<li>服务消费方得到最终结果。</li>
-</ol>
-<p>下面再贴一个网上的时序图：</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-6/32527396.jpg" alt="RPC原理时序图"></p>
-<p><strong>说了这么多，我们为什么要用 Dubbo 呢？</strong></p>
-<h3 id="1-3-为什么要用-Dubbo"><a href="#1-3-为什么要用-Dubbo" class="headerlink" title="1.3 为什么要用 Dubbo?"></a>1.3 为什么要用 Dubbo?</h3><p>Dubbo 的诞生和 SOA 分布式架构的流行有着莫大的关系。SOA 面向服务的架构（Service Oriented Architecture），也就是把工程按照业务逻辑拆分成服务层、表现层两个工程。服务层中包含业务逻辑，只需要对外提供服务即可。表现层只需要处理和页面的交互，业务逻辑都是调用服务层的服务来实现。SOA架构中有两个主要角色：服务提供者（Provider）和服务使用者（Consumer）。</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-26/43050183.jpg" alt="为什么要用 Dubbo"></p>
-<p><strong>如果你要开发分布式程序，你也可以直接基于 HTTP 接口进行通信，但是为什么要用 Dubbo呢？</strong></p>
-<p>我觉得主要可以从 Dubbo 提供的下面四点特性来说为什么要用 Dubbo：</p>
-<ol>
-<li><strong>负载均衡</strong>——同一个服务部署在不同的机器时该调用那一台机器上的服务</li>
-<li><strong>服务调用链路生成</strong>——随着系统的发展，服务越来越多，服务间依赖关系变得错踪复杂，甚至分不清哪个应用要在哪个应用之前启动，架构师都不能完整的描述应用的架构关系。Dubbo 可以为我们解决服务之间互相是如何调用的。</li>
-<li><strong>服务访问压力以及时长统计、资源调度和治理</strong>——基于访问压力实时管理集群容量，提高集群利用率。</li>
-<li><strong>服务降级</strong>——某个服务挂掉之后调用备用服务</li>
-</ol>
-<p>另外，Dubbo 除了能够应用在分布式系统中，也可以应用在现在比较火的微服务系统中。不过，由于 Spring Cloud 在微服务中应用更加广泛，所以，我觉得一般我们提 Dubbo 的话，大部分是分布式系统的情况。</p>
-<p><strong>我们刚刚提到了分布式这个概念，下面再给大家介绍一下什么是分布式？为什么要分布式？</strong></p>
-<h3 id="1-4-什么是分布式"><a href="#1-4-什么是分布式" class="headerlink" title="1.4 什么是分布式?"></a>1.4 什么是分布式?</h3><p>分布式或者说 SOA 分布式重要的就是面向服务，说简单的分布式就是我们把整个系统拆分成不同的服务然后将这些服务放在不同的服务器上减轻单体服务的压力提高并发量和性能。比如电商系统可以简单地拆分成订单系统、商品系统、登录系统等等，拆分之后的每个服务可以部署在不同的机器上，如果某一个服务的访问量比较大的话也可以将这个服务同时部署在多台机器上。</p>
-<h3 id="1-5-为什么要分布式"><a href="#1-5-为什么要分布式" class="headerlink" title="1.5 为什么要分布式?"></a>1.5 为什么要分布式?</h3><p>从开发角度来讲单体应用的代码都集中在一起，而分布式系统的代码根据业务被拆分。所以，每个团队可以负责一个服务的开发，这样提升了开发效率。另外，代码根据业务拆分之后更加便于维护和扩展。</p>
-<p>另外，我觉得将系统拆分成分布式之后不光便于系统扩展和维护，更能提高整个系统的性能。你想一想嘛?把整个系统拆分成不同的服务/系统，然后每个服务/系统 单独部署在一台服务器上，是不是很大程度上提高了系统性能呢？</p>
-<h2 id="二-Dubbo-的架构"><a href="#二-Dubbo-的架构" class="headerlink" title="二 Dubbo 的架构"></a>二 Dubbo 的架构</h2><h3 id="2-1-Dubbo-的架构图解"><a href="#2-1-Dubbo-的架构图解" class="headerlink" title="2.1 Dubbo 的架构图解"></a>2.1 Dubbo 的架构图解</h3><p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-26/46816446.jpg" alt="Dubbo 架构"></p>
-<p><strong>上述节点简单说明：</strong></p>
-<ul>
-<li><strong>Provider：</strong>   暴露服务的服务提供方</li>
-<li><strong>Consumer：</strong>  调用远程服务的服务消费方</li>
-<li><strong>Registry：</strong>  服务注册与发现的注册中心</li>
-<li><strong>Monitor：</strong>   统计服务的调用次数和调用时间的监控中心</li>
-<li><strong>Container：</strong>   服务运行容器</li>
-</ul>
-<p><strong>调用关系说明：</strong></p>
-<ol>
-<li>服务容器负责启动，加载，运行服务提供者。</li>
-<li>服务提供者在启动时，向注册中心注册自己提供的服务。</li>
-<li>服务消费者在启动时，向注册中心订阅自己所需的服务。</li>
-<li>注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者。</li>
-<li>服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。</li>
-<li>服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心。</li>
-</ol>
-<p><strong>重要知识点总结：</strong></p>
-<ul>
-<li><strong>注册中心负责服务地址的注册与查找，相当于目录服务，服务提供者和消费者只在启动时与注册中心交互，注册中心不转发请求，压力较小</strong></li>
-<li><strong>监控中心负责统计各服务调用次数，调用时间等，统计先在内存汇总后每分钟一次发送到监控中心服务器，并以报表展示</strong></li>
-<li><strong>注册中心，服务提供者，服务消费者三者之间均为长连接，监控中心除外</strong></li>
-<li><strong>注册中心通过长连接感知服务提供者的存在，服务提供者宕机，注册中心将立即推送事件通知消费者</strong></li>
-<li><strong>注册中心和监控中心全部宕机，不影响已运行的提供者和消费者，消费者在本地缓存了提供者列表</strong></li>
-<li><strong>注册中心和监控中心都是可选的，服务消费者可以直连服务提供者</strong></li>
-<li><strong>服务提供者无状态，任意一台宕掉后，不影响使用</strong></li>
-<li><strong>服务提供者全部宕掉后，服务消费者应用将无法使用，并无限次重连等待服务提供者恢复</strong></li>
-</ul>
-<h3 id="2-2-Dubbo-工作原理"><a href="#2-2-Dubbo-工作原理" class="headerlink" title="2.2 Dubbo 工作原理"></a>2.2 Dubbo 工作原理</h3><p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-26/64702923.jpg" alt="Dubbo 工作原理"></p>
-<p>图中从下至上分为十层，各层均为单向依赖，右边的黑色箭头代表层之间的依赖关系，每一层都可以剥离上层被复用，其中，Service 和 Config 层为 API，其它各层均为 SPI。</p>
-<p><strong>各层说明</strong>：</p>
-<ul>
-<li>第一层：<strong>service层</strong>，接口层，给服务提供者和消费者来实现的</li>
-<li>第二层：<strong>config层</strong>，配置层，主要是对dubbo进行各种配置的</li>
-<li>第三层：<strong>proxy层</strong>，服务接口透明代理，生成服务的客户端 Stub 和服务器端 Skeleton</li>
-<li>第四层：<strong>registry层</strong>，服务注册层，负责服务的注册与发现</li>
-<li>第五层：<strong>cluster层</strong>，集群层，封装多个服务提供者的路由以及负载均衡，将多个实例组合成一个服务</li>
-<li>第六层：<strong>monitor层</strong>，监控层，对rpc接口的调用次数和调用时间进行监控</li>
-<li>第七层：<strong>protocol层</strong>，远程调用层，封装rpc调用</li>
-<li>第八层：<strong>exchange层</strong>，信息交换层，封装请求响应模式，同步转异步</li>
-<li>第九层：<strong>transport层</strong>，网络传输层，抽象mina和netty为统一接口</li>
-<li>第十层：<strong>serialize层</strong>，数据序列化层。网络传输需要。</li>
-</ul>
-<h2 id="三-Dubbo-的负载均衡策略"><a href="#三-Dubbo-的负载均衡策略" class="headerlink" title="三 Dubbo 的负载均衡策略"></a>三 Dubbo 的负载均衡策略</h2><h3 id="3-1-先来解释一下什么是负载均衡"><a href="#3-1-先来解释一下什么是负载均衡" class="headerlink" title="3.1 先来解释一下什么是负载均衡"></a>3.1 先来解释一下什么是负载均衡</h3><p><strong>先来个官方的解释。</strong></p>
-<blockquote>
-<p>维基百科对负载均衡的定义：负载均衡改善了跨多个计算资源（例如计算机，计算机集群，网络链接，中央处理单元或磁盘驱动的的工作负载分布。负载平衡旨在优化资源使用，最大化吞吐量，最小化响应时间，并避免任何单个资源的过载。使用具有负载平衡而不是单个组件的多个组件可以通过冗余提高可靠性和可用性。负载平衡通常涉及专用软件或硬件</p>
-</blockquote>
-<p><strong>上面讲的大家可能不太好理解，再用通俗的话给大家说一下。</strong></p>
-<p>比如我们的系统中的某个服务的访问量特别大，我们将这个服务部署在了多台服务器上，当客户端发起请求的时候，多台服务器都可以处理这个请求。那么，如何正确选择处理该请求的服务器就很关键。假如，你就要一台服务器来处理该服务的请求，那该服务部署在多台服务器的意义就不复存在了。负载均衡就是为了避免单个服务器响应同一请求，容易造成服务器宕机、崩溃等问题，我们从负载均衡的这四个字就能明显感受到它的意义。</p>
-<h3 id="3-2-再来看看-Dubbo-提供的负载均衡策略"><a href="#3-2-再来看看-Dubbo-提供的负载均衡策略" class="headerlink" title="3.2 再来看看 Dubbo 提供的负载均衡策略"></a>3.2 再来看看 Dubbo 提供的负载均衡策略</h3><p>在集群负载均衡时，Dubbo 提供了多种均衡策略，默认为 <code>random</code> 随机调用。可以自行扩展负载均衡策略，参见：<a href="https://dubbo.gitbooks.io/dubbo-dev-book/content/impls/load-balance.html" target="_blank" rel="noopener">负载均衡扩展</a>。</p>
-<p>备注:下面的图片来自于：尚硅谷2018Dubbo 视频。</p>
-<h4 id="3-2-1-Random-LoadBalance-默认，基于权重的随机负载均衡机制"><a href="#3-2-1-Random-LoadBalance-默认，基于权重的随机负载均衡机制" class="headerlink" title="3.2.1  Random LoadBalance(默认，基于权重的随机负载均衡机制)"></a>3.2.1  Random LoadBalance(默认，基于权重的随机负载均衡机制)</h4><ul>
-<li><strong>随机，按权重设置随机概率。</strong></li>
-<li>在一个截面上碰撞的概率高，但调用量越大分布越均匀，而且按概率使用权重后也比较均匀，有利于动态调整提供者权重。</li>
-</ul>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-7/77722327.jpg" alt="基于权重的随机负载均衡机制"></p>
-<h4 id="3-2-2-RoundRobin-LoadBalance-不推荐，基于权重的轮询负载均衡机制"><a href="#3-2-2-RoundRobin-LoadBalance-不推荐，基于权重的轮询负载均衡机制" class="headerlink" title="3.2.2  RoundRobin LoadBalance(不推荐，基于权重的轮询负载均衡机制)"></a>3.2.2  RoundRobin LoadBalance(不推荐，基于权重的轮询负载均衡机制)</h4><ul>
-<li>轮循，按公约后的权重设置轮循比率。</li>
-<li>存在慢的提供者累积请求的问题，比如：第二台机器很慢，但没挂，当请求调到第二台时就卡在那，久而久之，所有请求都卡在调到第二台上。</li>
-</ul>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-7/97933247.jpg" alt="基于权重的轮询负载均衡机制"></p>
-<h4 id="3-2-3-LeastActive-LoadBalance"><a href="#3-2-3-LeastActive-LoadBalance" class="headerlink" title="3.2.3 LeastActive LoadBalance"></a>3.2.3 LeastActive LoadBalance</h4><ul>
-<li>最少活跃调用数，相同活跃数的随机，活跃数指调用前后计数差。</li>
-<li>使慢的提供者收到更少请求，因为越慢的提供者的调用前后计数差会越大。</li>
-</ul>
-<h4 id="3-2-4-ConsistentHash-LoadBalance"><a href="#3-2-4-ConsistentHash-LoadBalance" class="headerlink" title="3.2.4  ConsistentHash LoadBalance"></a>3.2.4  ConsistentHash LoadBalance</h4><ul>
-<li><strong>一致性 Hash，相同参数的请求总是发到同一提供者。(如果你需要的不是随机负载均衡，是要一类请求都到一个节点，那就走这个一致性hash策略。)</strong></li>
-<li>当某一台提供者挂时，原本发往该提供者的请求，基于虚拟节点，平摊到其它提供者，不会引起剧烈变动。</li>
-<li>算法参见：<a href="http://en.wikipedia.org/wiki/Consistent_hashing" target="_blank" rel="noopener">http://en.wikipedia.org/wiki/Consistent_hashing</a></li>
-<li>缺省只对第一个参数 Hash，如果要修改，请配置 <code>&lt;dubbo:parameter key=&quot;hash.arguments&quot; value=&quot;0,1&quot; /&gt;</code></li>
-<li>缺省用 160 份虚拟节点，如果要修改，请配置 <code>&lt;dubbo:parameter key=&quot;hash.nodes&quot; value=&quot;320&quot; /&gt;</code></li>
-</ul>
-<h3 id="3-3-配置方式"><a href="#3-3-配置方式" class="headerlink" title="3.3 配置方式"></a>3.3 配置方式</h3><p><strong>xml 配置方式</strong></p>
-<p>服务端服务级别</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:service <span class="class"><span class="keyword">interface</span></span>=<span class="string">"..."</span> loadbalance=<span class="string">"roundrobin"</span> /&gt;</span><br></pre></td></tr></table></figure>
-<p>客户端服务级别</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:reference <span class="class"><span class="keyword">interface</span></span>=<span class="string">"..."</span> loadbalance=<span class="string">"roundrobin"</span> /&gt;</span><br></pre></td></tr></table></figure>
-
-<p>服务端方法级别</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:service <span class="class"><span class="keyword">interface</span></span>=<span class="string">"..."</span>&gt;</span><br><span class="line">    &lt;dubbo:method name=<span class="string">"..."</span> loadbalance=<span class="string">"roundrobin"</span>/&gt;</span><br><span class="line">&lt;/dubbo:service&gt;</span><br></pre></td></tr></table></figure>
-
-<p>客户端方法级别</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:reference <span class="class"><span class="keyword">interface</span></span>=<span class="string">"..."</span>&gt;</span><br><span class="line">    &lt;dubbo:method name=<span class="string">"..."</span> loadbalance=<span class="string">"roundrobin"</span>/&gt;</span><br><span class="line">&lt;/dubbo:reference&gt;</span><br></pre></td></tr></table></figure>
-
-<p><strong>注解配置方式：</strong></p>
-<p>消费方基于基于注解的服务级别配置方式：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Reference</span>(loadbalance = <span class="string">"roundrobin"</span>)</span><br><span class="line">HelloService helloService;</span><br></pre></td></tr></table></figure>
-
-<h2 id="四-zookeeper宕机与dubbo直连的情况"><a href="#四-zookeeper宕机与dubbo直连的情况" class="headerlink" title="四 zookeeper宕机与dubbo直连的情况"></a>四 zookeeper宕机与dubbo直连的情况</h2><p>zookeeper宕机与dubbo直连的情况在面试中可能会被经常问到，所以要引起重视。</p>
-<p>在实际生产中，假如zookeeper注册中心宕掉，一段时间内服务消费方还是能够调用提供方的服务的，实际上它使用的本地缓存进行通讯，这只是dubbo健壮性的一种提现。</p>
-<p><strong>dubbo的健壮性表现：</strong></p>
-<ol>
-<li>监控中心宕掉不影响使用，只是丢失部分采样数据</li>
-<li>数据库宕掉后，注册中心仍能通过缓存提供服务列表查询，但不能注册新服务</li>
-<li>注册中心对等集群，任意一台宕掉后，将自动切换到另一台</li>
-<li>注册中心全部宕掉后，服务提供者和服务消费者仍能通过本地缓存通讯</li>
-<li>服务提供者无状态，任意一台宕掉后，不影响使用</li>
-<li>服务提供者全部宕掉后，服务消费者应用将无法使用，并无限次重连等待服务提供者恢复</li>
-</ol>
-<p>我们前面提到过：注册中心负责服务地址的注册与查找，相当于目录服务，服务提供者和消费者只在启动时与注册中心交互，注册中心不转发请求，压力较小。所以，我们可以完全可以绕过注册中心——采用 <strong>dubbo 直连</strong> ，即在服务消费方配置服务提供方的位置信息。</p>
-<p><strong>xml配置方式：</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"userService"</span> <span class="attr">interface</span>=<span class="string">"com.zang.gmall.service.UserService"</span> <span class="attr">url</span>=<span class="string">"dubbo://localhost:20880"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>注解方式：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Reference</span>(url = <span class="string">"127.0.0.1:20880"</span>)   </span><br><span class="line">HelloService helloService;</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/12/dubbo/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-分布式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1351,9 +941,340 @@
 
 
   
+    <article id="post-算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/12/%E7%AE%97%E6%B3%95/">算法</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/12/%E7%AE%97%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2020-04-12T07:52:20.126Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="LeetCode"><a href="#LeetCode" class="headerlink" title="LeetCode"></a>LeetCode</h2><p><a href="https://leetcode-cn.com/" target="_blank" rel="noopener">LeetCode（中国）官网</a></p>
+<p><a href="https://leetcode-cn.com/articles/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%9C%B0%E4%BD%BF%E7%94%A8-leetcode/" target="_blank" rel="noopener">如何高效地使用 LeetCode</a></p>
+<h2 id="牛客网："><a href="#牛客网：" class="headerlink" title="牛客网："></a>牛客网：</h2><p><a href="https://www.nowcoder.com" target="_blank" rel="noopener">牛客网首页</a></p>
+<blockquote>
+<h3 id="剑指offer编程题"><a href="#剑指offer编程题" class="headerlink" title="剑指offer编程题"></a><strong><a href="https://www.nowcoder.com/ta/coding-interviews" target="_blank" rel="noopener">剑指offer编程题</a></strong></h3></blockquote>
+<p><strong>分类解析：</strong></p>
+<ul>
+<li><a href="https://github.com/Snailclimb/Java-Guide/tree/master/数据结构与算法/算法题解析/剑指offer/（1）斐波那契数列问题和跳台阶问题.md" target="_blank" rel="noopener">（1）斐波那契数列问题和跳台阶问题</a></li>
+<li><a href="https://github.com/Snailclimb/Java-Guide/tree/master/数据结构与算法/算法题解析/剑指offer/（2）二维数组查找和替换空格问题.md" target="_blank" rel="noopener">（2）二维数组查找和替换空格问题</a></li>
+<li><a href="https://github.com/Snailclimb/Java-Guide/tree/master/数据结构与算法/算法题解析/剑指offer/（3）数值的整数次方和调整数组元素顺序.md" target="_blank" rel="noopener">（3）数值的整数次方和调整数组元素顺序</a></li>
+<li><a href="https://github.com/Snailclimb/Java-Guide/tree/master/数据结构与算法/算法题解析/剑指offer/（4）链表相关编程题.md" target="_blank" rel="noopener">（4）链表相关编程题</a></li>
+<li><a href="https://github.com/Snailclimb/Java-Guide/tree/master/数据结构与算法/算法题解析/剑指offer/（5）栈变队列和栈的压入、弹出序列.md" target="_blank" rel="noopener">（5）栈变队列和栈的压入、弹出序列</a></li>
+</ul>
+<blockquote>
+<h3 id="2017校招真题"><a href="#2017校招真题" class="headerlink" title="2017校招真题"></a><a href="https://www.nowcoder.com/ta/2017test" target="_blank" rel="noopener">2017校招真题</a></h3></blockquote>
+<blockquote>
+<h3 id="华为机试题"><a href="#华为机试题" class="headerlink" title="华为机试题"></a><a href="https://www.nowcoder.com/ta/huawei" target="_blank" rel="noopener">华为机试题</a></h3></blockquote>
+<h2 id="公司真题"><a href="#公司真题" class="headerlink" title="公司真题"></a>公司真题</h2><blockquote>
+<p><a href="https://www.nowcoder.com/test/6910869/summary" target="_blank" rel="noopener"> 网易2018校园招聘编程题真题集合</a></p>
+</blockquote>
+<p><strong>解析：</strong></p>
+<ul>
+<li><a href="https://github.com/Snailclimb/Java-Guide/tree/master/数据结构与算法/算法题解析/公司真题/网易2018校招编程题1-3.md" target="_blank" rel="noopener"> 网易2018校招编程题1-3</a></li>
+</ul>
+<blockquote>
+<p><a href="https://www.nowcoder.com/test/6291726/summary" target="_blank" rel="noopener"> 网易2018校招内推编程题集合</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.nowcoder.com/test/5986669/summary" target="_blank" rel="noopener">2017年校招全国统一模拟笔试(第五场)编程题集合</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.nowcoder.com/test/5507925/summary" target="_blank" rel="noopener">2017年校招全国统一模拟笔试(第四场)编程题集合</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.nowcoder.com/test/5217106/summary" target="_blank" rel="noopener">2017年校招全国统一模拟笔试(第三场)编程题集合</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.nowcoder.com/test/4546329/summary" target="_blank" rel="noopener">2017年校招全国统一模拟笔试(第二场)编程题集合</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.nowcoder.com/test/4236887/summary" target="_blank" rel="noopener"> 2017年校招全国统一模拟笔试(第一场)编程题集合</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.nowcoder.com/test/4998655/summary" target="_blank" rel="noopener">百度2017春招笔试真题编程题集合</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.nowcoder.com/test/4575457/summary" target="_blank" rel="noopener">网易2017春招笔试真题编程题集合</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.nowcoder.com/test/2811407/summary" target="_blank" rel="noopener">网易2017秋招编程题集合</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.nowcoder.com/test/2385858/summary" target="_blank" rel="noopener">网易有道2017内推编程题</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.nowcoder.com/test/3701760/summary" target="_blank" rel="noopener"> 滴滴出行2017秋招笔试真题-编程题汇总</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.nowcoder.com/test/1725829/summary" target="_blank" rel="noopener">腾讯2017暑期实习生编程题</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.nowcoder.com/test/1649301/summary" target="_blank" rel="noopener">今日头条2017客户端工程师实习生笔试题</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.nowcoder.com/test/1649268/summary" target="_blank" rel="noopener">今日头条2017后端工程师实习生笔试题</a></p>
+</blockquote>
+<h2 id="排序算法："><a href="#排序算法：" class="headerlink" title="排序算法："></a>排序算法：</h2><p><a href="http://www.cnblogs.com/chengxiao/p/6103002.html" target="_blank" rel="noopener">图解排序算法(一)之3种简单排序(选择，冒泡，直接插入)</a></p>
+<p><a href="https://www.cnblogs.com/chengxiao/p/6104371.html" target="_blank" rel="noopener">图解排序算法(二)之希尔排序</a></p>
+<p><a href="http://www.cnblogs.com/chengxiao/p/6129630.html" target="_blank" rel="noopener">图解排序算法(三)之堆排序</a></p>
+<p><a href="http://www.cnblogs.com/chengxiao/p/6194356.html" target="_blank" rel="noopener">图解排序算法(四)之归并排序</a></p>
+<p><a href="http://www.cnblogs.com/chengxiao/p/6262208.html" target="_blank" rel="noopener">图解排序算法(五)之快速排序——三数取中法</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/12/%E7%AE%97%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-数据结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="archive-article-date">
+  	<time datetime="2020-04-12T07:52:20.124Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- MarkdownTOC -->
+
+<ul>
+<li><a href="#queue">Queue</a><ul>
+<li><a href="#什么是队列">什么是队列</a></li>
+<li><a href="#队列的种类">队列的种类</a></li>
+<li><a href="#java-集合框架中的队列-queue">Java 集合框架中的队列 Queue</a></li>
+<li><a href="#推荐文章">推荐文章</a></li>
+</ul>
+</li>
+<li><a href="#set">Set</a><ul>
+<li><a href="#什么是-set">什么是 Set</a></li>
+<li><a href="#补充：有序集合与无序集合说明">补充：有序集合与无序集合说明</a></li>
+<li><a href="#hashset-和-treeset-底层数据结构">HashSet 和 TreeSet 底层数据结构</a></li>
+<li><a href="#推荐文章-1">推荐文章</a></li>
+</ul>
+</li>
+<li><a href="#list">List</a><ul>
+<li><a href="#什么是list">什么是List</a></li>
+<li><a href="#list的常见实现类">List的常见实现类</a></li>
+<li><a href="#arraylist-和-linkedlist-源码学习">ArrayList 和 LinkedList 源码学习</a></li>
+<li><a href="#推荐阅读">推荐阅读</a></li>
+</ul>
+</li>
+<li><a href="#map">Map</a></li>
+<li><a href="#树">树</a></li>
+</ul>
+<!-- /MarkdownTOC -->
+
+
+<h2 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h2><h3 id="什么是队列"><a href="#什么是队列" class="headerlink" title="什么是队列"></a>什么是队列</h3><p>队列是数据结构中比较重要的一种类型，它支持 FIFO，尾部添加、头部删除（先进队列的元素先出队列），跟我们生活中的排队类似。</p>
+<h3 id="队列的种类"><a href="#队列的种类" class="headerlink" title="队列的种类"></a>队列的种类</h3><ul>
+<li><strong>单队列</strong>（单队列就是常见的队列, 每次添加元素时，都是添加到队尾，存在“假溢出”的问题也就是明明有位置却不能添加的情况）</li>
+<li><strong>循环队列</strong>（避免了“假溢出”的问题）</li>
+</ul>
+<h3 id="Java-集合框架中的队列-Queue"><a href="#Java-集合框架中的队列-Queue" class="headerlink" title="Java 集合框架中的队列 Queue"></a>Java 集合框架中的队列 Queue</h3><p>Java 集合中的 Queue 继承自 Collection 接口 ，Deque, LinkedList, PriorityQueue, BlockingQueue 等类都实现了它。<br>Queue 用来存放 等待处理元素 的集合，这种场景一般用于缓冲、并发访问。<br>除了继承 Collection 接口的一些方法，Queue 还添加了额外的 添加、删除、查询操作。</p>
+<h3 id="推荐文章"><a href="#推荐文章" class="headerlink" title="推荐文章"></a>推荐文章</h3><ul>
+<li><a href="https://blog.csdn.net/u011240877/article/details/52860924" target="_blank" rel="noopener">Java 集合深入理解（9）：Queue 队列</a></li>
+</ul>
+<h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><h3 id="什么是-Set"><a href="#什么是-Set" class="headerlink" title="什么是 Set"></a>什么是 Set</h3><p>Set 继承于 Collection 接口，是一个不允许出现重复元素，并且无序的集合，主要 HashSet 和 TreeSet 两大实现类。</p>
+<p>在判断重复元素的时候，Set 集合会调用 hashCode()和 equal()方法来实现。</p>
+<h3 id="补充：有序集合与无序集合说明"><a href="#补充：有序集合与无序集合说明" class="headerlink" title="补充：有序集合与无序集合说明"></a>补充：有序集合与无序集合说明</h3><ul>
+<li>有序集合：集合里的元素可以根据 key 或 index 访问 (List、Map)</li>
+<li>无序集合：集合里的元素只能遍历。（Set）</li>
+</ul>
+<h3 id="HashSet-和-TreeSet-底层数据结构"><a href="#HashSet-和-TreeSet-底层数据结构" class="headerlink" title="HashSet 和 TreeSet 底层数据结构"></a>HashSet 和 TreeSet 底层数据结构</h3><p><strong>HashSet</strong> 是哈希表结构，主要利用 HashMap 的 key 来存储元素，计算插入元素的 hashCode 来获取元素在集合中的位置；</p>
+<p><strong>TreeSet</strong> 是红黑树结构，每一个元素都是树中的一个节点，插入的元素都会进行排序；</p>
+<h3 id="推荐文章-1"><a href="#推荐文章-1" class="headerlink" title="推荐文章"></a>推荐文章</h3><ul>
+<li><a href="https://www.jianshu.com/p/b48c47a42916" target="_blank" rel="noopener">Java集合–Set(基础)</a></li>
+</ul>
+<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><h3 id="什么是List"><a href="#什么是List" class="headerlink" title="什么是List"></a>什么是List</h3><p>在 List 中，用户可以精确控制列表中每个元素的插入位置，另外用户可以通过整数索引（列表中的位置）访问元素，并搜索列表中的元素。 与 Set 不同，List 通常允许重复的元素。 另外 List 是有序集合而 Set 是无序集合。</p>
+<h3 id="List的常见实现类"><a href="#List的常见实现类" class="headerlink" title="List的常见实现类"></a>List的常见实现类</h3><p><strong>ArrayList</strong> 是一个数组队列，相当于动态数组。它由数组实现，随机访问效率高，随机插入、随机删除效率低。</p>
+<p><strong>LinkedList</strong> 是一个双向链表。它也可以被当作堆栈、队列或双端队列进行操作。LinkedList随机访问效率低，但随机插入、随机删除效率高。</p>
+<p><strong>Vector</strong> 是矢量队列，和ArrayList一样，它也是一个动态数组，由数组实现。但是ArrayList是非线程安全的，而Vector是线程安全的。</p>
+<p><strong>Stack</strong> 是栈，它继承于Vector。它的特性是：先进后出(FILO, First In Last Out)。相关阅读：<a href="https://blog.csdn.net/javazejian/article/details/53362993" target="_blank" rel="noopener">java数据结构与算法之栈（Stack）设计与实现</a></p>
+<h3 id="ArrayList-和-LinkedList-源码学习"><a href="#ArrayList-和-LinkedList-源码学习" class="headerlink" title="ArrayList 和 LinkedList 源码学习"></a>ArrayList 和 LinkedList 源码学习</h3><ul>
+<li><a href="https://github.com/Snailclimb/Java-Guide/blob/master/Java/ArrayList.md" target="_blank" rel="noopener">ArrayList 源码学习</a>    </li>
+<li><a href="https://github.com/Snailclimb/Java-Guide/blob/master/Java/LinkedList.md" target="_blank" rel="noopener">LinkedList 源码学习</a>   </li>
+</ul>
+<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
+<li><a href="https://blog.csdn.net/javazejian/article/details/52953190" target="_blank" rel="noopener">java 数据结构与算法之顺序表与链表深入分析</a></li>
+</ul>
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><ul>
+<li><a href="https://juejin.im/post/5ab0568b5188255580020e56" target="_blank" rel="noopener">集合框架源码学习之 HashMap(JDK1.8)</a></li>
+<li><a href="https://link.juejin.im/?target=http%3A%2F%2Fwww.cnblogs.com%2Fchengxiao%2Fp%2F6842045.html">ConcurrentHashMap 实现原理及源码分析</a></li>
+</ul>
+<h2 id="树"><a href="#树" class="headerlink" title="树"></a>树</h2><ul>
+<li><h3 id="1-二叉树"><a href="#1-二叉树" class="headerlink" title="1 二叉树"></a>1 二叉树</h3><p> <a href="https://baike.baidu.com/item/%E4%BA%8C%E5%8F%89%E6%A0%91" target="_blank" rel="noopener">二叉树</a>（百度百科）</p>
+<p>(1)<a href="https://baike.baidu.com/item/%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91" target="_blank" rel="noopener">完全二叉树</a>——若设二叉树的高度为h，除第 h 层外，其它各层 (1～h-1) 的结点数都达到最大个数，第h层有叶子结点，并且叶子结点都是从左到右依次排布，这就是完全二叉树。</p>
+<p>(2)<a href="https://baike.baidu.com/item/%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91" target="_blank" rel="noopener">满二叉树</a>——除了叶结点外每一个结点都有左右子叶且叶子结点都处在最底层的二叉树。</p>
+<p>(3)<a href="https://baike.baidu.com/item/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/10421057" target="_blank" rel="noopener">平衡二叉树</a>——平衡二叉树又被称为AVL树（区别于AVL算法），它是一棵二叉排序树，且具有以下性质：它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。 </p>
+</li>
+<li><h3 id="2-完全二叉树"><a href="#2-完全二叉树" class="headerlink" title="2 完全二叉树"></a>2 完全二叉树</h3><p><a href="https://baike.baidu.com/item/%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91" target="_blank" rel="noopener">完全二叉树</a>（百度百科）</p>
+<p>完全二叉树：叶节点只能出现在最下层和次下层，并且最下面一层的结点都集中在该层最左边的若干位置的二叉树</p>
+</li>
+<li><h3 id="3-满二叉树"><a href="#3-满二叉树" class="headerlink" title="3 满二叉树"></a>3 满二叉树</h3><p> <a href="https://baike.baidu.com/item/%E6%BB%A1%E4%BA%8C%E5%8F%89%E6%A0%91" target="_blank" rel="noopener">满二叉树</a>（百度百科，国内外的定义不同）</p>
+<p> 国内教程定义：一个二叉树，如果每一个层的结点数都达到最大值，则这个二叉树就是满二叉树。也就是说，如果一个二叉树的层数为K，且结点总数是(2^k) -1 ，则它就是满二叉树。</p>
+</li>
+<li><h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p> <a href="https://blog.csdn.net/qq_33186366/article/details/51876191" target="_blank" rel="noopener">数据结构之堆的定义</a></p>
+<p>堆是具有以下性质的完全二叉树：每个结点的值都大于或等于其左右孩子结点的值，称为大顶堆；或者每个结点的值都小于或等于其左右孩子结点的值，称为小顶堆</p>
+</li>
+<li><h3 id="4-二叉查找树（BST）"><a href="#4-二叉查找树（BST）" class="headerlink" title="4 二叉查找树（BST）"></a>4 二叉查找树（BST）</h3><p><a href="http://www.cnblogs.com/yangecnu/p/Introduce-Binary-Search-Tree.html" target="_blank" rel="noopener">浅谈算法和数据结构: 七 二叉查找树</a></p>
+<p> 二叉查找树的特点：</p>
+<ol>
+<li>若任意节点的左子树不空，则左子树上所有结点的     值均小于它的根结点的值；</li>
+<li>若任意节点的右子树不空，则右子树上所有结点的值均大于它的根结点的值；</li>
+<li>任意节点的左、右子树也分别为二叉查找树。</li>
+<li>没有键值相等的节点（no duplicate nodes）。</li>
+</ol>
+</li>
+<li><h3 id="5-平衡二叉树（Self-balancing-binary-search-tree）"><a href="#5-平衡二叉树（Self-balancing-binary-search-tree）" class="headerlink" title="5 平衡二叉树（Self-balancing binary search tree）"></a>5 平衡二叉树（Self-balancing binary search tree）</h3><p><a href="https://baike.baidu.com/item/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91" target="_blank" rel="noopener"> 平衡二叉树</a>（百度百科，平衡二叉树的常用实现方法有红黑树、AVL、替罪羊树、Treap、伸展树等）</p>
+</li>
+<li><h3 id="6-红黑树"><a href="#6-红黑树" class="headerlink" title="6 红黑树"></a>6 红黑树</h3><ul>
+<li><p>红黑树特点:</p>
+<ol>
+<li>每个节点非红即黑；</li>
+<li>根节点总是黑色的；</li>
+<li>每个叶子节点都是黑色的空节点（NIL节点）；</li>
+<li>如果节点是红色的，则它的子节点必须是黑色的（反之不一定）；</li>
+<li>从根节点到叶节点或空子节点的每条路径，必须包含相同数目的黑色节点（即相同的黑色高度）</li>
+</ol>
+</li>
+<li><p>红黑树的应用：</p>
+<p>  TreeMap、TreeSet以及JDK1.8之后的HashMap底层都用到了红黑树。</p>
+</li>
+<li><p>为什么要用红黑树</p>
+<p>简单来说红黑树就是为了解决二叉查找树的缺陷，因为二叉查找树在某些情况下会退化成一个线性结构。详细了解可以查看 <a href="https://juejin.im/post/5a27c6946fb9a04509096248#comment" target="_blank" rel="noopener">漫画：什么是红黑树？</a>（也介绍到了二叉查找树，非常推荐）</p>
+</li>
+<li><p>推荐文章： </p>
+<ul>
+<li><a href="https://juejin.im/post/5a27c6946fb9a04509096248#comment" target="_blank" rel="noopener">漫画：什么是红黑树？</a>（也介绍到了二叉查找树，非常推荐）</li>
+<li><a href="http://dandanlove.com/2018/03/18/red-black-tree/" target="_blank" rel="noopener">寻找红黑树的操作手册</a>（文章排版以及思路真的不错）</li>
+<li><a href="https://zhuanlan.zhihu.com/p/24367771" target="_blank" rel="noopener">红黑树深入剖析及Java实现</a>（美团点评技术团队）    </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><h3 id="7-B-，B-，B-树"><a href="#7-B-，B-，B-树" class="headerlink" title="7 B-，B+，B*树"></a>7 B-，B+，B*树</h3><p> <a href="https://yq.aliyun.com/articles/38345" target="_blank" rel="noopener">二叉树学习笔记之B树、B+树、B*树 </a></p>
+<p> <a href="https://blog.csdn.net/aqzwss/article/details/53074186" target="_blank" rel="noopener">《B-树，B+树，B*树详解》</a></p>
+<p> <a href="https://blog.csdn.net/bigtree_3721/article/details/73632405" target="_blank" rel="noopener">《B-树，B+树与B*树的优缺点比较》</a></p>
+<p>B-树（或B树）是一种平衡的多路查找(又称排序)树，在文件系统中有所应用。主要用作文件的索引。其中的B就表示平衡(Balance) </p>
+<ol>
+<li>B+ 树的叶子节点链表结构相比于 B- 树便于扫库，和范围检索。</li>
+<li>B+树支持range-query(区间查询)非常方便，而B树不支持。这是数据库选用B+树的最主要原因。</li>
+<li>B*树 是B+树的变体，B*树分配新结点的概率比B+树要低，空间使用率更高；</li>
+</ol>
+</li>
+<li><h3 id="8-LSM-树"><a href="#8-LSM-树" class="headerlink" title="8 LSM 树"></a>8 LSM 树</h3><p><a href="https://blog.csdn.net/dbanote/article/details/8897599" target="_blank" rel="noopener">[HBase] LSM树 VS B+树</a></p>
+<p>B+树最大的性能问题是会产生大量的随机IO</p>
+<p>为了克服B+树的弱点，HBase引入了LSM树的概念，即Log-Structured Merge-Trees。</p>
+<p><a href="http://www.cnblogs.com/yanghuahui/p/3483754.html" target="_blank" rel="noopener">LSM树由来、设计思想以及应用到HBase的索引</a></p>
+</li>
+</ul>
+<h2 id="图"><a href="#图" class="headerlink" title="图"></a>图</h2><h2 id="BFS及DFS"><a href="#BFS及DFS" class="headerlink" title="BFS及DFS"></a>BFS及DFS</h2><ul>
+<li><a href="https://blog.csdn.net/Gene1994/article/details/85097507" target="_blank" rel="noopener">《使用BFS及DFS遍历树和图的思路及实现》</a></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
+      <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
     </nav>
   
 

@@ -152,453 +152,6 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-网易2018校招编程题1-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/12/%E7%BD%91%E6%98%932018%E6%A0%A1%E6%8B%9B%E7%BC%96%E7%A8%8B%E9%A2%981-3/">网易2018校招编程题1-3</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/12/%E7%BD%91%E6%98%932018%E6%A0%A1%E6%8B%9B%E7%BC%96%E7%A8%8B%E9%A2%981-3/" class="archive-article-date">
-  	<time datetime="2020-04-12T07:52:20.227Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>下面三道编程题来自网易2018校招编程题，这三道应该来说是非常简单的编程题了，这些题目大家稍微有点编程和数学基础的话应该没什么问题。看答案之前一定要自己先想一下如果是自己做的话会怎么去做，然后再对照这我的答案看看，和你自己想的有什么区别？那一种方法更好？</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/7/1647557d5a1474d7?w=1024&h=1024&f=jpeg&s=638271" alt="问题"></p>
-<blockquote>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1></blockquote>
-<h2 id="一-获得特定数量硬币问题"><a href="#一-获得特定数量硬币问题" class="headerlink" title="一 获得特定数量硬币问题"></a>一 获得特定数量硬币问题</h2><p>小易准备去魔法王国采购魔法神器,购买魔法神器需要使用魔法币,但是小易现在一枚魔法币都没有,但是小易有两台魔法机器可以通过投入x(x可以为0)个魔法币产生更多的魔法币。</p>
-<p>魔法机器1:如果投入x个魔法币,魔法机器会将其变为2x+1个魔法币</p>
-<p>魔法机器2:如果投入x个魔法币,魔法机器会将其变为2x+2个魔法币</p>
-<p>小易采购魔法神器总共需要n个魔法币,所以小易只能通过两台魔法机器产生恰好n个魔法币,小易需要你帮他设计一个投入方案使他最后恰好拥有n个魔法币。 </p>
-<p><strong>输入描述:</strong> 输入包括一行,包括一个正整数n(1 ≤ n ≤ 10^9),表示小易需要的魔法币数量。</p>
-<p><strong>输出描述:</strong> 输出一个字符串,每个字符表示该次小易选取投入的魔法机器。其中只包含字符’1’和’2’。</p>
-<p><strong>输入例子1:</strong> 10</p>
-<p><strong>输出例子1:</strong> 122</p>
-<h2 id="二-求“相反数”问题"><a href="#二-求“相反数”问题" class="headerlink" title="二 求“相反数”问题"></a>二 求“相反数”问题</h2><p>为了得到一个数的”相反数”,我们将这个数的数字顺序颠倒,然后再加上原先的数得到”相反数”。例如,为了得到1325的”相反数”,首先我们将该数的数字顺序颠倒,我们得到5231,之后再加上原先的数,我们得到5231+1325=6556.如果颠倒之后的数字有前缀零,前缀零将会被忽略。例如n = 100, 颠倒之后是1. </p>
-<p><strong>输入描述:</strong> 输入包括一个整数n,(1 ≤ n ≤ 10^5)</p>
-<p><strong>输出描述:</strong> 输出一个整数,表示n的相反数</p>
-<p><strong>输入例子1:</strong> 1325</p>
-<p><strong>输出例子1:</strong> 6556</p>
-<h2 id="三-字符串碎片的平均长度"><a href="#三-字符串碎片的平均长度" class="headerlink" title="三 字符串碎片的平均长度"></a>三 字符串碎片的平均长度</h2><p>一个由小写字母组成的字符串可以看成一些同一字母的最大碎片组成的。例如,”aaabbaaac”是由下面碎片组成的:’aaa’,’bb’,’c’。牛牛现在给定一个字符串,请你帮助计算这个字符串的所有碎片的平均长度是多少。</p>
-<p><strong>输入描述:</strong> 输入包括一个字符串s,字符串s的长度length(1 ≤ length ≤ 50),s只含小写字母(‘a’-‘z’)</p>
-<p><strong>输出描述:</strong> 输出一个整数,表示所有碎片的平均长度,四舍五入保留两位小数。</p>
-<p><strong>如样例所示:</strong> s = “aaabbaaac”<br>所有碎片的平均长度 = (3 + 2 + 3 + 1) / 4 = 2.25</p>
-<p><strong>输入例子1:</strong> aaabbaaac</p>
-<p><strong>输出例子1:</strong> 2.25</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/7/7/16475582faddc9b2?w=1024&h=1024&f=jpeg&s=531663" alt="答案"></p>
-<blockquote>
-<h1 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h1></blockquote>
-<h2 id="一-获得特定数量硬币问题-1"><a href="#一-获得特定数量硬币问题-1" class="headerlink" title="一 获得特定数量硬币问题"></a>一 获得特定数量硬币问题</h2><h3 id="分析："><a href="#分析：" class="headerlink" title="分析："></a>分析：</h3><p>作为该试卷的第一题，这道题应该只要思路正确就很简单了。</p>
-<p>解题关键：明确魔法机器1只能产生奇数，魔法机器2只能产生偶数即可。我们从后往前一步一步推回去即可。</p>
-<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><p>注意：由于用户的输入不确定性，一般是为了程序高可用性使需要将捕获用户输入异常然后友好提示用户输入类型错误并重新输入的。所以下面我给了两个版本，这两个版本都是正确的。这里只是给大家演示如何捕获输入类型异常，后面的题目中我给的代码没有异常处理的部分，参照下面两个示例代码，应该很容易添加。（PS：企业面试中没有明确就不用添加异常处理，当然你有的话也更好）</p>
-<p><strong>不带输入异常处理判断的版本：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main2</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 解题关键：明确魔法机器1只能产生奇数，魔法机器2只能产生偶数即可。我们从后往前一步一步推回去即可。</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"请输入要获得的硬币数量："</span>);</span><br><span class="line">		Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">		<span class="keyword">int</span> coincount = scanner.nextInt();</span><br><span class="line">		StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">		<span class="keyword">while</span> (coincount &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">			<span class="comment">// 偶数的情况</span></span><br><span class="line">			<span class="keyword">if</span> (coincount % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">				coincount = (coincount - <span class="number">2</span>) / <span class="number">2</span>;</span><br><span class="line">				sb.append(<span class="string">"2"</span>);</span><br><span class="line">				<span class="comment">// 奇数的情况</span></span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				coincount = (coincount - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">				sb.append(<span class="string">"1"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 输出反转后的字符串</span></span><br><span class="line">		System.out.println(sb.reverse());</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>带输入异常处理判断的版本（当输入的不是整数的时候会提示重新输入）：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.InputMismatchException;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 解题关键：明确魔法机器1只能产生奇数，魔法机器2只能产生偶数即可。我们从后往前一步一步推回去即可。</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"请输入要获得的硬币数量："</span>);</span><br><span class="line">		Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">		<span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">		<span class="keyword">while</span> (flag) &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="keyword">int</span> coincount = scanner.nextInt();</span><br><span class="line">				StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">				<span class="keyword">while</span> (coincount &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">					<span class="comment">// 偶数的情况</span></span><br><span class="line">					<span class="keyword">if</span> (coincount % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">						coincount = (coincount - <span class="number">2</span>) / <span class="number">2</span>;</span><br><span class="line">						sb.append(<span class="string">"2"</span>);</span><br><span class="line">						<span class="comment">// 奇数的情况</span></span><br><span class="line">					&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">						coincount = (coincount - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">						sb.append(<span class="string">"1"</span>);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="comment">// 输出反转后的字符串</span></span><br><span class="line">				System.out.println(sb.reverse());</span><br><span class="line">				flag=<span class="keyword">false</span>;<span class="comment">//程序结束</span></span><br><span class="line">			&#125; <span class="keyword">catch</span> (InputMismatchException e) &#123;</span><br><span class="line">				System.out.println(<span class="string">"输入数据类型不匹配，请您重新输入:"</span>);</span><br><span class="line">				scanner.nextLine();</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="二-求“相反数”问题-1"><a href="#二-求“相反数”问题-1" class="headerlink" title="二 求“相反数”问题"></a>二 求“相反数”问题</h2><h3 id="分析：-1"><a href="#分析：-1" class="headerlink" title="分析："></a>分析：</h3><p>解决本道题有几种不同的方法，但是最快速的方法就是利用reverse()方法反转字符串然后再将字符串转换成int类型的整数，这个方法是快速解决本题关键。我们先来回顾一下下面两个知识点：</p>
-<p><strong>1)String转int；</strong></p>
-<p>在 Java 中要将 String 类型转化为 int 类型时,需要使用 Integer 类中的 parseInt() 方法或者 valueOf() 方法进行转换.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String str = <span class="string">"123"</span>;</span><br><span class="line"><span class="keyword">int</span> a = Integer.parseInt(str);</span><br></pre></td></tr></table></figure>
-<p> 或</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String str = <span class="string">"123"</span>;</span><br><span class="line"><span class="keyword">int</span> a = Integer.valueOf(str).intValue()；</span><br></pre></td></tr></table></figure>
-
-
-<p><strong>2)next()和nextLine()的区别</strong></p>
-<p>在Java中输入字符串有两种方法，就是next()和nextLine().两者的区别就是：nextLine()的输入是碰到回车就终止输入，而next()方法是碰到空格，回车，Tab键都会被视为终止符。所以next()不会得到带空格的字符串，而nextLine()可以得到带空格的字符串。</p>
-<h3 id="示例代码："><a href="#示例代码：" class="headerlink" title="示例代码："></a>示例代码：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 本题关键：①String转int；②next()和nextLine()的区别</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">		System.out.println(<span class="string">"请输入一个整数："</span>);</span><br><span class="line">		Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">		String s=scanner.next(); </span><br><span class="line">		<span class="comment">//将字符串转换成数字</span></span><br><span class="line">		<span class="keyword">int</span> number1=Integer.parseInt(s);</span><br><span class="line">		<span class="comment">//将字符串倒序后转换成数字</span></span><br><span class="line">		<span class="comment">//因为Integer.parseInt()的参数类型必须是字符串所以必须加上toString()</span></span><br><span class="line">		<span class="keyword">int</span> number2=Integer.parseInt(<span class="keyword">new</span> StringBuilder(s).reverse().toString());</span><br><span class="line">		System.out.println(number1+number2);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="三-字符串碎片的平均长度-1"><a href="#三-字符串碎片的平均长度-1" class="headerlink" title="三 字符串碎片的平均长度"></a>三 字符串碎片的平均长度</h2><h3 id="分析：-2"><a href="#分析：-2" class="headerlink" title="分析："></a>分析：</h3><p>这道题的意思也就是要求：(字符串的总长度)/(相同字母团构成的字符串的个数)。</p>
-<p>这样就很简单了，就变成了字符串的字符之间的比较。如果需要比较字符串的字符的话，我们可以利用charAt(i)方法：取出特定位置的字符与后一个字符比较，或者利用toCharArray()方法将字符串转换成字符数组采用同样的方法做比较。</p>
-<h3 id="示例代码-1"><a href="#示例代码-1" class="headerlink" title="示例代码"></a>示例代码</h3><p><strong>利用charAt(i)方法：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	    Scanner sc = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">	    <span class="keyword">while</span> (sc.hasNext()) &#123;</span><br><span class="line">	        String s = sc.next();</span><br><span class="line">	        <span class="comment">//个数至少为一个</span></span><br><span class="line">	        <span class="keyword">float</span> count = <span class="number">1</span>;</span><br><span class="line">	        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length() - <span class="number">1</span>; i++) &#123;</span><br><span class="line">	            <span class="keyword">if</span> (s.charAt(i) != s.charAt(i + <span class="number">1</span>)) &#123;</span><br><span class="line">	                count++;</span><br><span class="line">	            &#125;</span><br><span class="line">	        &#125;</span><br><span class="line">	        System.out.println(s.length() / count);</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>利用toCharArray()方法：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main2</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	    Scanner sc = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">	    <span class="keyword">while</span> (sc.hasNext()) &#123;</span><br><span class="line">	        String s = sc.next();</span><br><span class="line">	        <span class="comment">//个数至少为一个</span></span><br><span class="line">	        <span class="keyword">float</span> count = <span class="number">1</span>;</span><br><span class="line">	        <span class="keyword">char</span> [] stringArr = s.toCharArray();</span><br><span class="line">	        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; stringArr.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">	            <span class="keyword">if</span> (stringArr[i] != stringArr[i + <span class="number">1</span>]) &#123;</span><br><span class="line">	                count++;</span><br><span class="line">	            &#125;</span><br><span class="line">	        &#125;</span><br><span class="line">	        System.out.println(s.length() / count);</span><br><span class="line">	    &#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/12/%E7%BD%91%E6%98%932018%E6%A0%A1%E6%8B%9B%E7%BC%96%E7%A8%8B%E9%A2%981-3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/12/%E7%AE%97%E6%B3%95/">算法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/12/%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-04-12T07:52:20.126Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="LeetCode"><a href="#LeetCode" class="headerlink" title="LeetCode"></a>LeetCode</h2><p><a href="https://leetcode-cn.com/" target="_blank" rel="noopener">LeetCode（中国）官网</a></p>
-<p><a href="https://leetcode-cn.com/articles/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%9C%B0%E4%BD%BF%E7%94%A8-leetcode/" target="_blank" rel="noopener">如何高效地使用 LeetCode</a></p>
-<h2 id="牛客网："><a href="#牛客网：" class="headerlink" title="牛客网："></a>牛客网：</h2><p><a href="https://www.nowcoder.com" target="_blank" rel="noopener">牛客网首页</a></p>
-<blockquote>
-<h3 id="剑指offer编程题"><a href="#剑指offer编程题" class="headerlink" title="剑指offer编程题"></a><strong><a href="https://www.nowcoder.com/ta/coding-interviews" target="_blank" rel="noopener">剑指offer编程题</a></strong></h3></blockquote>
-<p><strong>分类解析：</strong></p>
-<ul>
-<li><a href="https://github.com/Snailclimb/Java-Guide/tree/master/数据结构与算法/算法题解析/剑指offer/（1）斐波那契数列问题和跳台阶问题.md" target="_blank" rel="noopener">（1）斐波那契数列问题和跳台阶问题</a></li>
-<li><a href="https://github.com/Snailclimb/Java-Guide/tree/master/数据结构与算法/算法题解析/剑指offer/（2）二维数组查找和替换空格问题.md" target="_blank" rel="noopener">（2）二维数组查找和替换空格问题</a></li>
-<li><a href="https://github.com/Snailclimb/Java-Guide/tree/master/数据结构与算法/算法题解析/剑指offer/（3）数值的整数次方和调整数组元素顺序.md" target="_blank" rel="noopener">（3）数值的整数次方和调整数组元素顺序</a></li>
-<li><a href="https://github.com/Snailclimb/Java-Guide/tree/master/数据结构与算法/算法题解析/剑指offer/（4）链表相关编程题.md" target="_blank" rel="noopener">（4）链表相关编程题</a></li>
-<li><a href="https://github.com/Snailclimb/Java-Guide/tree/master/数据结构与算法/算法题解析/剑指offer/（5）栈变队列和栈的压入、弹出序列.md" target="_blank" rel="noopener">（5）栈变队列和栈的压入、弹出序列</a></li>
-</ul>
-<blockquote>
-<h3 id="2017校招真题"><a href="#2017校招真题" class="headerlink" title="2017校招真题"></a><a href="https://www.nowcoder.com/ta/2017test" target="_blank" rel="noopener">2017校招真题</a></h3></blockquote>
-<blockquote>
-<h3 id="华为机试题"><a href="#华为机试题" class="headerlink" title="华为机试题"></a><a href="https://www.nowcoder.com/ta/huawei" target="_blank" rel="noopener">华为机试题</a></h3></blockquote>
-<h2 id="公司真题"><a href="#公司真题" class="headerlink" title="公司真题"></a>公司真题</h2><blockquote>
-<p><a href="https://www.nowcoder.com/test/6910869/summary" target="_blank" rel="noopener"> 网易2018校园招聘编程题真题集合</a></p>
-</blockquote>
-<p><strong>解析：</strong></p>
-<ul>
-<li><a href="https://github.com/Snailclimb/Java-Guide/tree/master/数据结构与算法/算法题解析/公司真题/网易2018校招编程题1-3.md" target="_blank" rel="noopener"> 网易2018校招编程题1-3</a></li>
-</ul>
-<blockquote>
-<p><a href="https://www.nowcoder.com/test/6291726/summary" target="_blank" rel="noopener"> 网易2018校招内推编程题集合</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.nowcoder.com/test/5986669/summary" target="_blank" rel="noopener">2017年校招全国统一模拟笔试(第五场)编程题集合</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.nowcoder.com/test/5507925/summary" target="_blank" rel="noopener">2017年校招全国统一模拟笔试(第四场)编程题集合</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.nowcoder.com/test/5217106/summary" target="_blank" rel="noopener">2017年校招全国统一模拟笔试(第三场)编程题集合</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.nowcoder.com/test/4546329/summary" target="_blank" rel="noopener">2017年校招全国统一模拟笔试(第二场)编程题集合</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.nowcoder.com/test/4236887/summary" target="_blank" rel="noopener"> 2017年校招全国统一模拟笔试(第一场)编程题集合</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.nowcoder.com/test/4998655/summary" target="_blank" rel="noopener">百度2017春招笔试真题编程题集合</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.nowcoder.com/test/4575457/summary" target="_blank" rel="noopener">网易2017春招笔试真题编程题集合</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.nowcoder.com/test/2811407/summary" target="_blank" rel="noopener">网易2017秋招编程题集合</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.nowcoder.com/test/2385858/summary" target="_blank" rel="noopener">网易有道2017内推编程题</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.nowcoder.com/test/3701760/summary" target="_blank" rel="noopener"> 滴滴出行2017秋招笔试真题-编程题汇总</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.nowcoder.com/test/1725829/summary" target="_blank" rel="noopener">腾讯2017暑期实习生编程题</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.nowcoder.com/test/1649301/summary" target="_blank" rel="noopener">今日头条2017客户端工程师实习生笔试题</a></p>
-</blockquote>
-<blockquote>
-<p><a href="https://www.nowcoder.com/test/1649268/summary" target="_blank" rel="noopener">今日头条2017后端工程师实习生笔试题</a></p>
-</blockquote>
-<h2 id="排序算法："><a href="#排序算法：" class="headerlink" title="排序算法："></a>排序算法：</h2><p><a href="http://www.cnblogs.com/chengxiao/p/6103002.html" target="_blank" rel="noopener">图解排序算法(一)之3种简单排序(选择，冒泡，直接插入)</a></p>
-<p><a href="https://www.cnblogs.com/chengxiao/p/6104371.html" target="_blank" rel="noopener">图解排序算法(二)之希尔排序</a></p>
-<p><a href="http://www.cnblogs.com/chengxiao/p/6129630.html" target="_blank" rel="noopener">图解排序算法(三)之堆排序</a></p>
-<p><a href="http://www.cnblogs.com/chengxiao/p/6194356.html" target="_blank" rel="noopener">图解排序算法(四)之归并排序</a></p>
-<p><a href="http://www.cnblogs.com/chengxiao/p/6262208.html" target="_blank" rel="noopener">图解排序算法(五)之快速排序——三数取中法</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/12/%E7%AE%97%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-数据结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="archive-article-date">
-  	<time datetime="2020-04-12T07:52:20.124Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- MarkdownTOC -->
-
-<ul>
-<li><a href="#queue">Queue</a><ul>
-<li><a href="#什么是队列">什么是队列</a></li>
-<li><a href="#队列的种类">队列的种类</a></li>
-<li><a href="#java-集合框架中的队列-queue">Java 集合框架中的队列 Queue</a></li>
-<li><a href="#推荐文章">推荐文章</a></li>
-</ul>
-</li>
-<li><a href="#set">Set</a><ul>
-<li><a href="#什么是-set">什么是 Set</a></li>
-<li><a href="#补充：有序集合与无序集合说明">补充：有序集合与无序集合说明</a></li>
-<li><a href="#hashset-和-treeset-底层数据结构">HashSet 和 TreeSet 底层数据结构</a></li>
-<li><a href="#推荐文章-1">推荐文章</a></li>
-</ul>
-</li>
-<li><a href="#list">List</a><ul>
-<li><a href="#什么是list">什么是List</a></li>
-<li><a href="#list的常见实现类">List的常见实现类</a></li>
-<li><a href="#arraylist-和-linkedlist-源码学习">ArrayList 和 LinkedList 源码学习</a></li>
-<li><a href="#推荐阅读">推荐阅读</a></li>
-</ul>
-</li>
-<li><a href="#map">Map</a></li>
-<li><a href="#树">树</a></li>
-</ul>
-<!-- /MarkdownTOC -->
-
-
-<h2 id="Queue"><a href="#Queue" class="headerlink" title="Queue"></a>Queue</h2><h3 id="什么是队列"><a href="#什么是队列" class="headerlink" title="什么是队列"></a>什么是队列</h3><p>队列是数据结构中比较重要的一种类型，它支持 FIFO，尾部添加、头部删除（先进队列的元素先出队列），跟我们生活中的排队类似。</p>
-<h3 id="队列的种类"><a href="#队列的种类" class="headerlink" title="队列的种类"></a>队列的种类</h3><ul>
-<li><strong>单队列</strong>（单队列就是常见的队列, 每次添加元素时，都是添加到队尾，存在“假溢出”的问题也就是明明有位置却不能添加的情况）</li>
-<li><strong>循环队列</strong>（避免了“假溢出”的问题）</li>
-</ul>
-<h3 id="Java-集合框架中的队列-Queue"><a href="#Java-集合框架中的队列-Queue" class="headerlink" title="Java 集合框架中的队列 Queue"></a>Java 集合框架中的队列 Queue</h3><p>Java 集合中的 Queue 继承自 Collection 接口 ，Deque, LinkedList, PriorityQueue, BlockingQueue 等类都实现了它。<br>Queue 用来存放 等待处理元素 的集合，这种场景一般用于缓冲、并发访问。<br>除了继承 Collection 接口的一些方法，Queue 还添加了额外的 添加、删除、查询操作。</p>
-<h3 id="推荐文章"><a href="#推荐文章" class="headerlink" title="推荐文章"></a>推荐文章</h3><ul>
-<li><a href="https://blog.csdn.net/u011240877/article/details/52860924" target="_blank" rel="noopener">Java 集合深入理解（9）：Queue 队列</a></li>
-</ul>
-<h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><h3 id="什么是-Set"><a href="#什么是-Set" class="headerlink" title="什么是 Set"></a>什么是 Set</h3><p>Set 继承于 Collection 接口，是一个不允许出现重复元素，并且无序的集合，主要 HashSet 和 TreeSet 两大实现类。</p>
-<p>在判断重复元素的时候，Set 集合会调用 hashCode()和 equal()方法来实现。</p>
-<h3 id="补充：有序集合与无序集合说明"><a href="#补充：有序集合与无序集合说明" class="headerlink" title="补充：有序集合与无序集合说明"></a>补充：有序集合与无序集合说明</h3><ul>
-<li>有序集合：集合里的元素可以根据 key 或 index 访问 (List、Map)</li>
-<li>无序集合：集合里的元素只能遍历。（Set）</li>
-</ul>
-<h3 id="HashSet-和-TreeSet-底层数据结构"><a href="#HashSet-和-TreeSet-底层数据结构" class="headerlink" title="HashSet 和 TreeSet 底层数据结构"></a>HashSet 和 TreeSet 底层数据结构</h3><p><strong>HashSet</strong> 是哈希表结构，主要利用 HashMap 的 key 来存储元素，计算插入元素的 hashCode 来获取元素在集合中的位置；</p>
-<p><strong>TreeSet</strong> 是红黑树结构，每一个元素都是树中的一个节点，插入的元素都会进行排序；</p>
-<h3 id="推荐文章-1"><a href="#推荐文章-1" class="headerlink" title="推荐文章"></a>推荐文章</h3><ul>
-<li><a href="https://www.jianshu.com/p/b48c47a42916" target="_blank" rel="noopener">Java集合–Set(基础)</a></li>
-</ul>
-<h2 id="List"><a href="#List" class="headerlink" title="List"></a>List</h2><h3 id="什么是List"><a href="#什么是List" class="headerlink" title="什么是List"></a>什么是List</h3><p>在 List 中，用户可以精确控制列表中每个元素的插入位置，另外用户可以通过整数索引（列表中的位置）访问元素，并搜索列表中的元素。 与 Set 不同，List 通常允许重复的元素。 另外 List 是有序集合而 Set 是无序集合。</p>
-<h3 id="List的常见实现类"><a href="#List的常见实现类" class="headerlink" title="List的常见实现类"></a>List的常见实现类</h3><p><strong>ArrayList</strong> 是一个数组队列，相当于动态数组。它由数组实现，随机访问效率高，随机插入、随机删除效率低。</p>
-<p><strong>LinkedList</strong> 是一个双向链表。它也可以被当作堆栈、队列或双端队列进行操作。LinkedList随机访问效率低，但随机插入、随机删除效率高。</p>
-<p><strong>Vector</strong> 是矢量队列，和ArrayList一样，它也是一个动态数组，由数组实现。但是ArrayList是非线程安全的，而Vector是线程安全的。</p>
-<p><strong>Stack</strong> 是栈，它继承于Vector。它的特性是：先进后出(FILO, First In Last Out)。相关阅读：<a href="https://blog.csdn.net/javazejian/article/details/53362993" target="_blank" rel="noopener">java数据结构与算法之栈（Stack）设计与实现</a></p>
-<h3 id="ArrayList-和-LinkedList-源码学习"><a href="#ArrayList-和-LinkedList-源码学习" class="headerlink" title="ArrayList 和 LinkedList 源码学习"></a>ArrayList 和 LinkedList 源码学习</h3><ul>
-<li><a href="https://github.com/Snailclimb/Java-Guide/blob/master/Java/ArrayList.md" target="_blank" rel="noopener">ArrayList 源码学习</a>    </li>
-<li><a href="https://github.com/Snailclimb/Java-Guide/blob/master/Java/LinkedList.md" target="_blank" rel="noopener">LinkedList 源码学习</a>   </li>
-</ul>
-<h3 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h3><ul>
-<li><a href="https://blog.csdn.net/javazejian/article/details/52953190" target="_blank" rel="noopener">java 数据结构与算法之顺序表与链表深入分析</a></li>
-</ul>
-<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><ul>
-<li><a href="https://juejin.im/post/5ab0568b5188255580020e56" target="_blank" rel="noopener">集合框架源码学习之 HashMap(JDK1.8)</a></li>
-<li><a href="https://link.juejin.im/?target=http%3A%2F%2Fwww.cnblogs.com%2Fchengxiao%2Fp%2F6842045.html">ConcurrentHashMap 实现原理及源码分析</a></li>
-</ul>
-<h2 id="树"><a href="#树" class="headerlink" title="树"></a>树</h2><ul>
-<li><h3 id="1-二叉树"><a href="#1-二叉树" class="headerlink" title="1 二叉树"></a>1 二叉树</h3><p> <a href="https://baike.baidu.com/item/%E4%BA%8C%E5%8F%89%E6%A0%91" target="_blank" rel="noopener">二叉树</a>（百度百科）</p>
-<p>(1)<a href="https://baike.baidu.com/item/%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91" target="_blank" rel="noopener">完全二叉树</a>——若设二叉树的高度为h，除第 h 层外，其它各层 (1～h-1) 的结点数都达到最大个数，第h层有叶子结点，并且叶子结点都是从左到右依次排布，这就是完全二叉树。</p>
-<p>(2)<a href="https://baike.baidu.com/item/%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91" target="_blank" rel="noopener">满二叉树</a>——除了叶结点外每一个结点都有左右子叶且叶子结点都处在最底层的二叉树。</p>
-<p>(3)<a href="https://baike.baidu.com/item/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/10421057" target="_blank" rel="noopener">平衡二叉树</a>——平衡二叉树又被称为AVL树（区别于AVL算法），它是一棵二叉排序树，且具有以下性质：它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。 </p>
-</li>
-<li><h3 id="2-完全二叉树"><a href="#2-完全二叉树" class="headerlink" title="2 完全二叉树"></a>2 完全二叉树</h3><p><a href="https://baike.baidu.com/item/%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91" target="_blank" rel="noopener">完全二叉树</a>（百度百科）</p>
-<p>完全二叉树：叶节点只能出现在最下层和次下层，并且最下面一层的结点都集中在该层最左边的若干位置的二叉树</p>
-</li>
-<li><h3 id="3-满二叉树"><a href="#3-满二叉树" class="headerlink" title="3 满二叉树"></a>3 满二叉树</h3><p> <a href="https://baike.baidu.com/item/%E6%BB%A1%E4%BA%8C%E5%8F%89%E6%A0%91" target="_blank" rel="noopener">满二叉树</a>（百度百科，国内外的定义不同）</p>
-<p> 国内教程定义：一个二叉树，如果每一个层的结点数都达到最大值，则这个二叉树就是满二叉树。也就是说，如果一个二叉树的层数为K，且结点总数是(2^k) -1 ，则它就是满二叉树。</p>
-</li>
-<li><h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p> <a href="https://blog.csdn.net/qq_33186366/article/details/51876191" target="_blank" rel="noopener">数据结构之堆的定义</a></p>
-<p>堆是具有以下性质的完全二叉树：每个结点的值都大于或等于其左右孩子结点的值，称为大顶堆；或者每个结点的值都小于或等于其左右孩子结点的值，称为小顶堆</p>
-</li>
-<li><h3 id="4-二叉查找树（BST）"><a href="#4-二叉查找树（BST）" class="headerlink" title="4 二叉查找树（BST）"></a>4 二叉查找树（BST）</h3><p><a href="http://www.cnblogs.com/yangecnu/p/Introduce-Binary-Search-Tree.html" target="_blank" rel="noopener">浅谈算法和数据结构: 七 二叉查找树</a></p>
-<p> 二叉查找树的特点：</p>
-<ol>
-<li>若任意节点的左子树不空，则左子树上所有结点的     值均小于它的根结点的值；</li>
-<li>若任意节点的右子树不空，则右子树上所有结点的值均大于它的根结点的值；</li>
-<li>任意节点的左、右子树也分别为二叉查找树。</li>
-<li>没有键值相等的节点（no duplicate nodes）。</li>
-</ol>
-</li>
-<li><h3 id="5-平衡二叉树（Self-balancing-binary-search-tree）"><a href="#5-平衡二叉树（Self-balancing-binary-search-tree）" class="headerlink" title="5 平衡二叉树（Self-balancing binary search tree）"></a>5 平衡二叉树（Self-balancing binary search tree）</h3><p><a href="https://baike.baidu.com/item/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91" target="_blank" rel="noopener"> 平衡二叉树</a>（百度百科，平衡二叉树的常用实现方法有红黑树、AVL、替罪羊树、Treap、伸展树等）</p>
-</li>
-<li><h3 id="6-红黑树"><a href="#6-红黑树" class="headerlink" title="6 红黑树"></a>6 红黑树</h3><ul>
-<li><p>红黑树特点:</p>
-<ol>
-<li>每个节点非红即黑；</li>
-<li>根节点总是黑色的；</li>
-<li>每个叶子节点都是黑色的空节点（NIL节点）；</li>
-<li>如果节点是红色的，则它的子节点必须是黑色的（反之不一定）；</li>
-<li>从根节点到叶节点或空子节点的每条路径，必须包含相同数目的黑色节点（即相同的黑色高度）</li>
-</ol>
-</li>
-<li><p>红黑树的应用：</p>
-<p>  TreeMap、TreeSet以及JDK1.8之后的HashMap底层都用到了红黑树。</p>
-</li>
-<li><p>为什么要用红黑树</p>
-<p>简单来说红黑树就是为了解决二叉查找树的缺陷，因为二叉查找树在某些情况下会退化成一个线性结构。详细了解可以查看 <a href="https://juejin.im/post/5a27c6946fb9a04509096248#comment" target="_blank" rel="noopener">漫画：什么是红黑树？</a>（也介绍到了二叉查找树，非常推荐）</p>
-</li>
-<li><p>推荐文章： </p>
-<ul>
-<li><a href="https://juejin.im/post/5a27c6946fb9a04509096248#comment" target="_blank" rel="noopener">漫画：什么是红黑树？</a>（也介绍到了二叉查找树，非常推荐）</li>
-<li><a href="http://dandanlove.com/2018/03/18/red-black-tree/" target="_blank" rel="noopener">寻找红黑树的操作手册</a>（文章排版以及思路真的不错）</li>
-<li><a href="https://zhuanlan.zhihu.com/p/24367771" target="_blank" rel="noopener">红黑树深入剖析及Java实现</a>（美团点评技术团队）    </li>
-</ul>
-</li>
-</ul>
-</li>
-<li><h3 id="7-B-，B-，B-树"><a href="#7-B-，B-，B-树" class="headerlink" title="7 B-，B+，B*树"></a>7 B-，B+，B*树</h3><p> <a href="https://yq.aliyun.com/articles/38345" target="_blank" rel="noopener">二叉树学习笔记之B树、B+树、B*树 </a></p>
-<p> <a href="https://blog.csdn.net/aqzwss/article/details/53074186" target="_blank" rel="noopener">《B-树，B+树，B*树详解》</a></p>
-<p> <a href="https://blog.csdn.net/bigtree_3721/article/details/73632405" target="_blank" rel="noopener">《B-树，B+树与B*树的优缺点比较》</a></p>
-<p>B-树（或B树）是一种平衡的多路查找(又称排序)树，在文件系统中有所应用。主要用作文件的索引。其中的B就表示平衡(Balance) </p>
-<ol>
-<li>B+ 树的叶子节点链表结构相比于 B- 树便于扫库，和范围检索。</li>
-<li>B+树支持range-query(区间查询)非常方便，而B树不支持。这是数据库选用B+树的最主要原因。</li>
-<li>B*树 是B+树的变体，B*树分配新结点的概率比B+树要低，空间使用率更高；</li>
-</ol>
-</li>
-<li><h3 id="8-LSM-树"><a href="#8-LSM-树" class="headerlink" title="8 LSM 树"></a>8 LSM 树</h3><p><a href="https://blog.csdn.net/dbanote/article/details/8897599" target="_blank" rel="noopener">[HBase] LSM树 VS B+树</a></p>
-<p>B+树最大的性能问题是会产生大量的随机IO</p>
-<p>为了克服B+树的弱点，HBase引入了LSM树的概念，即Log-Structured Merge-Trees。</p>
-<p><a href="http://www.cnblogs.com/yanghuahui/p/3483754.html" target="_blank" rel="noopener">LSM树由来、设计思想以及应用到HBase的索引</a></p>
-</li>
-</ul>
-<h2 id="图"><a href="#图" class="headerlink" title="图"></a>图</h2><h2 id="BFS及DFS"><a href="#BFS及DFS" class="headerlink" title="BFS及DFS"></a>BFS及DFS</h2><ul>
-<li><a href="https://blog.csdn.net/Gene1994/article/details/85097507" target="_blank" rel="noopener">《使用BFS及DFS遍历树和图的思路及实现》</a></li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-搞定BAT面试——几道常见的子符串算法题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1683,9 +1236,673 @@
 
 
   
+    <article id="post-MySQL" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/12/MySQL/">MySQL</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/12/MySQL/" class="archive-article-date">
+  	<time datetime="2020-04-12T07:52:20.087Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Java面试通关手册（Java学习指南，欢迎Star，会一直完善下去，欢迎建议和指导）：<a href="https://github.com/Snailclimb/Java_Guide" target="_blank" rel="noopener">https://github.com/Snailclimb/Java_Guide</a></p>
+<blockquote>
+<h2 id="书籍推荐"><a href="#书籍推荐" class="headerlink" title="书籍推荐"></a>书籍推荐</h2></blockquote>
+<p><strong>《高性能MySQL : 第3版》</strong></p>
+<blockquote>
+<h2 id="文字教程推荐"><a href="#文字教程推荐" class="headerlink" title="文字教程推荐"></a>文字教程推荐</h2></blockquote>
+<p><a href="http://www.runoob.com/mysql/mysql-tutorial.html" target="_blank" rel="noopener">MySQL 教程（菜鸟教程）</a></p>
+<p><a href="https://www.yiibai.com/mysql/" target="_blank" rel="noopener">MySQL教程（易百教程）</a></p>
+<blockquote>
+<h2 id="视频教程推荐"><a href="#视频教程推荐" class="headerlink" title="视频教程推荐"></a>视频教程推荐</h2></blockquote>
+<p><strong>基础入门：</strong> <a href="https://www.imooc.com/learn/122" target="_blank" rel="noopener">与MySQL的零距离接触-慕课网</a></p>
+<p><strong>Mysql开发技巧：</strong> <a href="https://www.imooc.com/learn/398" target="_blank" rel="noopener">MySQL开发技巧（一）</a>　　<a href="https://www.imooc.com/learn/427" target="_blank" rel="noopener">MySQL开发技巧（二）</a>　　<a href="https://www.imooc.com/learn/449" target="_blank" rel="noopener">MySQL开发技巧（三）</a></p>
+<p><strong>Mysql5.7新特性及相关优化技巧：</strong> <a href="https://www.imooc.com/learn/533" target="_blank" rel="noopener">MySQL5.7版本新特性</a>　　<a href="https://www.imooc.com/learn/194" target="_blank" rel="noopener">性能优化之MySQL优化</a></p>
+<p><a href="https://www.imooc.com/learn/993" target="_blank" rel="noopener">MySQL集群（PXC）入门</a>　　<a href="https://www.imooc.com/learn/951" target="_blank" rel="noopener">MyCAT入门及应用</a></p>
+<blockquote>
+<h2 id="常见问题总结"><a href="#常见问题总结" class="headerlink" title="常见问题总结"></a>常见问题总结</h2></blockquote>
+<ul>
+<li><h3 id="①存储引擎"><a href="#①存储引擎" class="headerlink" title="①存储引擎"></a>①存储引擎</h3><p><a href="https://juejin.im/post/5b1685bef265da6e5c3c1c34" target="_blank" rel="noopener">MySQL常见的两种存储引擎：MyISAM与InnoDB的爱恨情仇</a></p>
+</li>
+<li><h3 id="②字符集及校对规则"><a href="#②字符集及校对规则" class="headerlink" title="②字符集及校对规则"></a>②字符集及校对规则</h3><p> 字符集指的是一种从二进制编码到某类字符符号的映射。校对规则则是指某种字符集下的排序规则。Mysql中每一种字符集都会对应一系列的校对规则。</p>
+<p> Mysql采用的是类似继承的方式指定字符集的默认值，每个数据库以及每张数据表都有自己的默认值，他们逐层继承。比如：某个库中所有表的默认字符集将是该数据库所指定的字符集（这些表在没有指定字符集的情况下，才会采用默认字符集） PS：整理自《Java工程师修炼之道》</p>
+<p> 详细内容可以参考：   <a href="https://www.cnblogs.com/geaozhang/p/6724393.html#mysqlyuzifuji" target="_blank" rel="noopener">MySQL字符集及校对规则的理解</a></p>
+</li>
+<li><h3 id="③索引相关的内容（数据库使用中非常关键的技术，合理正确的使用索引可以大大提高数据库的查询性能）"><a href="#③索引相关的内容（数据库使用中非常关键的技术，合理正确的使用索引可以大大提高数据库的查询性能）" class="headerlink" title="③索引相关的内容（数据库使用中非常关键的技术，合理正确的使用索引可以大大提高数据库的查询性能）"></a>③索引相关的内容（数据库使用中非常关键的技术，合理正确的使用索引可以大大提高数据库的查询性能）</h3><p>　　Mysql索引使用的数据结构主要有<strong>BTree索引</strong> 和 <strong>哈希索引</strong> 。对于哈希索引来说，底层的数据结构就是哈希表，因此在绝大多数需求为单条记录查询的时候，可以选择哈希索引，查询性能最快；其余大部分场景，建议选择BTree索引。</p>
+<p>　　Mysql的BTree索引使用的是B数中的B+Tree，但对于主要的两种存储引擎的实现方式是不同的。</p>
+<p>　　<strong>MyISAM:</strong> B+Tree叶节点的data域存放的是数据记录的地址。在索引检索的时候，首先按照B+Tree搜索算法搜索索引，如果指定的Key存在，则取出其 data 域的值，然后以 data 域的值为地址读取相应的数据记录。这被称为“非聚簇索引”。</p>
+<p>　　<strong>InnoDB:</strong> 其数据文件本身就是索引文件。相比MyISAM，索引文件和数据文件是分离的，其表数据文件本身就是按B+Tree组织的一个索引结构，树的叶节点data域保存了完整的数据记录。这个索引的key是数据表的主键，因此InnoDB表数据文件本身就是主索引。这被称为“聚簇索引（或聚集索引）”。而其余的索引都作为辅助索引，辅助索引的data域存储相应记录主键的值而不是地址，这也是和MyISAM不同的地方。<strong>在根据主索引搜索时，直接找到key所在的节点即可取出数据；在根据辅助索引查找时，则需要先取出主键的值，再走一遍主索引。</strong> <strong>因此，在设计表的时候，不建议使用过长的字段作为主键，也不建议使用非单调的字段作为主键，这样会造成主索引频繁分裂。</strong> PS：整理自《Java工程师修炼之道》</p>
+<p> 详细内容可以参考：</p>
+<p> <a href="https://www.jianshu.com/p/1775b4ff123a" target="_blank" rel="noopener">干货：mysql索引的数据结构</a></p>
+<p> <a href="https://blog.csdn.net/Jack__Frost/article/details/72571540" target="_blank" rel="noopener">MySQL优化系列（三）–索引的使用、原理和设计优化</a></p>
+<p> <a href="https://juejin.im/post/5b55b842f265da0f9e589e79#comment" target="_blank" rel="noopener">数据库两大神器【索引和锁】</a></p>
+</li>
+<li><h3 id="④查询缓存的使用"><a href="#④查询缓存的使用" class="headerlink" title="④查询缓存的使用"></a>④查询缓存的使用</h3><p> my.cnf加入以下配置，重启Mysql开启查询缓存</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">query_cache_type&#x3D;1</span><br><span class="line">query_cache_size&#x3D;600000</span><br></pre></td></tr></table></figure>
+
+<p> Mysql执行以下命令也可以开启查询缓存</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set global  query_cache_type&#x3D;1;</span><br><span class="line">set global  query_cache_size&#x3D;600000;</span><br></pre></td></tr></table></figure>
+<p> 如上，<strong>开启查询缓存后在同样的查询条件以及数据情况下，会直接在缓存中返回结果</strong>。这里的查询条件包括查询本身、当前要查询的数据库、客户端协议版本号等一些可能影响结果的信息。因此任何两个查询在任何字符上的不同都会导致缓存不命中。此外，如果查询中包含任何用户自定义函数、存储函数、用户变量、临时表、Mysql库中的系统表，其查询结果也不会被缓存。</p>
+<p> 缓存建立之后，Mysql的查询缓存系统会跟踪查询中涉及的每张表，如果这些表（数据或结构）发生变化，那么和这张表相关的所有缓存数据都将失效。</p>
+<p> <strong>缓存虽然能够提升数据库的查询性能，但是缓存同时也带来了额外的开销，每次查询后都要做一次缓存操作，失效后还要销毁。</strong> 因此，开启缓存查询要谨慎，尤其对于写密集的应用来说更是如此。如果开启，要注意合理控制缓存空间大小，一般来说其大小设置为几十MB比较合适。此外，<strong>还可以通过sql_cache和sql_no_cache来控制某个查询语句是否需要缓存：</strong></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select sql_no_cache count(*) from usr;</span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="⑤事务机制"><a href="#⑤事务机制" class="headerlink" title="⑤事务机制"></a>⑤事务机制</h3><p> <strong>关系性数据库需要遵循ACID规则，具体内容如下：</strong></p>
+</li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2018/5/20/1637b08b98619455?w=312&h=305&f=png&s=22430" alt="事务的特性"></p>
+<ol>
+<li><p><strong>原子性：</strong> 事务是最小的执行单位，不允许分割。事务的原子性确保动作要么全部完成，要么完全不起作用；</p>
+</li>
+<li><p><strong>一致性：</strong> 执行事务前后，数据库从一个一致性状态转换到另一个一致性状态。</p>
+</li>
+<li><p><strong>隔离性：</strong> 并发访问数据库时，一个用户的事物不被其他事务所干扰，各并发事务之间数据库是独立的；</p>
+</li>
+<li><p><strong>持久性：</strong> 一个事务被提交之后。它对数据库中数据的改变是持久的，即使数据库 发生故障也不应该对其有任何影响。</p>
+<p><strong>为了达到上述事务特性，数据库定义了几种不同的事务隔离级别：</strong></p>
+</li>
+</ol>
+<ul>
+<li><p><strong>READ_UNCOMMITTED（未提交读）:</strong> 最低的隔离级别，允许读取尚未提交的数据变更，<strong>可能会导致脏读、幻读或不可重复读</strong></p>
+</li>
+<li><p><strong>READ_COMMITTED（提交读）:</strong>     允许读取并发事务已经提交的数据，<strong>可以阻止脏读，但是幻读或不可重复读仍有可能发生</strong></p>
+</li>
+<li><p><strong>REPEATABLE_READ（可重复读）:</strong>     对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，<strong>可以阻止脏读和不可重复读，但幻读仍有可能发生。</strong></p>
+</li>
+<li><p><strong>SERIALIZABLE（串行）:</strong>     最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，<strong>该级别可以防止脏读、不可重复读以及幻读</strong>。但是这将严重影响程序的性能。通常情况下也不会用到该级别。</p>
+<p>这里需要注意的是：<strong>Mysql 默认采用的 REPEATABLE_READ隔离级别 Oracle 默认采用的 READ_COMMITTED隔离级别.</strong></p>
+<p>事务隔离机制的实现基于锁机制和并发调度。其中并发调度使用的是MVCC（多版本并发控制），通过行的创建时间和行的过期时间来支持并发一致性读和回滚等特性。</p>
+<p> 详细内容可以参考：   <a href="https://blog.csdn.net/qq_34337272/article/details/80394121" target="_blank" rel="noopener">可能是最漂亮的Spring事务管理详解</a></p>
+</li>
+<li><h3 id="⑥锁机制与InnoDB锁算法"><a href="#⑥锁机制与InnoDB锁算法" class="headerlink" title="⑥锁机制与InnoDB锁算法"></a>⑥锁机制与InnoDB锁算法</h3><p> <strong>MyISAM和InnoDB存储引擎使用的锁：</strong></p>
+<ul>
+<li><p>MyISAM采用表级锁(table-level locking)。</p>
+</li>
+<li><p>InnoDB支持行级锁(row-level locking)和表级锁,默认为行级锁</p>
+<p><strong>表级锁和行级锁对比：</strong></p>
+<ul>
+<li><strong>表级锁：</strong> Mysql中锁定 <strong>粒度最大</strong> 的一种锁，对当前操作的整张表加锁，实现简单，资源消耗也比较少，加锁快，不会出现死锁。其锁定粒度最大，触发锁冲突的概率最高，并发度最低，MyISAM和 InnoDB引擎都支持表级锁。</li>
+<li><strong>行级锁：</strong> Mysql中锁定 <strong>粒度最小</strong> 的一种锁，只针对当前操作的行进行加锁。 行级锁能大大减少数据库操作的冲突。其加锁粒度最小，并发度高，但加锁的开销也最大，加锁慢，会出现死锁。 </li>
+</ul>
+<p>详细内容可以参考：<br><a href="https://blog.csdn.net/qq_34337272/article/details/80611486" target="_blank" rel="noopener">Mysql锁机制简单了解一下</a></p>
+</li>
+</ul>
+<p><strong>InnoDB存储引擎的锁的算法有三种：</strong></p>
+<ul>
+<li>Record lock：单个行记录上的锁</li>
+<li>Gap lock：间隙锁，锁定一个范围，不包括记录本身</li>
+<li>Next-key lock：record+gap 锁定一个范围，包含记录本身</li>
+</ul>
+<p> <strong>相关知识点：</strong></p>
+<ol>
+<li>innodb对于行的查询使用next-key lock</li>
+<li>Next-locking keying为了解决Phantom Problem幻读问题</li>
+<li>当查询的索引含有唯一属性时，将next-key lock降级为record key</li>
+<li>Gap锁设计的目的是为了阻止多个事务将记录插入到同一范围内，而这会导致幻读问题的产生</li>
+<li>有两种方式显式关闭gap锁：（除了外键约束和唯一性检查外，其余情况仅使用record lock） A. 将事务隔离级别设置为RC B. 将参数innodb_locks_unsafe_for_binlog设置为1</li>
+</ol>
+</li>
+<li><h3 id="⑦大表优化"><a href="#⑦大表优化" class="headerlink" title="⑦大表优化"></a>⑦大表优化</h3><p>当MySQL单表记录数过大时，数据库的CRUD性能会明显下降，一些常见的优化措施如下：</p>
+<ol>
+<li><p><strong>限定数据的范围：</strong> 务必禁止不带任何限制数据范围条件的查询语句。比如：我们当用户在查询订单历史的时候，我们可以控制在一个月的范围内。；</p>
+</li>
+<li><p><strong>读/写分离：</strong> 经典的数据库拆分方案，主库负责写，从库负责读；<br>3 . <strong>垂直分区：</strong> </p>
+<p><strong>根据数据库里面数据表的相关性进行拆分。</strong> 例如，用户表中既有用户的登录信息又有用户的基本信息，可以将用户表拆分成两个单独的表，甚至放到单独的库做分库。</p>
+<p><strong>简单来说垂直拆分是指数据表列的拆分，把一张列比较多的表拆分为多张表。</strong> 如下图所示，这样来说大家应该就更容易理解了。<br><img src="https://user-gold-cdn.xitu.io/2018/6/16/164084354ba2e0fd?w=950&h=279&f=jpeg&s=26015" alt=""></p>
+<p><strong>垂直拆分的优点：</strong> 可以使得行数据变小，在查询时减少读取的Block数，减少I/O次数。此外，垂直分区可以简化表的结构，易于维护。</p>
+<p><strong>垂直拆分的缺点：</strong> 主键会出现冗余，需要管理冗余列，并会引起Join操作，可以通过在应用层进行Join来解决。此外，垂直分区会让事务变得更加复杂；</p>
+</li>
+<li><p><strong>水平分区：</strong> </p>
+</li>
+</ol>
+</li>
+</ul>
+<pre><code>**保持数据表结构不变，通过某种策略存储数据分片。这样每一片数据分散到不同的表或者库中，达到了分布式的目的。 水平拆分可以支撑非常大的数据量。** 
+
+水平拆分是指数据表行的拆分，表的行数超过200万行时，就会变慢，这时可以把一张的表的数据拆成多张表来存放。举个例子：我们可以将用户信息表拆分成多个用户信息表，这样就可以避免单一表数据量过大对性能造成影响。
+
+![数据库水平拆分](https://user-gold-cdn.xitu.io/2018/6/16/164084b7e9e423e3?w=690&amp;h=271&amp;f=jpeg&amp;s=23119)
+
+水平拆分可以支持非常大的数据量。需要注意的一点是:分表仅仅是解决了单一表数据过大的问题，但由于表的数据还是在同一台机器上，其实对于提升MySQL并发能力没有什么意义，所以 **水平拆分最好分库** 。
+
+水平拆分能够 **支持非常大的数据量存储，应用端改造也少**，但 **分片事务难以解决**  ，跨界点Join性能较差，逻辑复杂。《Java工程师修炼之道》的作者推荐 **尽量不要对数据进行分片，因为拆分会带来逻辑、部署、运维的各种复杂度** ，一般的数据表在优化得当的情况下支撑千万以下的数据量是没有太大问题的。如果实在要分片，尽量选择客户端分片架构，这样可以减少一次和中间件的网络I/O。
+
+**下面补充一下数据库分片的两种常见方案：**
+- **客户端代理：**  **分片逻辑在应用端，封装在jar包中，通过修改或者封装JDBC层来实现。** 当当网的 **Sharding-JDBC** 、阿里的TDDL是两种比较常用的实现。
+- **中间件代理：** **在应用和数据中间加了一个代理层。分片逻辑统一维护在中间件服务中。** 我们现在谈的 **Mycat** 、360的Atlas、网易的DDB等等都是这种架构的实现。</code></pre><p>  详细内容可以参考：<br>  <a href="https://segmentfault.com/a/1190000006158186" target="_blank" rel="noopener">MySQL大表优化方案</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/12/MySQL/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MySQL Index" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/12/MySQL%20Index/">MySQL Index</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/12/MySQL%20Index/" class="archive-article-date">
+  	<time datetime="2020-04-12T07:52:20.083Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="思维导图-索引篇"><a href="#思维导图-索引篇" class="headerlink" title="思维导图-索引篇"></a>思维导图-索引篇</h1><blockquote>
+<p>系列思维导图源文件（数据库+架构）以及思维导图制作软件—XMind8 破解安装，公众号后台回复：<strong>“思维导图”</strong> 免费领取！（下面的图片不是很清楚，原图非常清晰，另外提供给大家源文件也是为了大家根据自己需要进行修改）</p>
+</blockquote>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-2/70973487.jpg" alt="【思维导图-索引篇】"></p>
+<blockquote>
+<p><strong>下面是我补充的一些内容</strong></p>
+</blockquote>
+<h1 id="为什么索引能提高查询速度"><a href="#为什么索引能提高查询速度" class="headerlink" title="为什么索引能提高查询速度"></a>为什么索引能提高查询速度</h1><blockquote>
+<p>以下内容整理自：<br> 地址： <a href="https://juejin.im/post/5b55b842f265da0f9e589e79" target="_blank" rel="noopener">https://juejin.im/post/5b55b842f265da0f9e589e79</a><br> 作者 ：Java3y</p>
+</blockquote>
+<h3 id="先从-MySQL-的基本存储结构说起"><a href="#先从-MySQL-的基本存储结构说起" class="headerlink" title="先从 MySQL 的基本存储结构说起"></a>先从 MySQL 的基本存储结构说起</h3><p>MySQL的基本存储结构是页(记录都存在页里边)：</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-2/28559421.jpg" alt="MySQL的基本存储结构是页"></p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-2/82053134.jpg" alt=""></p>
+<ul>
+<li><strong>各个数据页可以组成一个双向链表</strong></li>
+<li><strong>每个数据页中的记录又可以组成一个单向链表</strong><ul>
+<li>每个数据页都会为存储在它里边儿的记录生成一个页目录，在通过主键查找某条记录的时候可以在页目录中使用二分法快速定位到对应的槽，然后再遍历该槽对应分组中的记录即可快速找到指定的记录</li>
+<li>以其他列(非主键)作为搜索条件：只能从最小记录开始依次遍历单链表中的每条记录。</li>
+</ul>
+</li>
+</ul>
+<p>所以说，如果我们写select * from user where indexname = ‘xxx’这样没有进行任何优化的sql语句，默认会这样做：</p>
+<ol>
+<li><strong>定位到记录所在的页:需要遍历双向链表，找到所在的页</strong></li>
+<li><strong>从所在的页内中查找相应的记录:由于不是根据主键查询，只能遍历所在页的单链表了</strong></li>
+</ol>
+<p>很明显，在数据量很大的情况下这样查找会很慢！这样的时间复杂度为O（n）。</p>
+<h3 id="使用索引之后"><a href="#使用索引之后" class="headerlink" title="使用索引之后"></a>使用索引之后</h3><p>索引做了些什么可以让我们查询加快速度呢？其实就是将无序的数据变成有序(相对)：</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-2/5373082.jpg" alt=""></p>
+<p>要找到id为8的记录简要步骤：</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-2/89338047.jpg" alt=""></p>
+<p>很明显的是：没有用索引我们是需要遍历双向链表来定位对应的页，现在通过 <strong>“目录”</strong> 就可以很快地定位到对应的页上了！（二分查找，时间复杂度近似为O(logn)）</p>
+<p>其实底层结构就是B+树，B+树作为树的一种实现，能够让我们很快地查找出对应的记录。</p>
+<h1 id="关于索引其他重要的内容补充"><a href="#关于索引其他重要的内容补充" class="headerlink" title="关于索引其他重要的内容补充"></a>关于索引其他重要的内容补充</h1><blockquote>
+<p>以下内容整理自：《Java工程师修炼之道》</p>
+</blockquote>
+<h3 id="最左前缀原则"><a href="#最左前缀原则" class="headerlink" title="最左前缀原则"></a>最左前缀原则</h3><p>MySQL中的索引可以以一定顺序引用多列，这种索引叫作联合索引。如User表的name和city加联合索引就是(name,city)，而最左前缀原则指的是，如果查询的时候查询条件精确匹配索引的左边连续一列或几列，则此列就可以被用到。如下：        </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">select * from user where name&#x3D;xx and city&#x3D;xx ; ／／可以命中索引</span><br><span class="line">select * from user where name&#x3D;xx ; &#x2F;&#x2F; 可以命中索引</span><br><span class="line">select * from user where city&#x3D;xx; &#x2F;&#x2F; 无法命中索引            </span><br><span class="line">&#96;&#96;&#96;                                                          </span><br><span class="line">这里需要注意的是，查询的时候如果两个条件都用上了，但是顺序不同，如 &#96;city&#x3D; xx and name ＝xx&#96;，那么现在的查询引擎会自动优化为匹配联合索引的顺序，这样是能够命中索引的.</span><br><span class="line"></span><br><span class="line">由于最左前缀原则，在创建联合索引时，索引字段的顺序需要考虑字段值去重之后的个数，较多的放前面。ORDERBY子句也遵循此规则。</span><br><span class="line"></span><br><span class="line">### 注意避免冗余索引</span><br><span class="line"></span><br><span class="line">冗余索引指的是索引的功能相同，能够命中 就肯定能命中 ，那么 就是冗余索引如（name,city ）和（name ）这两个索引就是冗余索引，能够命中后者的查询肯定是能够命中前者的 在大多数情况下，都应该尽量扩展已有的索引而不是创建新索引。</span><br><span class="line"></span><br><span class="line">MySQLS.7 版本后，可以通过查询 sys 库的 &#96;schema_redundant_indexes&#96; 表来查看冗余索引             </span><br><span class="line"></span><br><span class="line">### Mysql如何为表字段添加索引？？？</span><br><span class="line"></span><br><span class="line">1.添加PRIMARY KEY（主键索引）</span><br></pre></td></tr></table></figure>
+<p>ALTER TABLE <code>table_name</code> ADD PRIMARY KEY ( <code>column</code> ) </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2.添加UNIQUE(唯一索引)</span><br></pre></td></tr></table></figure>
+<p>ALTER TABLE <code>table_name</code> ADD UNIQUE ( <code>column</code> ) </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">3.添加INDEX(普通索引)</span><br></pre></td></tr></table></figure>
+<p>ALTER TABLE <code>table_name</code> ADD INDEX index_name ( <code>column</code> )</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">4.添加FULLTEXT(全文索引)</span><br></pre></td></tr></table></figure>
+<p>ALTER TABLE <code>table_name</code> ADD FULLTEXT ( <code>column</code>) </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">5.添加多列索引</span><br></pre></td></tr></table></figure>
+<p>ALTER TABLE <code>table_name</code> ADD INDEX index_name ( <code>column1</code>, <code>column2</code>, <code>column3</code> )</p>
+<pre><code>
+
+# 参考
+
+- 《Java工程师修炼之道》
+- 《MySQL高性能书籍_第3版》
+- https://juejin.im/post/5b55b842f265da0f9e589e79
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/12/MySQL%20Index/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-后端程序员必备的Linux基础知识" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/12/%E5%90%8E%E7%AB%AF%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%85%E5%A4%87%E7%9A%84Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">后端程序员必备的Linux基础知识</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/12/%E5%90%8E%E7%AB%AF%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%85%E5%A4%87%E7%9A%84Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="archive-article-date">
+  	<time datetime="2020-04-12T07:52:20.077Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- MarkdownTOC -->
+
+<ul>
+<li><a href="#一-从认识操作系统开始">一 从认识操作系统开始</a><ul>
+<li><a href="#11-操作系统简介">1.1 操作系统简介</a></li>
+<li><a href="#12-操作系统简单分类">1.2 操作系统简单分类</a></li>
+</ul>
+</li>
+<li><a href="#二-初探linux">二 初探Linux</a><ul>
+<li><a href="#21-linux简介">2.1 Linux简介</a></li>
+<li><a href="#22-linux诞生简介">2.2 Linux诞生简介</a></li>
+<li><a href="#23-linux的分类">2.3 Linux的分类</a></li>
+</ul>
+</li>
+<li><a href="#三-linux文件系统概览">三 Linux文件系统概览</a><ul>
+<li><a href="#31-linux文件系统简介">3.1 Linux文件系统简介</a></li>
+<li><a href="#32-文件类型与目录结构">3.2 文件类型与目录结构</a></li>
+</ul>
+</li>
+<li><a href="#四-linux基本命令">四 Linux基本命令</a><ul>
+<li><a href="#41-目录切换命令">4.1 目录切换命令</a></li>
+<li><a href="#42-目录的操作命令增删改查">4.2 目录的操作命令（增删改查）</a></li>
+<li><a href="#43-文件的操作命令增删改查">4.3 文件的操作命令（增删改查）</a></li>
+<li><a href="#44-压缩文件的操作命令">4.4 压缩文件的操作命令</a></li>
+<li><a href="#45-linux的权限命令">4.5 Linux的权限命令</a></li>
+<li><a href="#46-linux-用户管理">4.6 Linux 用户管理</a></li>
+<li><a href="#47-linux系统用户组的管理">4.7 Linux系统用户组的管理</a></li>
+<li><a href="#48-其他常用命令">4.8 其他常用命令</a></li>
+</ul>
+</li>
+</ul>
+<!-- /MarkdownTOC -->
+
+<blockquote>
+<p>学习Linux之前，我们先来简单的认识一下操作系统。</p>
+</blockquote>
+<h2 id="一-从认识操作系统开始"><a href="#一-从认识操作系统开始" class="headerlink" title="一 从认识操作系统开始"></a>一 从认识操作系统开始</h2><h3 id="1-1-操作系统简介"><a href="#1-1-操作系统简介" class="headerlink" title="1.1 操作系统简介"></a>1.1 操作系统简介</h3><p>我通过以下四点介绍什么操作系统：</p>
+<ul>
+<li><strong>操作系统（Operation System，简称OS）是管理计算机硬件与软件资源的程序，是计算机系统的内核与基石；</strong></li>
+<li><strong>操作系统本质上是运行在计算机上的软件程序 ；</strong></li>
+<li><strong>为用户提供一个与系统交互的操作界面 ；</strong></li>
+<li><strong>操作系统分内核与外壳（我们可以把外壳理解成围绕着内核的应用程序，而内核就是能操作硬件的程序）。</strong></li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/3/1645ee3dc5cf626e?w=862&h=637&f=png&s=23899" alt="操作系统分内核与外壳"></p>
+<h3 id="1-2-操作系统简单分类"><a href="#1-2-操作系统简单分类" class="headerlink" title="1.2 操作系统简单分类"></a>1.2 操作系统简单分类</h3><ol>
+<li><strong>Windows:</strong> 目前最流行的个人桌面操作系统 ，不做多的介绍，大家都清楚。</li>
+<li><strong>Unix：</strong> 最早的多用户、多任务操作系统 .按照操作系统的分类，属于分时操作系统。Unix 大多被用在服务器、工作站，现在也有用在个人计算机上。它在创建互联网、计算机网络或客户端/服务器模型方面发挥着非常重要的作用。<br><img src="https://user-gold-cdn.xitu.io/2018/7/3/1645ee83f036846d?w=1075&h=475&f=png&s=914462" alt="Unix"></li>
+<li><strong>Linux:</strong> Linux是一套免费使用和自由传播的类Unix操作系统.Linux存在着许多不同的Linux版本，但它们都使用了 <strong>Linux内核</strong> 。Linux可安装在各种计算机硬件设备中，比如手机、平板电脑、路由器、视频游戏控制台、台式计算机、大型机和超级计算机。严格来讲，Linux这个词本身只表示Linux内核，但实际上人们已经习惯了用Linux来形容整个基于Linux内核，并且使用GNU 工程各种工具和数据库的操作系统。</li>
+</ol>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/3/1645eeb8e843f29d?w=426&h=240&f=png&s=32650" alt="Linux"></p>
+<h2 id="二-初探Linux"><a href="#二-初探Linux" class="headerlink" title="二 初探Linux"></a>二 初探Linux</h2><h3 id="2-1-Linux简介"><a href="#2-1-Linux简介" class="headerlink" title="2.1 Linux简介"></a>2.1 Linux简介</h3><p>我们上面已经介绍到了Linux，我们这里只强调三点。</p>
+<ul>
+<li><strong>类Unix系统：</strong> Linux是一种自由、开放源码的类似Unix的操作系统 </li>
+<li><strong>Linux内核：</strong> 严格来说，Linux这个词本身只表示Linux内核 </li>
+<li><strong>Linux之父：</strong> 一个编程领域的传奇式人物。他是Linux内核的最早作者，随后发起了这个开源项目，担任Linux内核的首要架构师与项目协调者，是当今世界最著名的电脑程序员、黑客之一。他还发起了Git这个开源项目，并为主要的开发者。</li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/3/1645ef0a5a4f137f?w=270&h=376&f=png&s=193487" alt="Linux"></p>
+<h3 id="2-2-Linux诞生简介"><a href="#2-2-Linux诞生简介" class="headerlink" title="2.2 Linux诞生简介"></a>2.2 Linux诞生简介</h3><ul>
+<li>1991年，芬兰的业余计算机爱好者Linus Torvalds编写了一款类似Minix的系统（基于微内核架构的类Unix操作系统）被ftp管理员命名为Linux 加入到自由软件基金的GNU计划中; </li>
+<li>Linux以一只可爱的企鹅作为标志，象征着敢作敢为、热爱生活。 </li>
+</ul>
+<h3 id="2-3-Linux的分类"><a href="#2-3-Linux的分类" class="headerlink" title="2.3 Linux的分类"></a>2.3 Linux的分类</h3><p><strong>Linux根据原生程度，分为两种：</strong></p>
+<ol>
+<li><strong>内核版本：</strong> Linux不是一个操作系统，严格来讲，Linux只是一个操作系统中的内核。内核是什么？内核建立了计算机软件与硬件之间通讯的平台，内核提供系统服务，比如文件管理、虚拟内存、设备I/O等；</li>
+<li><strong>发行版本：</strong> 一些组织或公司在内核版基础上进行二次开发而重新发行的版本。Linux发行版本有很多种（ubuntu和CentOS用的都很多，初学建议选择CentOS），如下图所示：<br><img src="https://user-gold-cdn.xitu.io/2018/7/3/1645efa7048fd018?w=548&h=274&f=png&s=99213" alt="Linux发行版本"></li>
+</ol>
+<h2 id="三-Linux文件系统概览"><a href="#三-Linux文件系统概览" class="headerlink" title="三 Linux文件系统概览"></a>三 Linux文件系统概览</h2><h3 id="3-1-Linux文件系统简介"><a href="#3-1-Linux文件系统简介" class="headerlink" title="3.1 Linux文件系统简介"></a>3.1 Linux文件系统简介</h3><p><strong>在Linux操作系统中，所有被操作系统管理的资源，例如网络接口卡、磁盘驱动器、打印机、输入输出设备、普通文件或是目录都被看作是一个文件。</strong></p>
+<p>也就是说在LINUX系统中有一个重要的概念：<strong>一切都是文件</strong>。其实这是UNIX哲学的一个体现，而Linux是重写UNIX而来，所以这个概念也就传承了下来。在UNIX系统中，把一切资源都看作是文件，包括硬件设备。UNIX系统把每个硬件都看成是一个文件，通常称为设备文件，这样用户就可以用读写文件的方式实现对硬件的访问。</p>
+<h3 id="3-2-文件类型与目录结构"><a href="#3-2-文件类型与目录结构" class="headerlink" title="3.2 文件类型与目录结构"></a>3.2 文件类型与目录结构</h3><p><strong>Linux支持5种文件类型 ：</strong><br><img src="https://user-gold-cdn.xitu.io/2018/7/3/1645f1a7d64def1a?w=901&h=547&f=png&s=72692" alt="文件类型"></p>
+<p><strong>Linux的目录结构如下：</strong></p>
+<p>Linux文件系统的结构层次鲜明，就像一棵倒立的树，最顶层是其根目录：<br><img src="https://user-gold-cdn.xitu.io/2018/7/3/1645f1c65676caf6?w=823&h=315&f=png&s=15226" alt="Linux的目录结构"></p>
+<p><strong>常见目录说明：</strong></p>
+<ul>
+<li><strong>/bin：</strong> 存放二进制可执行文件(ls,cat,mkdir等)，常用命令一般都在这里；</li>
+<li><strong>/etc：</strong>  存放系统管理和配置文件；</li>
+<li><strong>/home：</strong>  存放所有用户文件的根目录，是用户主目录的基点，比如用户user的主目录就是/home/user，可以用~user表示；</li>
+<li><strong>/usr ：</strong> 用于存放系统应用程序；</li>
+<li><strong>/opt：</strong> 额外安装的可选应用程序包所放置的位置。一般情况下，我们可以把tomcat等都安装到这里；</li>
+<li><strong>/proc：</strong>  虚拟文件系统目录，是系统内存的映射。可直接访问这个目录来获取系统信息；</li>
+<li><strong>/root：</strong>  超级用户（系统管理员）的主目录（特权阶级^o^）；</li>
+<li><strong>/sbin:</strong>  存放二进制可执行文件，只有root才能访问。这里存放的是系统管理员使用的系统级别的管理命令和程序。如ifconfig等；</li>
+<li><strong>/dev：</strong> 用于存放设备文件；</li>
+<li><strong>/mnt：</strong> 系统管理员安装临时文件系统的安装点，系统提供这个目录是让用户临时挂载其他的文件系统；</li>
+<li><strong>/boot：</strong>  存放用于系统引导时使用的各种文件；</li>
+<li><strong>/lib ：</strong>      存放着和系统运行相关的库文件 ；</li>
+<li><strong>/tmp：</strong> 用于存放各种临时文件，是公用的临时文件存储点；</li>
+<li><strong>/var：</strong> 用于存放运行时需要改变数据的文件，也是某些大文件的溢出区，比方说各种服务的日志文件（系统启动日志等。）等；</li>
+<li><strong>/lost+found：</strong>  这个目录平时是空的，系统非正常关机而留下“无家可归”的文件（windows下叫什么.chk）就在这里。</li>
+</ul>
+<h2 id="四-Linux基本命令"><a href="#四-Linux基本命令" class="headerlink" title="四 Linux基本命令"></a>四 Linux基本命令</h2><p>下面只是给出了一些比较常用的命令。推荐一个Linux命令快查网站，非常不错，大家如果遗忘某些命令或者对某些命令不理解都可以在这里得到解决。</p>
+<p>Linux命令大全：<a href="http://man.linuxde.net/" target="_blank" rel="noopener">http://man.linuxde.net/</a></p>
+<h3 id="4-1-目录切换命令"><a href="#4-1-目录切换命令" class="headerlink" title="4.1 目录切换命令"></a>4.1 目录切换命令</h3><ul>
+<li><strong><code>cd usr</code>：</strong>   切换到该目录下usr目录  </li>
+<li><strong><code>cd ..（或cd../）</code>：</strong>  切换到上一层目录 </li>
+<li><strong><code>cd /</code>：</strong>   切换到系统根目录  </li>
+<li><strong><code>cd ~</code>：</strong>   切换到用户主目录 </li>
+<li><strong><code>cd -</code>：</strong>   切换到上一个操作所在目录</li>
+</ul>
+<h3 id="4-2-目录的操作命令-增删改查"><a href="#4-2-目录的操作命令-增删改查" class="headerlink" title="4.2 目录的操作命令(增删改查)"></a>4.2 目录的操作命令(增删改查)</h3><ol>
+<li><p><strong><code>mkdir 目录名称</code>：</strong> 增加目录</p>
+</li>
+<li><p><strong><code>ls或者ll</code></strong>（ll是ls -l的别名，ll命令可以看到该目录下的所有目录和文件的详细信息）：查看目录信息</p>
+</li>
+<li><p><strong><code>find 目录 参数</code>：</strong> 寻找目录（查）</p>
+<p> 示例：</p>
+<ul>
+<li>列出当前目录及子目录下所有文件和文件夹: <code>find .</code></li>
+<li>在<code>/home</code>目录下查找以.txt结尾的文件名:<code>find /home -name &quot;*.txt&quot;</code></li>
+<li>同上，但忽略大小写: <code>find /home -iname &quot;*.txt&quot;</code></li>
+<li>当前目录及子目录下查找所有以.txt和.pdf结尾的文件:<code>find . \( -name &quot;*.txt&quot; -o -name &quot;*.pdf&quot; \)</code>或<code>find . -name &quot;*.txt&quot; -o -name &quot;*.pdf&quot;</code></li>
+</ul>
+</li>
+<li><p><strong><code>mv 目录名称 新目录名称</code>：</strong> 修改目录的名称（改）</p>
+<p>注意：mv的语法不仅可以对目录进行重命名而且也可以对各种文件，压缩包等进行  重命名的操作。mv命令用来对文件或目录重新命名，或者将文件从一个目录移到另一个目录中。后面会介绍到mv命令的另一个用法。</p>
+</li>
+<li><p><strong><code>mv 目录名称 目录的新位置</code>：</strong>  移动目录的位置—剪切（改）</p>
+<p> 注意：mv语法不仅可以对目录进行剪切操作，对文件和压缩包等都可执行剪切操作。另外mv与cp的结果不同，mv好像文件“搬家”，文件个数并未增加。而cp对文件进行复制，文件个数增加了。</p>
+</li>
+<li><p><strong><code>cp -r 目录名称 目录拷贝的目标位置</code>：</strong> 拷贝目录（改），-r代表递归拷贝 </p>
+<p> 注意：cp命令不仅可以拷贝目录还可以拷贝文件，压缩包等，拷贝文件和压缩包时不  用写-r递归</p>
+</li>
+<li><p><strong><code>rm [-rf] 目录</code>:</strong> 删除目录（删）</p>
+<p> 注意：rm不仅可以删除目录，也可以删除其他文件或压缩包，为了增强大家的记忆，  无论删除任何目录或文件，都直接使用<code>rm -rf</code> 目录/文件/压缩包</p>
+</li>
+</ol>
+<h3 id="4-3-文件的操作命令-增删改查"><a href="#4-3-文件的操作命令-增删改查" class="headerlink" title="4.3 文件的操作命令(增删改查)"></a>4.3 文件的操作命令(增删改查)</h3><ol>
+<li><p><strong><code>touch 文件名称</code>:</strong>  文件的创建（增）</p>
+</li>
+<li><p><strong><code>cat/more/less/tail 文件名称</code></strong> 文件的查看（查）</p>
+<ul>
+<li><strong><code>cat</code>：</strong> 查看显示文件内容</li>
+<li><strong><code>more</code>：</strong> 可以显示百分比，回车可以向下一行， 空格可以向下一页，q可以退出查看</li>
+<li><strong><code>less</code>：</strong> 可以使用键盘上的PgUp和PgDn向上 和向下翻页，q结束查看</li>
+<li><strong><code>tail-10</code> ：</strong> 查看文件的后10行，Ctrl+C结束</li>
+</ul>
+<p>注意：命令 tail -f 文件 可以对某个文件进行动态监控，例如tomcat的日志文件，  会随着程序的运行，日志会变化，可以使用tail -f catalina-2016-11-11.log 监控 文 件的变化 </p>
+</li>
+<li><p><strong><code>vim 文件</code>：</strong>  修改文件的内容（改）</p>
+<p>vim编辑器是Linux中的强大组件，是vi编辑器的加强版，vim编辑器的命令和快捷方式有很多，但此处不一一阐述，大家也无需研究的很透彻，使用vim编辑修改文件的方式基本会使用就可以了。</p>
+<p><strong>在实际开发中，使用vim编辑器主要作用就是修改配置文件，下面是一般步骤：</strong></p>
+<p> vim 文件——&gt;进入文件—–&gt;命令模式——&gt;按i进入编辑模式—–&gt;编辑文件  ——-&gt;按Esc进入底行模式—–&gt;输入:wq/q! （输入wq代表写入内容并退出，即保存；输入q!代表强制退出不保存。）</p>
+</li>
+<li><p><strong><code>rm -rf 文件</code>：</strong> 删除文件（删）</p>
+<p> 同目录删除：熟记 <code>rm -rf</code> 文件 即可</p>
+</li>
+</ol>
+<h3 id="4-4-压缩文件的操作命令"><a href="#4-4-压缩文件的操作命令" class="headerlink" title="4.4 压缩文件的操作命令"></a>4.4 压缩文件的操作命令</h3><p><strong>1）打包并压缩文件：</strong></p>
+<p>Linux中的打包文件一般是以.tar结尾的，压缩的命令一般是以.gz结尾的。</p>
+<p>而一般情况下打包和压缩是一起进行的，打包并压缩后的文件的后缀名一般.tar.gz。<br>命令：<strong><code>tar -zcvf 打包压缩后的文件名 要打包压缩的文件</code></strong><br>其中：</p>
+<p>  z：调用gzip压缩命令进行压缩</p>
+<p>  c：打包文件</p>
+<p>  v：显示运行过程</p>
+<p>  f：指定文件名</p>
+<p>比如：加入test目录下有三个文件分别是 :aaa.txt bbb.txt ccc.txt,如果我们要打包test目录并指定压缩后的压缩包名称为test.tar.gz可以使用命令：<strong><code>tar -zcvf test.tar.gz aaa.txt bbb.txt ccc.txt</code>或：<code>tar -zcvf test.tar.gz       /test/</code></strong></p>
+<p><strong>2）解压压缩包：</strong></p>
+<p>命令：tar [-xvf] 压缩文件</p>
+<p>其中：x：代表解压</p>
+<p>示例：</p>
+<p>1 将/test下的test.tar.gz解压到当前目录下可以使用命令：<strong><code>tar -xvf test.tar.gz</code></strong></p>
+<p>2 将/test下的test.tar.gz解压到根目录/usr下:<strong><code>tar -xvf xxx.tar.gz -C /usr</code></strong>（- C代表指定解压的位置）</p>
+<h3 id="4-5-Linux的权限命令"><a href="#4-5-Linux的权限命令" class="headerlink" title="4.5 Linux的权限命令"></a>4.5 Linux的权限命令</h3><p> 操作系统中每个文件都拥有特定的权限、所属用户和所属组。权限是操作系统用来限制资源访问的机制，在Linux中权限一般分为读(readable)、写(writable)和执行(excutable)，分为三组。分别对应文件的属主(owner)，属组(group)和其他用户(other)，通过这样的机制来限制哪些用户、哪些组可以对特定的文件进行什么样的操作。通过 <strong><code>ls -l</code></strong> 命令我们可以  查看某个目录下的文件或目录的权限</p>
+<p>示例：在随意某个目录下<code>ls -l</code></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/5/1646955be781daaa?w=589&h=228&f=png&s=16360" alt=""></p>
+<p>第一列的内容的信息解释如下：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/5/16469565b6951791?w=489&h=209&f=png&s=39791" alt=""></p>
+<blockquote>
+<p>下面将详细讲解文件的类型、Linux中权限以及文件有所有者、所在组、其它组具体是什么？</p>
+</blockquote>
+<p><strong>文件的类型：</strong></p>
+<ul>
+<li>d： 代表目录</li>
+<li>-： 代表文件</li>
+<li>l： 代表软链接（可以认为是window中的快捷方式）</li>
+</ul>
+<p><strong>Linux中权限分为以下几种：</strong></p>
+<ul>
+<li>r：代表权限是可读，r也可以用数字4表示</li>
+<li>w：代表权限是可写，w也可以用数字2表示</li>
+<li>x：代表权限是可执行，x也可以用数字1表示</li>
+</ul>
+<p><strong>文件和目录权限的区别：</strong></p>
+<p> 对文件和目录而言，读写执行表示不同的意义。</p>
+<p> 对于文件：</p>
+<table>
+<thead>
+<tr>
+<th align="left">权限名称</th>
+<th align="right">可执行操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">r</td>
+<td align="right">可以使用cat查看文件的内容</td>
+</tr>
+<tr>
+<td align="left">w</td>
+<td align="right">可以修改文件的内容</td>
+</tr>
+<tr>
+<td align="left">x</td>
+<td align="right">可以将其运行为二进制文件</td>
+</tr>
+</tbody></table>
+<p> 对于目录：</p>
+<table>
+<thead>
+<tr>
+<th align="left">权限名称</th>
+<th align="right">可执行操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">r</td>
+<td align="right">可以查看目录下列表</td>
+</tr>
+<tr>
+<td align="left">w</td>
+<td align="right">可以创建和删除目录下文件</td>
+</tr>
+<tr>
+<td align="left">x</td>
+<td align="right">可以使用cd进入目录</td>
+</tr>
+</tbody></table>
+<p><strong>需要注意的是超级用户可以无视普通用户的权限，即使文件目录权限是000，依旧可以访问。</strong><br><strong>在linux中的每个用户必须属于一个组，不能独立于组外。在linux中每个文件有所有者、所在组、其它组的概念。</strong></p>
+<ul>
+<li><p><strong>所有者</strong></p>
+<p>一般为文件的创建者，谁创建了该文件，就天然的成为该文件的所有者，用ls ‐ahl命令可以看到文件的所有者 也可以使用chown 用户名  文件名来修改文件的所有者 。</p>
+</li>
+<li><p><strong>文件所在组</strong></p>
+<p>当某个用户创建了一个文件后，这个文件的所在组就是该用户所在的组 用ls ‐ahl命令可以看到文件的所有组 也可以使用chgrp  组名  文件名来修改文件所在的组。 </p>
+</li>
+<li><p><strong>其它组</strong></p>
+<p>除开文件的所有者和所在组的用户外，系统的其它用户都是文件的其它组 </p>
+</li>
+</ul>
+<blockquote>
+<p>我们再来看看如何修改文件/目录的权限。</p>
+</blockquote>
+<p><strong>修改文件/目录的权限的命令：<code>chmod</code></strong></p>
+<p>示例：修改/test下的aaa.txt的权限为属主有全部权限，属主所在的组有读写权限，<br>其他用户只有读的权限</p>
+<p><strong><code>chmod u=rwx,g=rw,o=r aaa.txt</code></strong></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/7/5/164697447dc6ecac?w=525&h=246&f=png&s=12362" alt=""></p>
+<p>上述示例还可以使用数字表示：</p>
+<p>chmod 764 aaa.txt</p>
+<p><strong>补充一个比较常用的东西:</strong></p>
+<p>假如我们装了一个zookeeper，我们每次开机到要求其自动启动该怎么办？</p>
+<ol>
+<li>新建一个脚本zookeeper</li>
+<li>为新建的脚本zookeeper添加可执行权限，命令是:<code>chmod +x zookeeper</code></li>
+<li>把zookeeper这个脚本添加到开机启动项里面，命令是：<code>chkconfig --add  zookeeper</code></li>
+<li>如果想看看是否添加成功，命令是：<code>chkconfig --list</code></li>
+</ol>
+<h3 id="4-6-Linux-用户管理"><a href="#4-6-Linux-用户管理" class="headerlink" title="4.6 Linux 用户管理"></a>4.6 Linux 用户管理</h3><p>Linux系统是一个多用户多任务的分时操作系统，任何一个要使用系统资源的用户，都必须首先向系统管理员申请一个账号，然后以这个账号的身份进入系统。</p>
+<p>用户的账号一方面可以帮助系统管理员对使用系统的用户进行跟踪，并控制他们对系统资源的访问；另一方面也可以帮助用户组织文件，并为用户提供安全性保护。</p>
+<p><strong>Linux用户管理相关命令:</strong></p>
+<ul>
+<li><code>useradd 选项 用户名</code>:添加用户账号</li>
+<li><code>userdel 选项 用户名</code>:删除用户帐号</li>
+<li><code>usermod 选项 用户名</code>:修改帐号</li>
+<li><code>passwd 用户名</code>:更改或创建用户的密码</li>
+<li><code>passwd -S 用户名</code> :显示用户账号密码信息</li>
+<li><code>passwd -d 用户名</code>:  清除用户密码</li>
+</ul>
+<p>useradd命令用于Linux中创建的新的系统用户。useradd可用来建立用户帐号。帐号建好之后，再用passwd设定帐号的密码．而可用userdel删除帐号。使用useradd指令所建立的帐号，实际上是保存在/etc/passwd文本文件中。</p>
+<p>passwd命令用于设置用户的认证信息，包括用户密码、密码过期时间等。系统管理者则能用它管理系统用户的密码。只有管理者可以指定用户名称，一般用户只能变更自己的密码。</p>
+<h3 id="4-7-Linux系统用户组的管理"><a href="#4-7-Linux系统用户组的管理" class="headerlink" title="4.7 Linux系统用户组的管理"></a>4.7 Linux系统用户组的管理</h3><p>每个用户都有一个用户组，系统可以对一个用户组中的所有用户进行集中管理。不同Linux 系统对用户组的规定有所不同，如Linux下的用户属于与它同名的用户组，这个用户组在创建用户时同时创建。</p>
+<p>用户组的管理涉及用户组的添加、删除和修改。组的增加、删除和修改实际上就是对/etc/group文件的更新。</p>
+<p><strong>Linux系统用户组的管理相关命令:</strong></p>
+<ul>
+<li><code>groupadd 选项 用户组</code> :增加一个新的用户组</li>
+<li><code>groupdel 用户组</code>:要删除一个已有的用户组</li>
+<li><code>groupmod 选项 用户组</code> : 修改用户组的属性</li>
+</ul>
+<h3 id="4-8-其他常用命令"><a href="#4-8-其他常用命令" class="headerlink" title="4.8 其他常用命令"></a>4.8 其他常用命令</h3><ul>
+<li><p><strong><code>pwd</code>：</strong> 显示当前所在位置</p>
+</li>
+<li><p><strong><code>grep 要搜索的字符串 要搜索的文件 --color</code>：</strong> 搜索命令，–color代表高亮显示</p>
+</li>
+<li><p><strong><code>ps -ef</code>/<code>ps -aux</code>：</strong> 这两个命令都是查看当前系统正在运行进程，两者的区别是展示格式不同。如果想要查看特定的进程可以使用这样的格式：<strong><code>ps aux|grep redis</code></strong> （查看包括redis字符串的进程），也可使用 <code>pgrep redis -a</code>。</p>
+<p>注意：如果直接用ps（（Process Status））命令，会显示所有进程的状态，通常结合grep命令查看某进程的状态。</p>
+</li>
+<li><p><strong><code>kill -9 进程的pid</code>：</strong> 杀死进程（-9 表示强制终止。）</p>
+<p>先用ps查找进程，然后用kill杀掉</p>
+</li>
+<li><p><strong>网络通信命令：</strong></p>
+<ul>
+<li>查看当前系统的网卡信息：ifconfig</li>
+<li>查看与某台机器的连接情况：ping </li>
+<li>查看当前系统的端口使用：netstat -an</li>
+</ul>
+</li>
+<li><p><strong>net-tools 和 iproute2 ：</strong><br> <code>net-tools</code>起源于BSD的TCP/IP工具箱，后来成为老版本Linux内核中配置网络功能的工具。但自2001年起，Linux社区已经对其停止维护。同时，一些Linux发行版比如Arch Linux和CentOS/RHEL 7则已经完全抛弃了net-tools，只支持<code>iproute2</code>。linux ip命令类似于ifconfig，但功能更强大，旨在替代它。更多详情请阅读<a href="https://linoxide.com/linux-command/use-ip-command-linux" target="_blank" rel="noopener">如何在Linux中使用IP命令和示例</a></p>
+</li>
+<li><p><strong><code>shutdown</code>：</strong>  <code>shutdown -h now</code>： 指定现在立即关机；<code>shutdown +5 &quot;System will shutdown after 5 minutes&quot;</code>:指定5分钟后关机，同时送出警告信息给登入用户。</p>
+</li>
+<li><p><strong><code>reboot</code>：</strong>  <strong><code>reboot</code>：</strong>  重开机。<strong><code>reboot -w</code>：</strong> 做个重开机的模拟（只有纪录并不会真的重开机）。</p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/12/%E5%90%8E%E7%AB%AF%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%85%E5%A4%87%E7%9A%84Linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
+      <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
     </nav>
   
 
